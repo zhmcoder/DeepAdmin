@@ -23,4 +23,5 @@ Homestead.json
 /.vscode
 .phpunit.result.cache
 public
+dist
 node_modules
