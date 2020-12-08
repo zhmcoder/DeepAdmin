@@ -84,7 +84,7 @@ class AdminServiceProvider extends ServiceProvider
             $this->publishes([__DIR__ . '/../config' => config_path()], 'deep-admin-config');
             $this->publishes([__DIR__ . '/../resources/lang' => resource_path('lang')], 'deep-admin-lang');
             $this->publishes([__DIR__ . '/../database/migrations' => database_path('migrations')], 'deep-admin-migrations');
-//            $this->publishes([__DIR__ . '/../public' => public_path('vendor/laravel-vue-admin')], 'laravel-vue-admin-assets');
+            $this->publishes([__DIR__ . '/../dist' => public_path('vendor/deep-admin')], 'deep-admin-assets');
         }
     }
 
