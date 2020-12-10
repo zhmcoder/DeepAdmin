@@ -18,5 +18,8 @@ Route::group([
 
     $router->get('remote/search', 'RemoteSearchController@search')->name('remote.search');
     $router->post('upload/images', 'UploadController@images')->name('upload.images');
+
+    $router->post('_handle_upload_image_', 'HandleController@uploadImage')->name('upload.image_handle');
+    $router->post('_handle_upload_file_', 'HandleController@uploadFile')->name('upload.file_handler');
 });
 

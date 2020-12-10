@@ -585,7 +585,7 @@ class ContentController extends AdminController
 
                 case 'avatar' : // 头像
                     $obj->component(Upload::make()->avatar()->path('avatar')->uniqueName())->required($val['is_required'], 'string');
-
+                    break;
                 case 'uploadMulti' : // 图片上传 多图
                     $obj->component(
                         Upload::make()->image()->multiple()->uniqueName()
