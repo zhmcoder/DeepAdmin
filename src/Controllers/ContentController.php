@@ -96,6 +96,10 @@ class ContentController extends AdminController
             ->where('is_search', '>', 1)->orderBy('list_order', 'asc')->orderBy('id', 'asc')->get()->toArray();
         $grid->filter(function ($filter) use ($entityField) {
             foreach ($entityField as $key => $val) {
+                if (!$this->isShow($val)) {
+                    continue;
+                }
+
                 $val['name'] = !empty($val['prop']) ? $val['prop'] : $val['name'];
 
                 $defaultValue = request($val['name']); // todo 关联查询
