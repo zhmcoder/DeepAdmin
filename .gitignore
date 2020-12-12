@@ -25,3 +25,5 @@ Homestead.json
 public
 dist
 node_modules
+
+.idea/
