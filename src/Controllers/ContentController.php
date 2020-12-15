@@ -707,6 +707,10 @@ class ContentController extends AdminController
             //}
         });
 
+        $form->deleted(function (Form $form) {
+            $this->deleted_event($form);
+        });
+
         $form->saving(function (Form $form) use ($cascadeFields) {
 
             // 级联选择拆分字段
@@ -751,6 +755,11 @@ class ContentController extends AdminController
 
     // 添加回调
     protected function saved_event(Form $form)
+    {
+
+    }
+
+    protected function deleted_event(Form $form)
     {
 
     }
