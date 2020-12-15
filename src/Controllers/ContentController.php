@@ -90,6 +90,8 @@ class ContentController extends AdminController
                         ->uri($this->create_url() . $params)
                 );
             }
+
+            $this->grid_toolbars($toolbars);
         });
 
         $entityField = EntityField::query()->where('entity_id', $this->entityId)
@@ -737,6 +739,12 @@ class ContentController extends AdminController
 
     // 操作回调
     protected function grid_action(Grid\Actions $actions)
+    {
+
+    }
+
+    // 操作回调
+    protected function grid_toolbars(Grid\Toolbars $toolbars)
     {
 
     }
