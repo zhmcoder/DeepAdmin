@@ -702,17 +702,14 @@ class ContentController extends AdminController
         )->hideLabel()->inputWidth(2);
 
         $form->saved(function (Form $form) use ($isEdit) {
-            //if (!$isEdit) {
-            $this->saved_event($form);
-            //}
+            return $this->saved_event($form);
         });
 
         $form->deleted(function (Form $form) {
-            $this->deleted_event($form);
+            return $this->deleted_event($form);
         });
 
         $form->saving(function (Form $form) use ($cascadeFields) {
-
             // 级联选择拆分字段
             if (!empty($cascadeFields)) {
                 foreach ($cascadeFields as $parentField => $childrenField) {
@@ -736,30 +733,38 @@ class ContentController extends AdminController
 
             }
 
+            return $this->saving_event($form);
         });
 
         return $form;
     }
 
-    // 操作回调
+    // 操作栏回调
     protected function grid_action(Grid\Actions $actions)
     {
 
     }
 
-    // 操作回调
+    // 工具栏回调
     protected function grid_toolbars(Grid\Toolbars $toolbars)
     {
 
     }
 
-    // 添加回调
+    // 保存成功回调
     protected function saved_event(Form $form)
     {
 
     }
 
+    // 删除回调
     protected function deleted_event(Form $form)
+    {
+
+    }
+
+    // 保存之前回调
+    protected function saving_event(Form $form)
     {
 
     }
