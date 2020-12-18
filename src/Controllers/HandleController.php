@@ -59,7 +59,6 @@ class HandleController extends Controller
                     'path' => $file_info['id'].'',
                     'name' => $file_info['name'],
                     'url' => \Storage::disk($file_info['disk'])->url($file_info['path']),
-                    'test' => 'read db',
                 ];
             }else{
                 if ($uniqueName == "true" || $uniqueName == true) {
