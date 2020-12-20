@@ -56,7 +56,7 @@ class HandleController extends Controller
             if($file_info){
                 $data = [
                     'id' => $file_info['id'],//兼容vue-element-admin的处理逻辑，传的是文件存储的id
-                    'path' => $file_info['id'].'',
+                    'path' => $file_info['path'],
                     'name' => $file_info['name'],
                     'url' => \Storage::disk($file_info['disk'])->url($file_info['path']),
                 ];
