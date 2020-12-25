@@ -2,6 +2,7 @@
 
 namespace Andruby\DeepAdmin\Components\Echarts;
 
+use Illuminate\Support\Str;
 use SmallRuralDog\Admin\Components\Component;
 
 class LineChart extends Component
@@ -10,6 +11,11 @@ class LineChart extends Component
     protected $canvasId;
     protected $data;
     protected $config;
+
+    public function __construct()
+    {
+        $this->canvasId = Str::random();
+    }
 
     public static function make()
     {
