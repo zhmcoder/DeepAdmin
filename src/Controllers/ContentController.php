@@ -76,18 +76,20 @@ class ContentController extends AdminController
             ->fit(true)
             ->emptyText("暂无数据");
 
+        $time = time();
+
         $entityId = $this->entityId;
-        $grid->toolbars(function (Grid\Toolbars $toolbars) use ($entityId, $actionsInfo) {
+        $grid->toolbars(function (Grid\Toolbars $toolbars) use ($entityId, $actionsInfo, $time) {
             $toolbars->hideCreateButton();
             if (!empty($actionsInfo) && in_array('create', $actionsInfo)) {
                 $uri = explode('?', request()->getRequestUri());
-                $params = isset($uri[1]) ? $uri[1] : '';
+                $params = isset($uri[1]) ? $uri[1] . '&' : '';
 
                 $toolbars->addRight(
                     Grid\Tools\ToolButton::make("添加")
                         ->icon("el-icon-plus")
                         ->handler(Grid\Tools\ToolButton::HANDLER_ROUTE)
-                        ->uri($this->create_url() . $params)
+                        ->uri($this->create_url() . $params . 'timestamp=' . $time)
                 );
             }
 
@@ -165,8 +167,7 @@ class ContentController extends AdminController
             }
         }
 
-        $grid->actions(function (Grid\Actions $actions) use ($actionsInfo, $editParams) {
-            $time = time();
+        $grid->actions(function (Grid\Actions $actions) use ($actionsInfo, $editParams, $time) {
 
             // 隐藏编辑操作
             if (!empty($actionsInfo) && in_array('edit', $actionsInfo)) {
@@ -518,7 +519,9 @@ class ContentController extends AdminController
                     break;
 
                 case 'inputNumber' : // 整数
-                    $obj->component(InputNumber::make()->min(0))->help($val['form_comment'])->defaultValue($defaultValue)->required($val['is_required'], 'number');
+                    $min = isset($val['min']) ? $val['min'] : 0;
+                    $max = isset($val['max']) ? $val['max'] : 99999999999;
+                    $obj->component(InputNumber::make()->min($min)->max($max))->help($val['form_comment'])->defaultValue($defaultValue)->required($val['is_required'], 'number');
                     break;
 
                 case 'inputDecimal' : // 小数

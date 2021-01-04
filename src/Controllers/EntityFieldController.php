@@ -151,6 +151,18 @@ class EntityFieldController extends AdminController
                     })
             )->required();
 
+        $form->item('min', '最小值')
+            ->component(InputNumber::make(256)->min(0))
+            ->defaultValue(0)
+            ->vif('type', 'integer')
+            ->help('对于整数类型的字段，最小值，默认0');
+
+        $form->item('max', '最大值')
+            ->component(InputNumber::make(256)->min(0))
+            ->defaultValue(0)
+            ->vif('type', 'integer')
+            ->help('对于整数类型的字段，最大值，默认0');
+
         $form->item('field_length', '字段长度')
             ->component(InputNumber::make(256)->min(10))
             ->defaultValue(100)
