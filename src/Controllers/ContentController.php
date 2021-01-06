@@ -609,25 +609,25 @@ class ContentController extends AdminController
                     break;
 
                 case 'dateTime' : // 日期时间
-                    $obj->component(DateTimePicker::make());
+                    $obj->component(DateTimePicker::make())->required($val['is_required'], 'string');
                     break;
 
                 case 'date' : // 日期
-                    $obj->component(DatePicker::make());
+                    $obj->component(DatePicker::make())->required($val['is_required'], 'string');
                     break;
 
                 case 'switch' : // 开关
-                    $obj->component(CSwitch::make());
+                    $obj->component(CSwitch::make())->required($val['is_required'], 'number');
                     break;
 
                 case 'color' : // 颜色选择
-                    $obj->component(ColorPicker::make());
+                    $obj->component(ColorPicker::make())->required($val['is_required'], 'string');
                     break;
 
                 case 'password' : // 密码
                     $obj->component(function () {
                         return Input::make()->password()->showPassword();
-                    })->inputWidth(4);
+                    })->inputWidth(4)->required($val['is_required'], 'string');
                     break;
 
                 case 'wangEditor' : //
