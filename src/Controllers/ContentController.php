@@ -492,6 +492,11 @@ class ContentController extends AdminController
                 $obj = $form->item($val['name'], $val['form_name']);
             }
 
+            // 关联显示字段
+            if (!empty($val['vif_name']) && isset($val['vif_value'])) {
+                $obj = $obj->vif($val['vif_name'], $val['vif_value']);
+            }
+
             $isUnique = isset($val['is_unique']) ? $val['is_unique'] : false;
             $disabled = ($val['is_search'] == 5) ? true : false;
 

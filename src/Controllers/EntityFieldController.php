@@ -269,6 +269,9 @@ class EntityFieldController extends AdminController
 
         $form->item('list_width', '列表宽度')->help('列表宽度设置为0则自适应')->component(InputNumber::make(0)->max(500)->min(0))->tab('高级配置');
 
+        $form->item('vif_name', '关联字段名称')->inputWidth(4)->tab('高级配置');
+        $form->item('vif_value', '关联字段值')->inputWidth(4)->tab('高级配置');
+
         $form->saved(function (Form $form) use ($isEdit) {
             if (!$isEdit) {
                 $this->saved_event($form);
