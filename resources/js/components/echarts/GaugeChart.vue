@@ -75,7 +75,7 @@
                             color: '#3E3E3E', // 文字的颜色,默认 auto。
                             fontSize: 25 // 文字的字体大小,默认 15。
                         },
-                        data: ['83.1']
+                        data: chartConfig.series.data
                     }
                 ]
             }
