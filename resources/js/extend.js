@@ -19,4 +19,7 @@ VueAdmin.booting((Vue, router, store) => {
     Vue.component("RatePieChart", require('./components/echarts/RatePieChart.vue').default);
     Vue.component("LiquidFillChart", require('./components/echarts/LiquidFillChart.vue').default);
     Vue.component("SectionLineChart", require('./components/echarts/SectionLineChart.vue').default);
+    Vue.component("NumDisplayH", require('./components/echarts/NumDisplayH.vue').default);
+    Vue.component("NumDisplayV", require('./components/echarts/NumDisplayV.vue').default);
+    Vue.component("DisplayList", require('./components/echarts/DisplayList.vue').default);
 });
