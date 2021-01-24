@@ -164,7 +164,7 @@ class EntityFieldController extends AdminController
             ->help('对于整数类型的字段，最大值，默认0');
 
         $form->item('field_length', '字段长度')
-            ->component(InputNumber::make(256)->min(10))
+            ->component(InputNumber::make(256)->min(1))
             ->defaultValue(100)
             ->vif('type', 'string')
             ->help('对于char、string类型的字段，请在此输入字段长度');
