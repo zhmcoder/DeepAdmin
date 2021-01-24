@@ -53,10 +53,10 @@ class Content extends Model
         // todo 多选需要标记字段类型
         $entityFieldList = EntityField::query()
             ->where('entity_id', request('entity_id'))
-            ->whereIn('form_type', ['checkbox', 'checkboxTable', 'selectMulti', 'selectMultiTable', 'inputDecimal', 'cascade', 'cascadeMulti'])
+            ->whereIn('form_type', ['checkbox', 'checkboxTable', 'selectMulti', 'selectMultiTable', 'inputDecimal', 'cascade', 'cascadeMulti', 'uploadMulti'])
             ->get()->toArray();
 
-        $array = ['checkbox', 'checkboxTable', 'selectMulti', 'selectMultiTable', 'cascade', 'cascadeMulti'];
+        $array = ['checkbox', 'checkboxTable', 'selectMulti', 'selectMultiTable', 'cascade', 'cascadeMulti', 'uploadMulti'];
         foreach ($entityFieldList as $key => $val) {
             // 转换成数组
             if (in_array($val['form_type'], $array)) {
