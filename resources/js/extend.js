@@ -22,4 +22,5 @@ VueAdmin.booting((Vue, router, store) => {
     Vue.component("NumDisplayH", require('./components/echarts/NumDisplayH.vue').default);
     Vue.component("NumDisplayV", require('./components/echarts/NumDisplayV.vue').default);
     Vue.component("DisplayList", require('./components/echarts/DisplayList.vue').default);
+    Vue.component("MarkLineChart", require('./components/echarts/MarkLineChart.vue').default);
 });
