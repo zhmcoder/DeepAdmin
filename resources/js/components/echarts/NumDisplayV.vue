@@ -1,20 +1,11 @@
 <template>
-  <div class="num-display-v">
-    <div class="num-display-v-title">停机总时长</div>
+  <div class="num-display-v" :style="wrapStyle">
     <div class="num-display-v-stop">
-      <div>
-        <span :style="`color: ${attrs.data.color[0]}`" class="total-stop">{{downTime[0]}}</span>
-        <span class="total-stop-unit">天</span>
+        <div v-for="(item, index) in attrs.data.data" :key="index">
+          <span class="total-stop" :style="`color: ${item.color}`">{{item.count}}</span>
+          <span class="otal-stop-unit">{{item.name}}</span>
+        </div>
       </div>
-      <div>
-        <span :style="`color: ${attrs.data.color[1]}`" class="total-stop">{{downTime[1]}}</span>
-        <span class="total-stop-unit">时</span>
-      </div>
-      <div>
-        <span :style="`color: ${attrs.data.color[2]}`" class="total-stop">{{downTime[2]}}</span>
-        <span class="total-stop-unit">分</span>
-      </div>
-    </div>
   </div>
 </template>
 <script>
@@ -24,28 +15,16 @@
     },
     data() {
       return {
-        downTime: this.convertTime(this.attrs.data.duration)
-      }
-    },
-    methods: {
-      convertTime (time) {
-        if (time) {
-          let day = time.split('天')[0] || 0
-          let hour = time.split('天')[1].split('小时')[0] || 0
-          let min = time.split('天')[1].split('小时')[1].split('分钟')[0] || 0
-          let sec = time.split('天')[1].split('小时')[1].split('分钟')[1].split('秒') || 0
-          return [day, hour, min, sec]
-        } else {
-          return [0, 0, 0]
+        wrapStyle: {
+          width: this.attrs.data.width || '100%',
+          height: this.attrs.data.height || '360px'
         }
-      }
+      };
     },
   };
 </script>
 <style lang="scss">
 .num-display-v {
-  width: 100%;
-  height: 360px;
   display: flex;
   align-items: center;
 }

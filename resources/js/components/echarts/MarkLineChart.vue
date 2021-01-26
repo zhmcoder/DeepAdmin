@@ -21,7 +21,6 @@
         mounted() {
             let myChart = echarts.init(document.getElementById(this.attrs.canvasId))
             let chartConfig = this.attrs.data
-            console.log(this.attrs, 1111)
             let chartData = {
                 grid: {
                     top: '30',
