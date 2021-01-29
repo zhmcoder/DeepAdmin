@@ -379,9 +379,8 @@ class ContentController extends AdminController
 
             if ($val['name'] == 'sort') {
                 $obj->component(
-                    SortUpDown::make(110)
-                        ->setSortAction(config('admin.route.api_prefix') . '/entities/content/sort_up_down?entity_id=' . $entityId)
-                // SortEdit::make()->action(config('admin.route.api_prefix') . '/entities/content/grid_sort_change?entity_id=' . $entityId)
+                // SortUpDown::make(110)->setSortAction(config('admin.route.api_prefix') . '/entities/content/sort_up_down?entity_id=' . $entityId)
+                    SortEdit::make()->action(config('admin.route.api_prefix') . '/entities/content/grid_sort_change?entity_id=' . $entityId)
                 );
             }
         }
