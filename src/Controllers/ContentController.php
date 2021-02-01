@@ -379,9 +379,8 @@ class ContentController extends AdminController
 
             if ($val['name'] == 'sort') {
                 $obj->component(
-                    SortUpDown::make(110)
-                        ->setSortAction(config('admin.route.api_prefix') . '/entities/content/sort_up_down?entity_id=' . $entityId)
-                // SortEdit::make()->action(config('admin.route.api_prefix') . '/entities/content/grid_sort_change?entity_id=' . $entityId)
+                // SortUpDown::make(110)->setSortAction(config('admin.route.api_prefix') . '/entities/content/sort_up_down?entity_id=' . $entityId)
+                    SortEdit::make()->action(config('admin.route.api_prefix') . '/entities/content/grid_sort_change?entity_id=' . $entityId)
                 );
             }
         }
@@ -487,9 +486,9 @@ class ContentController extends AdminController
             }
 
             if (!empty($val['prop'])) {
-                $obj = $form->item($val['prop'], $val['form_name']);
+                $obj = $form->item($val['prop'], $val['form_name'])->help($val['form_comment']);
             } else {
-                $obj = $form->item($val['name'], $val['form_name']);
+                $obj = $form->item($val['name'], $val['form_name'])->help($val['form_comment']);
             }
 
             // 关联显示字段
@@ -622,11 +621,11 @@ class ContentController extends AdminController
                     break;
 
                 case 'switch' : // 开关
-                    $obj->component(CSwitch::make());
+                    $obj->component(CSwitch::make())->required($val['is_required'], 'number');
                     break;
 
                 case 'color' : // 颜色选择
-                    $obj->component(ColorPicker::make());
+                    $obj->component(ColorPicker::make())->required($val['is_required'], 'string');
                     break;
 
                 case 'password' : // 密码
@@ -644,13 +643,13 @@ class ContentController extends AdminController
                 case 'timePicker' : // 时间选择
                     $obj->component(TimePicker::make()->pickerOptions(
                         ['start' => '00:00', 'step' => '00:30', 'end' => '24:00']
-                    )->placeholder($val['form_comment']));
+                    )->placeholder($val['form_comment']))->required($val['is_required'], 'string');
                     break;
 
                 case 'timePickerRange' : // 时间段选择
                     $obj->component(TimePicker::make([])->pickerOptions(
                         ['start' => '00:00', 'step' => '01:00', 'end' => '24:00']
-                    )->isRange()->rangeSeparator('至')->placeholder($val['form_comment']));
+                    )->isRange()->rangeSeparator('至')->placeholder($val['form_comment']))->required($val['is_required'], 'string');
                     break;
 
                 case 'selectRemote' : // 下拉单选远程查询
