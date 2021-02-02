@@ -164,7 +164,7 @@ class EntityFieldController extends AdminController
             ->help('对于整数类型的字段，最大值，默认0');
 
         $form->item('field_length', '字段长度')
-            ->component(InputNumber::make(256)->min(10))
+            ->component(InputNumber::make(256)->min(1))
             ->defaultValue(100)
             ->vif('type', 'string')
             ->help('对于char、string类型的字段，请在此输入字段长度');
@@ -268,6 +268,9 @@ class EntityFieldController extends AdminController
         $form->item('is_unique', '是否唯一')->component(CSwitch::make())->defaultValue(0)->tab('高级配置');
 
         $form->item('list_width', '列表宽度')->help('列表宽度设置为0则自适应')->component(InputNumber::make(0)->max(500)->min(0))->tab('高级配置');
+
+        $form->item('vif_name', '关联字段名称')->inputWidth(4)->tab('高级配置');
+        $form->item('vif_value', '关联字段值')->inputWidth(4)->tab('高级配置');
 
         $form->saved(function (Form $form) use ($isEdit) {
             if (!$isEdit) {

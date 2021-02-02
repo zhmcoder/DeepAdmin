@@ -116,7 +116,7 @@
                     }
                 } else if (item.type === 'line') {
                     itemStyle = {
-                        color: '#67E5F0'
+                        color: item.color
                     }
                 }
                 chartData.series.push({
