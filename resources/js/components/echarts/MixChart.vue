@@ -25,12 +25,12 @@
                 tooltip: {
                     trigger: 'axis',
                     axisPointer: {
-                        type: 'cross',
+                        // type: 'cross',
                         crossStyle: {
                             color: '#999'
                         }
-                    },
-                    formatter: '{a0}: {c0}<br />{a1}: {c1}%<br />{a2}: {c2}%'
+                    }
+                    // formatter: '{a0}: {c0}<br />{a1}: {c1}%<br />{a2}: {c2}%'
                 },
                 grid: {
                     // top: '20', // 距上边距
@@ -69,11 +69,11 @@
                         type: 'value',
                         name: chartConfig.yAxisName || '',
                         min: 0,
-                        axisLine: {
-                            lineStyle: {
-                                color: '#626770'
-                            }
-                        },
+                        // axisLine: {
+                        //     lineStyle: {
+                        //         color: '#626770'
+                        //     }
+                        // },
                         axisLabel: {
                             formatter: '{value}',
                             color: '#626770'
@@ -91,7 +91,7 @@
                             }
                         },
                         axisLabel: {
-                            formatter: '{value}%',
+                            formatter: '{value}' + chartConfig.unit || '',
                             color: '#626770'
                         },
                         splitLine: {
