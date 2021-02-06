@@ -831,6 +831,10 @@ class ContentController extends AdminController
         $tableWhere = !empty($fields['table_where']) ? explode("\n", $fields['table_where']) : '';
         $type = !empty($fields['type']) ? $fields['type'] : 'integer';
 
+        $desc = !empty($fields['desc']) ? $fields['desc'] : '';
+        $descPrefix = !empty($fields['desc_prefix']) ? $fields['desc_prefix'] : '';
+        $descSuffix = !empty($fields['desc_suffix']) ? $fields['desc_suffix'] : '';
+
         $return = [];
         if (!empty($formParams) && count($formParams) >= 3) {
 
@@ -848,7 +852,12 @@ class ContentController extends AdminController
             if (!empty($list)) {
                 foreach ($list as $k => $v) {
                     $v[$formParams[1]] = ($type == 'integer') ? (int)$v[$formParams[1]] : (string)$v[$formParams[1]];
-                    $return[] = SelectOption::make($v[$formParams[1]], $v[$formParams[2]]);
+
+                    if (!empty($desc) && isset($v[$desc])) {
+                        $return[] = SelectOption::make($v[$formParams[1]], $v[$formParams[2]])->desc($descPrefix . $v[$desc] . $descSuffix);
+                    } else {
+                        $return[] = SelectOption::make($v[$formParams[1]], $v[$formParams[2]]);
+                    }
                 }
             }
         }
@@ -856,8 +865,9 @@ class ContentController extends AdminController
         return $return;
     }
 
-    // 是否显示表单
-    public function isShow($val)
+// 是否显示表单
+    public
+    function isShow($val)
     {
         $isShow = true;
         if (!empty($val['show_where'])) {
@@ -930,8 +940,9 @@ class ContentController extends AdminController
         return $isShow;
     }
 
-    // 级联选择
-    protected function _cascadeOptions($fields, $parentId = 0)
+// 级联选择
+    protected
+    function _cascadeOptions($fields, $parentId = 0)
     {
         $formParams = !empty($fields['form_params']) ? explode("\n", $fields['form_params']) : '';
         $tableWhere = !empty($fields['table_where']) ? explode("\n", $fields['table_where']) : '';
