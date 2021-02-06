@@ -272,6 +272,10 @@ class EntityFieldController extends AdminController
         $form->item('vif_name', '关联字段名称')->inputWidth(4)->tab('高级配置');
         $form->item('vif_value', '关联字段值')->inputWidth(4)->tab('高级配置');
 
+        $form->item('desc', '下拉副标题')->inputWidth(4)->tab('定制配置');
+        $form->item('desc_prefix', '下拉副标题前缀')->inputWidth(4)->tab('定制配置');
+        $form->item('desc_suffix', '下拉副标题后缀')->inputWidth(4)->tab('定制配置');
+
         $form->saved(function (Form $form) use ($isEdit) {
             if (!$isEdit) {
                 $this->saved_event($form);
