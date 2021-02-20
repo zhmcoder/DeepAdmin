@@ -106,7 +106,7 @@ class GoodsController extends AdminController
         $form->item("cost_price", "进货价")->vif("one_attr", 1)->component(Input::make(0)->append("元"))->inputWidth(5);
         $form->item("line_price", "划线价")->vif("one_attr", 1)->component(Input::make(0)->append("元"))->inputWidth(5);
         $form->item("stock_num", "库存")->vif("one_attr", 1)->component(Input::make(0)->append("元"))->inputWidth(5);
-        $form->item("goods_sku", "产品规格")->vif("one_attr", 0)->component(GoodsSku::make())->help("这是自定义组件，<a target='_blank' href='https://github.com/SmallRuralDog/laravel-vue-admin-demo/blob/master/app/Admin/Extends/LaravelVueAdminDemoExtend/resources/js/components/GoodsSku.vue'>查看源代码</a>");
+        $form->item("goods_sku", "产品规格")->vif("one_attr", 0)->component(GoodsSku::make());
 
 
         $form->item("putaway", "上架")->component(CSwitch::make());
