@@ -390,6 +390,8 @@ class ContentController extends AdminController
             $grid->dataUrl($this->dataUrl);
         }
 
+        $grid = $this->grid_list($grid);
+
         return $grid;
     }
 
@@ -744,6 +746,12 @@ class ContentController extends AdminController
         });
 
         return $form;
+    }
+
+    // 列表回调
+    protected function grid_list(Grid $grid)
+    {
+
     }
 
     // 操作栏回调
