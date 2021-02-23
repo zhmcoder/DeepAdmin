@@ -751,7 +751,7 @@ class ContentController extends AdminController
     // 列表回调
     protected function grid_list(Grid $grid)
     {
-
+        return $grid;
     }
 
     // 操作栏回调
