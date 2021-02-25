@@ -390,6 +390,8 @@ class ContentController extends AdminController
             $grid->dataUrl($this->dataUrl);
         }
 
+        $grid = $this->grid_list($grid);
+
         return $grid;
     }
 
@@ -613,11 +615,11 @@ class ContentController extends AdminController
                     break;
 
                 case 'dateTime' : // 日期时间
-                    $obj->component(DateTimePicker::make());
+                    $obj->component(DateTimePicker::make())->required($val['is_required'], 'string');
                     break;
 
                 case 'date' : // 日期
-                    $obj->component(DatePicker::make());
+                    $obj->component(DatePicker::make())->required($val['is_required'], 'string');
                     break;
 
                 case 'switch' : // 开关
@@ -631,7 +633,7 @@ class ContentController extends AdminController
                 case 'password' : // 密码
                     $obj->component(function () {
                         return Input::make()->password()->showPassword();
-                    })->inputWidth(4);
+                    })->inputWidth(4)->required($val['is_required'], 'string');
                     break;
 
                 case 'wangEditor' : //
@@ -746,6 +748,12 @@ class ContentController extends AdminController
         return $form;
     }
 
+    // 列表回调
+    protected function grid_list(Grid $grid)
+    {
+        return $grid;
+    }
+
     // 操作栏回调
     protected function grid_action(Grid\Actions $actions)
     {
@@ -831,6 +839,10 @@ class ContentController extends AdminController
         $tableWhere = !empty($fields['table_where']) ? explode("\n", $fields['table_where']) : '';
         $type = !empty($fields['type']) ? $fields['type'] : 'integer';
 
+        $desc = !empty($fields['desc']) ? $fields['desc'] : '';
+        $descPrefix = !empty($fields['desc_prefix']) ? $fields['desc_prefix'] : '';
+        $descSuffix = !empty($fields['desc_suffix']) ? $fields['desc_suffix'] : '';
+
         $return = [];
         if (!empty($formParams) && count($formParams) >= 3) {
 
@@ -848,7 +860,12 @@ class ContentController extends AdminController
             if (!empty($list)) {
                 foreach ($list as $k => $v) {
                     $v[$formParams[1]] = ($type == 'integer') ? (int)$v[$formParams[1]] : (string)$v[$formParams[1]];
-                    $return[] = SelectOption::make($v[$formParams[1]], $v[$formParams[2]]);
+
+                    if (!empty($desc) && isset($v[$desc])) {
+                        $return[] = SelectOption::make($v[$formParams[1]], $v[$formParams[2]])->desc($descPrefix . $v[$desc] . $descSuffix);
+                    } else {
+                        $return[] = SelectOption::make($v[$formParams[1]], $v[$formParams[2]]);
+                    }
                 }
             }
         }
@@ -856,8 +873,9 @@ class ContentController extends AdminController
         return $return;
     }
 
-    // 是否显示表单
-    public function isShow($val)
+// 是否显示表单
+    public
+    function isShow($val)
     {
         $isShow = true;
         if (!empty($val['show_where'])) {
@@ -930,8 +948,9 @@ class ContentController extends AdminController
         return $isShow;
     }
 
-    // 级联选择
-    protected function _cascadeOptions($fields, $parentId = 0)
+// 级联选择
+    protected
+    function _cascadeOptions($fields, $parentId = 0)
     {
         $formParams = !empty($fields['form_params']) ? explode("\n", $fields['form_params']) : '';
         $tableWhere = !empty($fields['table_where']) ? explode("\n", $fields['table_where']) : '';

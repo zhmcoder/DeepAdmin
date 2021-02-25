@@ -25,4 +25,5 @@ VueAdmin.booting((Vue, router, store) => {
     Vue.component("MarkLineChart", require('./components/echarts/MarkLineChart.vue').default);
     Vue.component("NormalBarChart", require('./components/echarts/NormalBarChart.vue').default);
     Vue.component("PropertyList", require('./components/echarts/PropertyList.vue').default);
+    Vue.component("GoodsSku", require('./components/GoodsSku').default)
 });
