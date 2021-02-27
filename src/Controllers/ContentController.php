@@ -898,7 +898,7 @@ class ContentController extends AdminController
             if (!empty($list)) {
                 foreach ($list as $k => $v) {
                     $v[$formParams[1]] = ($type == 'integer') ? (int)$v[$formParams[1]] : (string)$v[$formParams[1]];
-                    $return[] = ['label' => $v[$formParams[1]], 'value' => $v[$formParams[2]]];
+                    $return[] = ['label' => $v[$formParams[2]], 'value' => $v[$formParams[1]]];
                 }
             }
         }
