@@ -873,6 +873,39 @@ class ContentController extends AdminController
         return $return;
     }
 
+
+    // 连表下拉单选列表
+    protected function _selectOptionTableList($fields)
+    {
+        $formParams = !empty($fields['form_params']) ? explode("\n", $fields['form_params']) : '';
+        $tableWhere = !empty($fields['table_where']) ? explode("\n", $fields['table_where']) : '';
+        $type = !empty($fields['type']) ? $fields['type'] : 'integer';
+
+        $return = [];
+        if (!empty($formParams) && count($formParams) >= 3) {
+
+            $model = new Content($formParams[0]);
+
+            // 扩展下拉连表查询条件
+            if (!empty($tableWhere)) {
+                foreach ($tableWhere as $key => $val) {
+                    $where = explode(',', $val);
+                    $model = $model->where("$where[0]", "$where[1]", "$where[2]");
+                }
+            }
+            $list = $model->get()->toArray();
+
+            if (!empty($list)) {
+                foreach ($list as $k => $v) {
+                    $v[$formParams[1]] = ($type == 'integer') ? (int)$v[$formParams[1]] : (string)$v[$formParams[1]];
+                    $return[] = ['label' => $v[$formParams[1]], 'value' => $v[$formParams[2]]];
+                }
+            }
+        }
+
+        return $return;
+    }
+
 // 是否显示表单
     public
     function isShow($val)
