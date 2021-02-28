@@ -1,6 +1,6 @@
 <template>
     <div class="property-list">
-      <el-form ref="ruleForm" label-width="0px" class="demo-ruleForm" >
+      <!-- <el-form ref="ruleForm" :model="value" label-width="0px" class="demo-ruleForm" > -->
         <el-form-item>
           <el-table :data="tableData" style="width: 100%">
                 <el-table-column v-for="(col, i) in attr_names" :key="i" :prop="col.prop">
@@ -8,8 +8,8 @@
                     <span>{{col.label}}</span>
                   </template>
                   <template slot-scope="scope">
-                    <el-input v-if="col.type=='input'" size="mini" v-model="scope.row[col.prop]"> </el-input>
-                    <el-select v-if="col.type=='select'" v-model="scope.row[col.prop]">
+                    <el-input v-if="col.type=='input'" size="mini" v-model="scope.row[col.prop]" @input="changeInput"> </el-input>
+                    <el-select v-if="col.type=='select'" v-model="scope.row[col.prop]" @input="changeInput">
                       <el-option
                         v-for="item in col.options"
                         :key="item.value"
@@ -21,7 +21,8 @@
                 </el-table-column>
                 <el-table-column fixed="right" label="操作" width="80">
                   <template slot-scope="scope">
-                    <el-button
+                    <el-button v-if="scope.$index==0" type="text" size="small" @click.native.prevent="addRow">添加</el-button>
+                    <el-button v-else
                       @click.native.prevent="deleteRow(scope.$index, tableData)"
                       type="text"
                       size="small">
@@ -31,22 +32,20 @@
                 </el-table-column>
           </el-table>
         </el-form-item>
-        <el-form-item required>
+        <!-- <el-form-item required>
           <el-button @click="addRow">添加</el-button>
           <el-button @click="submitData">提交</el-button>
-        </el-form-item>
-      </el-form>
+        </el-form-item> -->
+      <!-- </el-form> -->
     </div>
 </template>
 <script>
   export default {
-    props: {
-        attrs: Object
-    },
+    props: ["attrs", "value"],
     data() {
       return {
         attr_names: [],
-        tableData:[{}]
+        tableData: this.value
       }
     },
     created() {
@@ -54,6 +53,9 @@
       this.tableData = this.attrs.data.tableData
     },
     methods: {
+      changeInput(value) {
+        this.$emit("change", this.tableData)
+      },
       // 增加行
       addRow(){
         let obj={}
@@ -61,20 +63,21 @@
       },
       //删除行
       deleteRow(index, rows) {
-        rows.splice(index, 1);
+        if (this.tableData.length > 1) {
+          rows.splice(index, 1);
+        }
       },
       // 调试代码信息用
-      submitData(){
-        console.log('this.attr_names',this.attr_names);
-        console.log('this.tableData',this.tableData);
-      }
+      // submitData(){
+      //   console.log(this.tableData)
+      //   console.log('this.attr_names',this.attr_names);
+      //   console.log('this.tableData',this.tableData);
+      // }
     }
   };
 </script>
 <style lang="scss" scoped>
 .property-list {
-  height: 360px;
-  overflow: auto;
   width: 100%;
   padding: 20px;
 }
