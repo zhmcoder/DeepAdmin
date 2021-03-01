@@ -50,7 +50,7 @@
     },
     created() {
       this.attr_names = this.attrs.data.attr_names
-      this.tableData = this.attrs.data.tableData
+      this.tableData = this.attrs.data.tableData.length <= 0 ? [{}] : this.attrs.data.tableData
     },
     methods: {
       changeInput(value) {
