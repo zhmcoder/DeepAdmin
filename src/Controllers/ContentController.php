@@ -163,7 +163,14 @@ class ContentController extends AdminController
                     }
                 }
 
-                $editParams .= $key . '=' . $val . '&';
+                if (is_array($val)) {
+                    $key .= '[]';
+                    foreach ($val as $v) {
+                        $editParams .= $key . '=' . $v . '&';
+                    }
+                } else {
+                    $editParams .= $key . '=' . $val . '&';
+                }
             }
         }
 
