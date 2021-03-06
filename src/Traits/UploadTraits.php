@@ -18,7 +18,7 @@ trait UploadTraits
             return $this->upload($request);
         } catch (\Exception $exception) {
             if (method_exists($this, 'responseError')) {
-                $this->responseError();
+                $this->responseError($exception->getMessage());
             } else {
                 return \Admin::responseError($exception->getMessage());
             }
@@ -37,7 +37,7 @@ trait UploadTraits
 
         } catch (\Exception $exception) {
             if (method_exists($this, 'responseError')) {
-                $this->responseError();
+                $this->responseError($exception->getMessage());
             } else {
                 return \Admin::responseError($exception->getMessage());
             }
@@ -64,6 +64,7 @@ trait UploadTraits
                     'path' => $file_info['path'],
                     'name' => $file_info['name'],
                     'url' => \Storage::disk($file_info['disk'])->url($file_info['path']),
+                    'host' => \Storage::disk($disk)->url('')
                 ];
             } else {
                 if ($uniqueName == "true" || $uniqueName == true) {
@@ -83,7 +84,8 @@ trait UploadTraits
                     'id' => $file_info['id'],
                     'path' => $path,
                     'name' => $name,
-                    'url' => \Storage::disk($disk)->url($path)
+                    'url' => \Storage::disk($disk)->url($path),
+                    'host' => \Storage::disk($disk)->url('')
                 ];
             }
 
@@ -94,7 +96,7 @@ trait UploadTraits
             }
         } catch (\Exception $exception) {
             if (method_exists($this, 'responseError')) {
-                $this->responseError();
+                $this->responseError($exception->getMessage());
             } else {
                 return \Admin::responseError($exception->getMessage());
             }
