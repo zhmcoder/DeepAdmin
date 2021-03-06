@@ -79,6 +79,5 @@
 <style lang="scss" scoped>
 .property-list {
   width: 100%;
-  padding: 20px;
 }
 </style>
