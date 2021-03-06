@@ -19,8 +19,8 @@ Route::group([
     $router->get('remote/search', 'RemoteSearchController@search')->name('remote.search');
     $router->post('upload/images', 'UploadController@images')->name('upload.images');
 
-    $router->post('_handle_upload_image_', 'HandleController@uploadImage')->name('upload.image_handle');
-    $router->post('_handle_upload_file_', 'HandleController@uploadFile')->name('upload.file_handler');
+    $router->post('_deep_admin_upload_image_', 'HandleController@uploadImage')->name('upload.image_handle');
+    $router->post('_deep_admin_upload_file_', 'HandleController@uploadFile')->name('upload.file_handler');
 
     //产品演示
     $router->resource('goods/list', 'GoodsController');
