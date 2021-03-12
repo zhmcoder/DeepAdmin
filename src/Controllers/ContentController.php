@@ -822,15 +822,15 @@ class ContentController extends AdminController
     protected function _selectOptionList($fields)
     {
         $formParams = explode("\n", $fields['form_params']);
-        $optionList = [];
+        $option = [];
         $type = [];
         foreach ($formParams as $k => &$v) {
             $v = explode('=', $v);
-            $optionList[$v[0]] = $v[1];
+            $option[$v[0]] = $v[1];
             $type[$v[1]] = isset($v[2]) ? $v[2] : 'info';
         }
 
-        return $optionList;
+        return ['option' => $option, 'type' => $type];
     }
 
     // 普通下拉单选
