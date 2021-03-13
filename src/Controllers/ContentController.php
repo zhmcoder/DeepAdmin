@@ -163,7 +163,14 @@ class ContentController extends AdminController
                     }
                 }
 
-                $editParams .= $key . '=' . $val . '&';
+                if (is_array($val)) {
+                    $key .= '[]';
+                    foreach ($val as $v) {
+                        $editParams .= $key . '=' . $v . '&';
+                    }
+                } else {
+                    $editParams .= $key . '=' . $val . '&';
+                }
             }
         }
 
@@ -193,7 +200,7 @@ class ContentController extends AdminController
 
         // 是否显示ID字段
         if (Schema::hasColumn($this->entity->table_name, 'id')) {
-            $grid->column('id', 'ID')->sortable()->width(80);
+            $grid->column('id', '序号')->sortable()->width(80);
         }
 
         $entityField = EntityField::query()->where('entity_id', $this->entityId)
@@ -811,6 +818,21 @@ class ContentController extends AdminController
         return $return;
     }
 
+    // 普通下拉单选 列表
+    protected function _selectOptionList($fields)
+    {
+        $formParams = explode("\n", $fields['form_params']);
+        $option = [];
+        $type = [];
+        foreach ($formParams as $k => &$v) {
+            $v = explode('=', $v);
+            $option[$v[0]] = $v[1];
+            $type[$v[1]] = isset($v[2]) ? $v[2] : 'info';
+        }
+
+        return ['option' => $option, 'type' => $type];
+    }
+
     // 普通下拉单选
     protected function _selectOption($fields)
     {
@@ -881,6 +903,10 @@ class ContentController extends AdminController
         $tableWhere = !empty($fields['table_where']) ? explode("\n", $fields['table_where']) : '';
         $type = !empty($fields['type']) ? $fields['type'] : 'integer';
 
+        $desc = !empty($fields['desc']) ? $fields['desc'] : '';
+        $descPrefix = !empty($fields['desc_prefix']) ? $fields['desc_prefix'] : '';
+        $descSuffix = !empty($fields['desc_suffix']) ? $fields['desc_suffix'] : '';
+
         $return = [];
         if (!empty($formParams) && count($formParams) >= 3) {
 
@@ -898,7 +924,13 @@ class ContentController extends AdminController
             if (!empty($list)) {
                 foreach ($list as $k => $v) {
                     $v[$formParams[1]] = ($type == 'integer') ? (int)$v[$formParams[1]] : (string)$v[$formParams[1]];
-                    $return[] = ['label' => $v[$formParams[2]], 'value' => $v[$formParams[1]]];
+
+                    if (!empty($desc) && isset($v[$desc])) {
+                        $return[] = ['label' => $v[$formParams[2]], 'value' => $v[$formParams[1]], 'desc' => $descPrefix . $v[$desc] . $descSuffix];
+                    } else {
+                        $return[] = ['label' => $v[$formParams[2]], 'value' => $v[$formParams[1]]];
+                    }
+
                 }
             }
         }
@@ -906,9 +938,8 @@ class ContentController extends AdminController
         return $return;
     }
 
-// 是否显示表单
-    public
-    function isShow($val)
+    // 是否显示表单
+    public function isShow($val)
     {
         $isShow = true;
         if (!empty($val['show_where'])) {
@@ -981,9 +1012,8 @@ class ContentController extends AdminController
         return $isShow;
     }
 
-// 级联选择
-    protected
-    function _cascadeOptions($fields, $parentId = 0)
+    // 级联选择
+    protected function _cascadeOptions($fields, $parentId = 0)
     {
         $formParams = !empty($fields['form_params']) ? explode("\n", $fields['form_params']) : '';
         $tableWhere = !empty($fields['table_where']) ? explode("\n", $fields['table_where']) : '';
