@@ -8,6 +8,7 @@
                     <span>{{col.label}}</span>
                   </template>
                   <template slot-scope="scope">
+                    <el-input-number v-if="col.type=='number'" :min="0" size="mini" :precision="0" :placeholder="0" v-model="scope.row[col.prop]" @input="changeInput">0</el-input-number>
                     <el-input v-if="col.type=='input'" size="mini" v-model="scope.row[col.prop]" @input="changeInput"> </el-input>
                     <el-select v-if="col.type=='select'" v-model="scope.row[col.prop]" @input="changeInput">
                       <el-option
