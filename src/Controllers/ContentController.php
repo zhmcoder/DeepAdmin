@@ -44,8 +44,8 @@ class ContentController extends AdminController
     private $entityId = null; //
     private $entity = null; // 模型
     private $entityField = null; // 模型字段
-    private $remoteUrl = '';
-    private $uploadImages = '';
+    public $remoteUrl = '';
+    public $uploadImages = '';
     private $createUrl = "/entities/content/create?";
     public $dataUrl = "";
 
@@ -83,13 +83,13 @@ class ContentController extends AdminController
             $toolbars->hideCreateButton();
             if (!empty($actionsInfo) && in_array('create', $actionsInfo)) {
                 $uri = explode('?', request()->getRequestUri());
-                $params = isset($uri[1]) ? $uri[1] . '&' : '';
+                $params = isset($uri[1]) ? $uri[1] : '';
 
                 $toolbars->addRight(
                     Grid\Tools\ToolButton::make("添加")
                         ->icon("el-icon-plus")
                         ->handler(Grid\Tools\ToolButton::HANDLER_ROUTE)
-                        ->uri($this->create_url() . $params . 'timestamp=' . $time)
+                        ->uri($this->create_url() . $params)
                 );
             }
 
@@ -178,14 +178,14 @@ class ContentController extends AdminController
 
             // 隐藏编辑操作
             if (!empty($actionsInfo) && in_array('edit', $actionsInfo)) {
-                $actions->editAction()->params($editParams . 'timestamp=' . $time);
+                $actions->editAction()->params($editParams . 'version=' . $time);
             } else {
                 $actions->hideEditAction();
             }
 
             // 隐藏删除操作
             if (!empty($actionsInfo) && in_array('delete', $actionsInfo)) {
-                $actions->deleteAction()->params('entity_id=' . $this->entityId . '&timestamp=' . $time);
+                $actions->deleteAction()->params('entity_id=' . $this->entityId . '&version=' . $time);
             } else {
                 $actions->hideDeleteAction();
             }
@@ -524,8 +524,9 @@ class ContentController extends AdminController
 
             switch ($val['form_type']) {
                 case 'input' :
-                    $obj->component(Input::make()->placeholder($val['form_comment'])->maxlength($val['field_length']))
+                    $obj->component(Input::make()->placeholder($val['form_comment'])->maxlength($val['field_length'])->showWordLimit())
                         ->inputWidth(6)
+                        ->help('')
                         ->required($val['is_required'], 'string')
                         ->unique($isUnique, $this->entity->table_name, $val['name'], $val['comment'])
                         ->max($val['field_length'])->defaultValue($defaultValue);
@@ -534,11 +535,11 @@ class ContentController extends AdminController
                 case 'inputNumber' : // 整数
                     $min = isset($val['min']) ? $val['min'] : 0;
                     $max = isset($val['max']) ? $val['max'] : 99999999999;
-                    $obj->component(InputNumber::make()->min($min)->max($max))->help($val['form_comment'])->defaultValue($defaultValue)->required($val['is_required'], 'number');
+                    $obj->component(InputNumber::make()->min($min)->max($max)->controlsPosition(''))->help($val['form_comment'])->defaultValue($defaultValue)->required($val['is_required'], 'number');
                     break;
 
                 case 'inputDecimal' : // 小数
-                    $obj->component(InputNumber::make()->precision($val['field_scale'])->min(0))->help($val['form_comment'])->required($val['is_required'], 'float');
+                    $obj->component(InputNumber::make()->precision($val['field_scale'])->min(0)->controlsPosition(''))->help($val['form_comment'])->required($val['is_required'], 'float');
                     break;
 
                 case 'option' : // 单选
@@ -598,7 +599,7 @@ class ContentController extends AdminController
                     break;
 
                 case 'textArea' : // 长文本
-                    $obj->component(Input::make()->textarea(4))->inputWidth(15)->required($val['is_required'], 'string');
+                    $obj->component(Input::make()->textarea(4)->showWordLimit())->inputWidth(15)->required($val['is_required'], 'string');
                     break;
 
                 case 'upload' : // 图片上传 单图

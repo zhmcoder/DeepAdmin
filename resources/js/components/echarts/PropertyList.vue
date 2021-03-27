@@ -8,6 +8,7 @@
                     <span>{{col.label}}</span>
                   </template>
                   <template slot-scope="scope">
+                    <el-input-number :style="`width: ${col.width}px;`" v-if="col.type=='number'" :min="0" size="mini" :precision="col.precision" :placeholder="0" v-model="scope.row[col.prop]" @input="changeInput">0</el-input-number>
                     <el-input :style="`width: ${col.width}px;`" v-if="col.type=='input'" size="mini" v-model="scope.row[col.prop]" @input="changeInput"> </el-input>
                     <el-select :style="`width: ${col.width}px;`" v-if="col.type=='select'" v-model="scope.row[col.prop]" @input="changeInput">
                       <el-option
@@ -21,8 +22,7 @@
                 </el-table-column>
                 <el-table-column fixed="right" label="操作" width="80">
                   <template slot-scope="scope">
-                    <el-button v-if="scope.$index==0" type="text" size="small" @click.native.prevent="addRow">添加</el-button>
-                    <el-button v-else
+                    <el-button
                       @click.native.prevent="deleteRow(scope.$index, tableData)"
                       type="text"
                       size="small">
@@ -32,10 +32,10 @@
                 </el-table-column>
           </el-table>
         </el-form-item>
-        <!-- <el-form-item required>
-          <el-button @click="addRow">添加</el-button>
-          <el-button @click="submitData">提交</el-button>
-        </el-form-item> -->
+        <el-form-item>
+          <el-button style="display:block;margin: 0 auto;" type="text" size="middle" @click.native.prevent="addRow">添加</el-button>
+          <!-- <el-button @click="submitData">提交</el-button> -->
+        </el-form-item>
       <!-- </el-form> -->
     </div>
 </template>
