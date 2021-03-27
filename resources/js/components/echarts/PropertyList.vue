@@ -3,13 +3,13 @@
       <!-- <el-form ref="ruleForm" :model="value" label-width="0px" class="demo-ruleForm" > -->
         <el-form-item>
           <el-table :data="tableData" style="width: 100%" :show-header="attrs.data.is_title==1">
-                <el-table-column v-for="(col, i) in attr_names" :key="i" :prop="col.prop">
+                <el-table-column v-for="(col, i) in attr_names" :key="i" :prop="col.prop" :width="Number(col.width) + 20 + 'px'">
                   <template slot="header">
                     <span>{{col.label}}</span>
                   </template>
                   <template slot-scope="scope">
-                    <el-input v-if="col.type=='input'" size="mini" v-model="scope.row[col.prop]" @input="changeInput"> </el-input>
-                    <el-select v-if="col.type=='select'" v-model="scope.row[col.prop]" @input="changeInput">
+                    <el-input :style="`width: ${col.width}px;`" v-if="col.type=='input'" size="mini" v-model="scope.row[col.prop]" @input="changeInput"> </el-input>
+                    <el-select :style="`width: ${col.width}px;`" v-if="col.type=='select'" v-model="scope.row[col.prop]" @input="changeInput">
                       <el-option
                         v-for="item in col.options"
                         :key="item.value"
