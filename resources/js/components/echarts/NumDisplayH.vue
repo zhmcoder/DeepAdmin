@@ -18,13 +18,13 @@
 <style lang="scss">
 .num-display-h {
   width: 100%;
-  height: 400px;
+  /*height: 400px;*/
 }
 .num-display-wrap {
   display: flex;
   justify-content: space-around;
   text-align: center;
-  padding-top: 100px;
+  /*padding-top: 100px;*/
   &-num {
     font-size: 70px;
     font-family: PingFangSC-Semibold,PingFang SC;
