@@ -60,6 +60,9 @@
                         formatter: '{value}',
                         color: '#3E3E3E'
                     },
+                    splitLine:{
+                        show:false
+                    },
                     min: chartConfig.yAxisData.min,
                     max: chartConfig.yAxisData.max,
                 },
