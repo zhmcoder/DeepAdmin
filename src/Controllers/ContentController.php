@@ -19,6 +19,7 @@ use SmallRuralDog\Admin\Components\Form\DateTimePicker;
 use SmallRuralDog\Admin\Components\Form\Input;
 use SmallRuralDog\Admin\Components\Form\InputNumber;
 use SmallRuralDog\Admin\Components\Form\Radio;
+use SmallRuralDog\Admin\Components\Form\RadioButton;
 use SmallRuralDog\Admin\Components\Form\RadioGroup;
 use SmallRuralDog\Admin\Components\Form\Select;
 use SmallRuralDog\Admin\Components\Form\TimePicker;
@@ -95,6 +96,12 @@ class ContentController extends AdminController
 
             $this->grid_toolbars($toolbars);
         });
+
+//        $grid->quickFilter()->filterKey('status')
+//            ->quickOptions([
+//                Radio::make('1', '正常'),
+//                Radio::make('2', '过期'),
+//                Radio::make('3', '审核')]);
 
         $entityField = EntityField::query()->where('entity_id', $this->entityId)
             ->where('is_search', '>', 1)->orderBy('list_order', 'asc')->orderBy('id', 'asc')->get()->toArray();
