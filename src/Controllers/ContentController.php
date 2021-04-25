@@ -6,6 +6,7 @@ use Andruby\DeepAdmin\Components\Grid\DeepLink;
 use Andruby\DeepAdmin\Components\Grid\SortEdit;
 use Andruby\DeepAdmin\Components\Grid\SortUpDown;
 use Andruby\DeepAdmin\Models\ContentTimeStamp;
+use Andruby\DeepAdmin\Services\GridCacheService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use SmallRuralDog\Admin\Components\Attrs\SelectOption;
@@ -270,16 +271,19 @@ class ContentController extends AdminController
 
                 case 'selectTable' :
                 case 'selectRemote' :
+                    debug_log_info($val['form_params']);
                     $formParams = explode("\n", $val['form_params']);
+
                     $obj->customValue(function ($row, $value) use ($formParams, $val) {
                         $value = (!empty($val['prop'])) ? $row[$val['prop']] : $value; // 使用字段
 
                         $return = [];
                         if (!empty($formParams[0]) && !empty($formParams[1]) && !empty($formParams[2])) {
                             $model = new Content($formParams[0]);
-                            $modelInfo = $model->where($formParams[1], $value)->first();
-                            if (!empty($value) && !empty($modelInfo)) {
-                                $return[] = $modelInfo[$formParams[2]];
+                            if (!empty($value)) {
+                                $return[] = GridCacheService::instance()
+                                    ->get_cache_value($model, $formParams[0] . '_' . $formParams[1] . '_' . $value,
+                                        $value, $formParams[1], $formParams[2]);;
                             }
                         }
                         return $return;

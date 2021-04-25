@@ -78,4 +78,6 @@ return [
         'middleware' => ['web', 'admin'],
     ],
 
+    'GRID_RELATED_DATA_CACHE_EXPIRE_TIME' => env('GRID_RELATED_DATA_CACHE_EXPIRE_TIME', 5 * 60),
+
 ];
