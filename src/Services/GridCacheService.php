@@ -3,7 +3,7 @@
 namespace Andruby\DeepAdmin\Services;
 
 
-use App\Admin\Models\ColumnInfo;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 
 /**
@@ -23,7 +23,9 @@ class GridCacheService
     {
         $value = Cache::get($key);
         if (empty($value)) {
-//            $model = $model::query();
+            if(!($model instanceof Model)){
+                $model = $model::query();
+            }
             if ($is_delete) {
                 $model = $model->withTrashed(); // 查询已删除数据
             }
