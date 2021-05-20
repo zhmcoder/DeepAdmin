@@ -15,61 +15,67 @@
                 chartStyle: {
                     width: this.attrs.data.width || '100%',
                     height: this.attrs.data.height || '100%'
-                }
+                },
+                myChart:null
             };
         },
         mounted() {
-            let myChart = echarts.init(document.getElementById(this.attrs.canvasId))
-            let chartConfig = this.attrs.data
-            let chartData = {
-                grid: {
-                    top: '30',
-                    left: 40,
-                    right: 80,
-                    bottom: 20,
-                    containLabel: true
-                },
-                tooltip: {
-                  trigger: 'axis',
-                  formatter: (param) => {
-                    let current = param[0]
-                    if (current.data && current.data.is_warning) {
-                      let list = ''
-                      current.data.waring_list.map(item => {
-                        list += item + '<br/>'
-                      })
-                      return list
-                    } else {
-                      return current.axisValue + '<br/>' + current.value
-                    }
-                  }
-                },
-                xAxis: {
-                  type: 'category',
-                  boundaryGap: false,
-                  data: chartConfig.xAxisData || []
-                },
-                yAxis: {
-                    type: 'value',
-                    axisLine: {
-                        lineStyle: {
-                            color: '#EEEEEE'
+            this.myChart = echarts.init(document.getElementById(this.attrs.canvasId))
+            this.chart_data(this.attrs.data);
+        },
+        methods: {
+            chart_data(attr_data) {
+                let chartConfig = attr_data
+                let chartData = {
+                    grid: {
+                        top: '30',
+                        left: 40,
+                        right: 80,
+                        bottom: 20,
+                        containLabel: true
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        formatter: (param) => {
+                            let current = param[0]
+                            if (current.data && current.data.is_warning) {
+                                let list = ''
+                                current.data.waring_list.map(item => {
+                                    list += item + '<br/>'
+                                })
+                                return list
+                            } else {
+                                return current.axisValue + '<br/>' + current.value
+                            }
                         }
                     },
-                    axisLabel: {
-                        formatter: '{value}',
-                        color: '#3E3E3E'
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: chartConfig.xAxisData || []
                     },
-                    splitLine:{
-                        show:false
+                    yAxis: {
+                        type: 'value',
+                        axisLine: {
+                            lineStyle: {
+                                color: '#EEEEEE'
+                            }
+                        },
+                        axisLabel: {
+                            formatter: '{value}',
+                            color: '#3E3E3E'
+                        },
+                        splitLine:{
+                            show:false
+                        },
+                        min: chartConfig.yAxisData.min,
+                        max: chartConfig.yAxisData.max,
                     },
-                    min: chartConfig.yAxisData.min,
-                    max: chartConfig.yAxisData.max,
-                },
-                visualMap: chartConfig.visualMap,
-                series: chartConfig.series
+                    visualMap: chartConfig.visualMap,
+                    series: chartConfig.series
+                }
+                this.myChart.setOption(chartData)
             }
-            myChart.setOption(chartData)
         }
     };
 </script>

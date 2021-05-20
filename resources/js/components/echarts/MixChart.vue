@@ -15,129 +15,135 @@
                 chartStyle: {
                     width: this.attrs.data.width || '100%',
                     height: this.attrs.data.height || '100%'
-                }
+                },
+                myChart:null
             };
         },
         mounted() {
-            let myChart = echarts.init(document.getElementById(this.attrs.canvasId))
-            let chartConfig = this.attrs.data
-            let chartData = {
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {
-                        // type: 'cross',
-                        crossStyle: {
-                            color: '#999'
+            this.myChart = echarts.init(document.getElementById(this.attrs.canvasId))
+            this.chart_data(this.attrs.data);
+        },
+        methods: {
+            chart_data(attr_data) {
+                let chartConfig = attr_data
+                let chartData = {
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            // type: 'cross',
+                            crossStyle: {
+                                color: '#999'
+                            }
                         }
-                    }
-                    // formatter: '{a0}: {c0}<br />{a1}: {c1}%<br />{a2}: {c2}%'
-                },
-                grid: {
-                    // top: '20', // 距上边距
-                    left: '20', // 距离左边距
-                    right: '20', // 距离右边距
-                    bottom: '10%', // 距离下边距
-                    containLabel: true
-                },
-                legend: {
-                    x: 'center',
-                    y: 'bottom',
-                    padding: [0, 50, 0, 0],
-                    data: chartConfig.legend.data || [],
-                    itemWidth: 16,
-                    itemHeight: 16,
-                    textStyle: {
-                        color: '#333333',
-                        fontSize: 12
-                    }
-                },
-                toolbox: {
-                    show: true,
-                    feature: {
-                        saveAsImage: {show: true}
-                    }
-                },
-                xAxis: {
-                    type: 'category',
-                    axisLine: {
-                        lineStyle: {
-                            color: '#626770'
+                        // formatter: '{a0}: {c0}<br />{a1}: {c1}%<br />{a2}: {c2}%'
+                    },
+                    grid: {
+                        // top: '20', // 距上边距
+                        left: '20', // 距离左边距
+                        right: '20', // 距离右边距
+                        bottom: '10%', // 距离下边距
+                        containLabel: true
+                    },
+                    legend: {
+                        x: 'center',
+                        y: 'bottom',
+                        padding: [0, 50, 0, 0],
+                        data: chartConfig.legend.data || [],
+                        itemWidth: 16,
+                        itemHeight: 16,
+                        textStyle: {
+                            color: '#333333',
+                            fontSize: 12
                         }
                     },
-                    axisLabel: {
-                        interval: 0,
-                        rotate: 20
-                    },
-                    data: chartConfig.xAxisData || []
-                },
-                yAxis: [
-                    {
-                        type: 'value',
-                        name: chartConfig.yAxisName || '',
-                        min: 0,
-                        // axisLine: {
-                        //     lineStyle: {
-                        //         color: '#626770'
-                        //     }
-                        // },
-                        axisLabel: {
-                            formatter: '{value}',
-                            color: '#626770'
-                        },
-                        splitLine: {
-                            show: false
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            saveAsImage: {show: true}
                         }
                     },
-                    {
-                        type: 'value',
-                        min: 0,
+                    xAxis: {
+                        type: 'category',
                         axisLine: {
                             lineStyle: {
                                 color: '#626770'
                             }
                         },
                         axisLabel: {
-                            formatter: '{value}' + chartConfig.unit || '',
-                            color: '#626770'
+                            interval: 0,
+                            rotate: 20
                         },
-                        splitLine: {
-                            show: false
+                        data: chartConfig.xAxisData || []
+                    },
+                    yAxis: [
+                        {
+                            type: 'value',
+                            name: chartConfig.yAxisName || '',
+                            min: 0,
+                            // axisLine: {
+                            //     lineStyle: {
+                            //         color: '#626770'
+                            //     }
+                            // },
+                            axisLabel: {
+                                formatter: '{value}',
+                                color: '#626770'
+                            },
+                            splitLine: {
+                                show: false
+                            }
+                        },
+                        {
+                            type: 'value',
+                            min: 0,
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#626770'
+                                }
+                            },
+                            axisLabel: {
+                                formatter: '{value}' + chartConfig.unit || '',
+                                color: '#626770'
+                            },
+                            splitLine: {
+                                show: false
+                            }
+                        }
+                    ],
+                    series: [],
+                    dataZoom: chartConfig.dataZoom,
+                }
+                this.attrs.data.series.forEach((item, index) => {
+                    let itemStyle
+                    if (item.type === 'bar') {
+                        itemStyle = {
+                            barBorderRadius: [20, 20, 0, 0],
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: item.color
+                            }, {
+                                offset: 1,
+                                color: item.colorEnd
+                            }])
+                        }
+                    } else if (item.type === 'line') {
+                        itemStyle = {
+                            color: item.color
                         }
                     }
-                ],
-                series: [],
-                dataZoom: chartConfig.dataZoom,
-            }
-            this.attrs.data.series.forEach((item, index) => {
-                let itemStyle
-                if (item.type === 'bar') {
-                    itemStyle = {
-                        barBorderRadius: [20, 20, 0, 0],
-                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                            offset: 0,
-                            color: item.color
-                        }, {
-                            offset: 1,
-                            color: item.colorEnd
-                        }])
-                    }
-                } else if (item.type === 'line') {
-                    itemStyle = {
-                        color: item.color
-                    }
-                }
-                chartData.series.push({
-                    name: item.name,
-                    type: item.type,
-                    barWidth: 20,
-                    itemStyle: {
-                        normal: itemStyle
-                    },
-                    yAxisIndex: item.type === 'line' ? 1 : 0,
-                    data: item.data
+                    chartData.series.push({
+                        name: item.name,
+                        type: item.type,
+                        barWidth: 20,
+                        itemStyle: {
+                            normal: itemStyle
+                        },
+                        yAxisIndex: item.type === 'line' ? 1 : 0,
+                        data: item.data
+                    })
                 })
-            })
-            myChart.setOption(chartData)
+                this.myChart.setOption(chartData)
+            }
         },
         updated() {
             // this.antv.changeData(this.attrs.data);

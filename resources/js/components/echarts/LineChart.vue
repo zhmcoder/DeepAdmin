@@ -15,82 +15,88 @@
                 chartStyle: {
                     width: this.attrs.data.width || '100%',
                     height: this.attrs.data.height || '100%'
-                }
+                },
+                myChart:null
             };
         },
         mounted() {
-            let myChart = echarts.init(document.getElementById(this.attrs.canvasId))
-            let chartConfig = this.attrs.data
-            let chartData = {
-                grid: {
-                    top: '30', // 距上边距
-                    left: '20', // 距离左边距
-                    right: '10', // 距离右边距
-                    bottom: 20, // 距离下边距
-                    containLabel: true
-                },
-                tooltip: {
-                    trigger: 'item',
-                    formatter: '{b} : {c}'
-                },
-                xAxis: {
-                    type: 'category',
-                    axisLine: {
-                        lineStyle: {
-                            color: '#EEEEEE'
+            this.myChart = echarts.init(document.getElementById(this.attrs.canvasId))
+            this.chart_data(this.attrs.data);
+        },
+        methods: {
+            chart_data(attr_data) {
+                let chartConfig = attr_data
+                let chartData = {
+                    grid: {
+                        top: '30', // 距上边距
+                        left: '20', // 距离左边距
+                        right: '10', // 距离右边距
+                        bottom: 20, // 距离下边距
+                        containLabel: true
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{b} : {c}'
+                    },
+                    xAxis: {
+                        type: 'category',
+                        axisLine: {
+                            lineStyle: {
+                                color: '#EEEEEE'
+                            }
+                        },
+                        axisLabel: {
+                            interval: 0,
+                            rotate: 0,
+                            color: '#3E3E3E'
+                        },
+                        boundaryGap: [0, 0.01],
+                        data: chartConfig.xAxisData || []
+                    },
+                    yAxis: {
+                        type: 'value',
+                        axisLine: {
+                            lineStyle: {
+                                color: '#EEEEEE'
+                            }
+                        },
+                        axisLabel: {
+                            formatter: '{value}',
+                            color: '#3E3E3E'
+                        },
+                        splitLine: {
+                            show: false
                         }
                     },
-                    axisLabel: {
-                        interval: 0,
-                        rotate: 0,
-                        color: '#3E3E3E'
-                    },
-                    boundaryGap: [0, 0.01],
-                    data: chartConfig.xAxisData || []
-                },
-                yAxis: {
-                    type: 'value',
-                    axisLine: {
+                    series: [{
+                        type: 'line',
+                        data: chartConfig.series.data || [],
+                        // smooth: true,
+                        symbol: 'none',
                         lineStyle: {
-                            color: '#EEEEEE'
+                            color: chartConfig.series.color,
+                            width: 2,
+                            type: 'solid'
+                        },
+                        // 折线堆积区域样式
+                        areaStyle: {
+                            type: 'default',
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: chartConfig.series.areaColor[0]
+                            }, {
+                                offset: 1,
+                                color: chartConfig.series.areaColor[1]
+                            }])
+                        },
+                        // 折线连接点样式
+                        itemStyle: {
+                            show: false
                         }
-                    },
-                    axisLabel: {
-                        formatter: '{value}',
-                        color: '#3E3E3E'
-                    },
-                    splitLine: {
-                        show: false
-                    }
-                },
-                series: [{
-                    type: 'line',
-                    data: chartConfig.series.data || [],
-                    // smooth: true,
-                    symbol: 'none',
-                    lineStyle: {
-                        color: chartConfig.series.color,
-                        width: 2,
-                        type: 'solid'
-                    },
-                    // 折线堆积区域样式
-                    areaStyle: {
-                        type: 'default',
-                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                            offset: 0,
-                            color: chartConfig.series.areaColor[0]
-                        }, {
-                            offset: 1,
-                            color: chartConfig.series.areaColor[1]
-                        }])
-                    },
-                    // 折线连接点样式
-                    itemStyle: {
-                        show: false
-                    }
-                }]
+                    }]
+                }
+                this.myChart.setOption(chartData);
             }
-            myChart.setOption(chartData)
         },
         updated() {
             // this.antv.changeData(this.attrs.data);

@@ -15,72 +15,78 @@
                 chartStyle: {
                     width: this.attrs.data.width || '100%',
                     height: this.attrs.data.height || '100%'
-                }
+                },
+                myChart:null
             };
         },
         mounted() {
-            let myChart = echarts.init(document.getElementById(this.attrs.canvasId))
-            let chartConfig = this.attrs.data
-            let chartData = {
-                title: {
-                    text: chartConfig.title.text || '',
-                    subtext: chartConfig.subtitle.text || '',
-                    left: chartConfig.title.left || 'center',
-                    top: chartConfig.title.top || 'center',
-                    textStyle: {
-                        fontWeight: '500',
-                        fontSize: chartConfig.title.fontSize,
-                        color: chartConfig.title.color
-                    },
-                    subtextStyle: {
-                        fontWeight: 'normal',
-                        fontSize: chartConfig.subtitle.fontSize,
-                        color: chartConfig.subtitle.color
-                    }
-                },
-                tooltip: {
-                    show: chartConfig.showTooltip || true,
-                    trigger: 'item',
-                    formatter: '{b} : {d}%'
-                },
-                legend: {
-                    orient: chartConfig.legend.orient,
-                    right: chartConfig.legend.right || '10%',
-                    y: chartConfig.legend.y || 'middle',
-                    data: chartConfig.legend.data,
-                    textStyle: {
-                        color: chartConfig.legend.color,
-                        fontSize: chartConfig.legend.fontSize
-                    },
-                    itemWidth: 16,
-                    itemHeight: 16
-                },
-                "series": [
-                    {
-                        type: 'pie',
-                        radius: chartConfig.series.radius || '60%',
-                        color: chartConfig.series.color,
-                        center: chartConfig.series.center || ['35%', '50%'],
-                        label: {
-                            show: false
+            this.myChart = echarts.init(document.getElementById(this.attrs.canvasId))
+            this.chart_data(this.attrs.data);
+        },
+        methods: {
+            chart_data(attr_data) {
+                let chartConfig = attr_data
+                let chartData = {
+                    title: {
+                        text: chartConfig.title.text || '',
+                        subtext: chartConfig.subtitle.text || '',
+                        left: chartConfig.title.left || 'center',
+                        top: chartConfig.title.top || 'center',
+                        textStyle: {
+                            fontWeight: '500',
+                            fontSize: chartConfig.title.fontSize,
+                            color: chartConfig.title.color
                         },
-                        labelLine: {
-                            normal: {
+                        subtextStyle: {
+                            fontWeight: 'normal',
+                            fontSize: chartConfig.subtitle.fontSize,
+                            color: chartConfig.subtitle.color
+                        }
+                    },
+                    tooltip: {
+                        show: chartConfig.showTooltip || true,
+                        trigger: 'item',
+                        formatter: '{b} : {d}%'
+                    },
+                    legend: {
+                        orient: chartConfig.legend.orient,
+                        right: chartConfig.legend.right || '10%',
+                        y: chartConfig.legend.y || 'middle',
+                        data: chartConfig.legend.data,
+                        textStyle: {
+                            color: chartConfig.legend.color,
+                            fontSize: chartConfig.legend.fontSize
+                        },
+                        itemWidth: 16,
+                        itemHeight: 16
+                    },
+                    "series": [
+                        {
+                            type: 'pie',
+                            radius: chartConfig.series.radius || '60%',
+                            color: chartConfig.series.color,
+                            center: chartConfig.series.center || ['35%', '50%'],
+                            label: {
                                 show: false
-                            }
-                        },
-                        data: chartConfig.series.data,
-                        hoverAnimation: false,
-                        itemStyle: {
-                            normal: {
-                                borderWidth: 2,
-                                borderColor: '#fff'
+                            },
+                            labelLine: {
+                                normal: {
+                                    show: false
+                                }
+                            },
+                            data: chartConfig.series.data,
+                            hoverAnimation: false,
+                            itemStyle: {
+                                normal: {
+                                    borderWidth: 2,
+                                    borderColor: '#fff'
+                                }
                             }
                         }
-                    }
-                ]
+                    ]
+                }
+                this.myChart.setOption(chartData)
             }
-            myChart.setOption(chartData)
         },
         updated() {
             // this.antv.changeData(this.attrs.data);
