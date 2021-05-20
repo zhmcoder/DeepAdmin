@@ -37,6 +37,13 @@
                             type:'shadow'
                         }
                     },
+                    grid: {
+                        top: '60', // 距上边距
+                        left: '30', // 距离左边距
+                        right: '30', // 距离右边距
+                        bottom: '60', // 距离下边距
+                        containLabel: true
+                    },
                     legend: {
                         data: chartConfig.legend.data || []
                     },
