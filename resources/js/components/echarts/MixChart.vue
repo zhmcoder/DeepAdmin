@@ -51,6 +51,12 @@
                         fontSize: 12
                     }
                 },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        saveAsImage: {show: true}
+                    }
+                },
                 xAxis: {
                     type: 'category',
                     axisLine: {
@@ -99,7 +105,8 @@
                         }
                     }
                 ],
-                series: []
+                series: [],
+                dataZoom: chartConfig.dataZoom,
             }
             this.attrs.data.series.forEach((item, index) => {
                 let itemStyle
