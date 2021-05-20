@@ -97,6 +97,10 @@
                     itemStyle: {
                         normal: itemStyle
                     },
+                    label: {
+                        show: true,
+                        position: 'top'
+                    },
                     data: item.data
                 })
             })
