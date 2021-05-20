@@ -27,20 +27,18 @@
             chart_data(attr_data) {
                 let chartConfig = attr_data
                 let chartData = {
-                    grid: {
-                        top: '30',
-                        left: '25',
-                        right: '25',
-                        bottom: '30',
-                        containLabel: true
+                    title: {
+                        text: (chartConfig.title) ? chartConfig.title : ''
                     },
                     tooltip: {
                         show:true,
                         trigger:'axis',
                         axisPointer:{
                             type:'shadow'
-
                         }
+                    },
+                    legend: {
+                        data: chartConfig.legend.data || []
                     },
                     toolbox: {
                         show: true,
