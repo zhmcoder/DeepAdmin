@@ -66,7 +66,7 @@
                       }
                     },
                     axisLabel: {
-                      formatter: '{value}',
+                      formatter: '{value}' + chartConfig.unit || '',
                       color: '#626770'
                     },
                     splitLine: {
@@ -103,6 +103,9 @@
                     },
                     data: item.data
                 })
+                if(chartConfig.max){
+                    chartData.yAxis.max = chartConfig.max;
+                }
             })
             myChart.setOption(chartData)
         },
