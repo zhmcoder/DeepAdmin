@@ -66,11 +66,6 @@
                 }
                 this.myChart.setOption(chartData)
             }
-        },
-        methods: {
-            chart_data(attr_data) {
-
-            }
         }
     };
 </script>
