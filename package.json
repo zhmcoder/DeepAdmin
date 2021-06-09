@@ -21,7 +21,8 @@
     "dependencies": {
         "cartesian": "^1.0.1",
         "echarts": "^4.6.0",
-        "echarts-liquidfill": "^2.0.6",
+        "echa、rts-liquidfill": "^2.0.6",
+        "gantt-schedule-timeline-calendar": "^3.7.1",
         "vue": "^2.6.11"
     }
 }
