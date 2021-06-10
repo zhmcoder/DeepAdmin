@@ -58,6 +58,7 @@
     export default {
         name: 'GSTC',
         mounted() {
+            console.log(GSTC.api.GSTCID('id'));
             /**
              * @type { import("gantt-schedule-timeline-calendar").Config }
              */
@@ -92,6 +93,8 @@
                     items: generateItems()
                 }
             };
+            console.log(config);
+            console.log(JSON.stringify(config));
             state = GSTC.api.stateFromConfig(config);
             gstc = GSTC({
                 element: this.$refs.gstc,
