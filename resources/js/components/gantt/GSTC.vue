@@ -16,6 +16,7 @@
     import { Plugin as ItemMovement } from 'gantt-schedule-timeline-calendar/dist/plugins/item-movement.esm.min.js';
     import 'gantt-schedule-timeline-calendar/dist/style.css';
 
+
     let gstc, state;
     // helper functions
     /**
@@ -24,7 +25,7 @@
     function generateRows(){
         const rows = {};
         for(let i=0;i<100;i++){
-            const id = GSTC.api.GSTCID(i.toString());
+            const id = i.toString();
             rows[id]={
                 id,
                 label:`Row ${i}`
@@ -57,8 +58,12 @@
     // main component
     export default {
         name: 'GSTC',
+        props: {
+            attrs: Object,
+        },
         mounted() {
             console.log(GSTC.api.GSTCID('id'));
+            console.log(this.attrs);
             /**
              * @type { import("gantt-schedule-timeline-calendar").Config }
              */
@@ -67,26 +72,7 @@
                 licenseKey:'====BEGIN LICENSE KEY====\\nUDm9p01o1K+pcbY4Uo2Q1EcoorGkjTljUZRk6sp7xY+mU65GOdbM4e/c81TbAI91kLxpc2RhP79Vz3+MqCcpDtOa3MnhmDkp48wdithQzzvMS1024VgAsd+t+1e/R6XIZ+hUkX38WCDpdqbuftXxl+iA3bwZp2ubiVbMXblgFi8Gy6c6Jy/3VCxgprVh+ZBA47caDq7jw1uaR++dtHDCXiJgtEkEypt2DGWnbAXvgC5zNJ8RnM0D/mabtba/FKSzKHApe7j4GyX/8F1HyPgMjTo48weQ4ttP0FOA5enrG7LNek0AgYEnmhWfoNBivy8qCe7vtfKqL6JJdwJjldY5gQ==||U2FsdGVkX18tsWTfvqFEfd1sLZFgEemTKCdPwa/VxOZkNi/KDkAe5n799e3QPHn5stHwuJHZDwTrQFj8QU4msiSMmd6AK2wty3n7Nwt5Hnk=\\nOTGTCZeoxBVOvAmqAFgCKX4cV2ZqJSBsTmYYqtmshDvqQ0RkpjmWoBArZOILyZ5lS5ZEj+cLWHsEnnrRG28wH3k96gnx4gmUnu3ks0k4EEEs7pZijHMp0yDlUtTimo6zllRkNOtaqVXz8UM1oAspuroh0hEOgMOup5/JS525r6n+85wNbPbEyfEm0Xo+KWxE/QloHtTivE3AsNNZLtwWCnH1S5jQTDTjGjenkEKZeBVSelR4E6UW5vr0NG57N0Rc7H9gaFIiEYxDu9i7l3LGDWlpVla997K4FmnuUJH4iA8mLH79WKurSkNTjKC7ys/TeH65sM7dgpuoEJpq5uO6pA==\\n====END LICENSE KEY====',
                 plugins:[TimelinePointer(), Selection(), ItemResizing(), ItemMovement()],
                 list:{
-                    columns:{
-                        data:{
-                            [GSTC.api.GSTCID('id')] :{
-                                id:GSTC.api.GSTCID('id'),
-                                width:60,
-                                data:({row})=>GSTC.api.sourceID(row.id),
-                                header:{
-                                    content:'ID'
-                                }
-                            },
-                            [GSTC.api.GSTCID('label')] :{
-                                id:GSTC.api.GSTCID('label'),
-                                width: 200,
-                                data:'label',
-                                header:{
-                                    content: 'Label'
-                                }
-                            }
-                        }
-                    },
+                    columns:this.attrs.lists.columns,
                     rows:generateRows()
                 },
                 chart:{
