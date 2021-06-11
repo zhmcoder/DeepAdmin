@@ -39,9 +39,9 @@
     function generateItems(){
         const items = {};
         let start = GSTC.api.date().startOf('day').subtract(6,'day');
-        for(let i =0;i<100;i++){
-            const id = GSTC.api.GSTCID(i.toString());
-            const rowId = GSTC.api.GSTCID((Math.floor(Math.random()*100)).toString());
+        for(let i =0;i<15;i++){
+            const id = i.toString();
+            const rowId = i.toString();
             start = start.add(1,'day');
             items[id] = {
                 id,
@@ -73,7 +73,7 @@
                 plugins:[TimelinePointer(), Selection(), ItemResizing(), ItemMovement()],
                 list:{
                     columns:this.attrs.lists.columns,
-                    rows:generateRows()
+                    rows:this.attrs.lists.rows
                 },
                 chart:{
                     items: generateItems()

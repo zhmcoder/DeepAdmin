@@ -23,9 +23,11 @@ class Lists extends AdminJsonBuilder
         return $this;
     }
 
-    public function addRows($rows)
+    public function rows(array $rows)
     {
-        $this->rows_data[] = $rows;
+        foreach ($rows as $item) {
+            $this->rows[$item['id']] = $item;
+        }
         return $this;
     }
 
@@ -36,20 +38,10 @@ class Lists extends AdminJsonBuilder
 
     public function jsonSerialize()
     {
-        $data = [
+        return [
             'columns' => $this->columns,
             'row' => $this->row,
             'rows' => $this->rows
-        ];
-
-        $row=[];
-
-        foreach ($this->rows_data as $item){
-//            $row_item[$item['']]
-        }
-
-        $data['rows'] =$row;
-
-        return $data;
+        ];;
     }
 }
