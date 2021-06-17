@@ -76,7 +76,7 @@
                     rows:this.attrs.lists.rows
                 },
                 chart:{
-                    items: generateItems()
+                    items: this.attrs.chart.items
                 }
             };
             console.log(config);
