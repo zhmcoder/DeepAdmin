@@ -24,6 +24,7 @@ class GSTC extends Component
     protected $Promise;// {Promise} - alternative promise implementation
     protected $utcMode;// {boolean} - dayjs UTC mode on / off
 
+    protected $licenseKey;
 
     public function __construct()
     {
@@ -33,6 +34,12 @@ class GSTC extends Component
     public static function make()
     {
         return new GSTC();
+    }
+
+    public function licenseKey($licenseKey)
+    {
+        $this->licenseKey = $licenseKey;
+        return $this;
     }
 
     public function innerHeight($innerHeight)
