@@ -19,6 +19,7 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
+        "@antv/x6": "^1.23.12",
         "cartesian": "^1.0.1",
         "echarts": "^4.6.0",
         "echarts-liquidfill": "^2.0.6",
