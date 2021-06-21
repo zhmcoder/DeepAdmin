@@ -2,6 +2,7 @@
 
 namespace Andruby\DeepAdmin\Components\Gantt;
 
+use Andruby\DeepAdmin\Components\Gantt\Chart\Time;
 use SmallRuralDog\Admin\Traits\AdminJsonBuilder;
 
 class Chart extends AdminJsonBuilder
@@ -24,6 +25,12 @@ class Chart extends AdminJsonBuilder
         foreach ($items as $item) {
             $this->items[$item['id']] = $item;
         }
+        return $this;
+    }
+
+    public function time(Time $time)
+    {
+        $this->time = $time;
         return $this;
     }
 }

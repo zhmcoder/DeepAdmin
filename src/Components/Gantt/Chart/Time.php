@@ -1,12 +1,13 @@
 <?php
 
-namespace Andruby\DeepAdmin\Components\Gantt;
+namespace Andruby\DeepAdmin\Components\Gantt\Chart;
 
 class Time
 {
 //Options
 //from and to should be generated from GSTC.api.date('...').valueOf() function. If from and to are not specified GSTC will calculate those values basing on items time.
 
+    protected $period;
     protected $from;// {number} - from what point in time the chart should display dates (in milliseconds)
     protected $to;// {number} - where chart should stop displaying dates (in milliseconds)
     protected $fromDate;// {dayjs} readonly - from dayjs date instead of millisecond
@@ -22,4 +23,15 @@ class Time
     protected $calculatedZoomMode;// {boolean} - if true GSTC will calculate zoom basing on from and to values to fill out whole space horizontally for example to show only one month inside current view and change months programmatically
 //[NOTICE] onLevelDates, onCurrentViewLevelDates and onDate
 //onLevelDates and onCurrentViewLevelDates takes one object as argument { dates, format, level, levelIndex } and should return original or modified dates. onDate takes one object argument { dates, format, level, levelIndex } with date instead of dates and should return original or modified date.
+    public static function make()
+    {
+        return new Time();
+    }
+
+    public function period($period)
+    {
+        $this->period = $period;
+        return $this;
+    }
+
 }
