@@ -11,6 +11,7 @@ VueAdmin.booting((Vue, router, store) => {
     Vue.component("AntvStackedColumn", require('./components/antv/AntvStackedColumn').default);
     Vue.component("AntvPie", require('./components/antv/AntvPie').default);
     Vue.component("AntvGraph", require('./components/antv/AntvGraph').default);
+    Vue.component("AntvDualAxes", require('./components/antv/AntvDualAxes').default);
 
     Vue.component("LineChart", require('./components/echarts/LineChart.vue').default);
     Vue.component("PieChart", require('./components/echarts/PieChart.vue').default);
