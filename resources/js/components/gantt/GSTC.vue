@@ -127,7 +127,7 @@
                     period: 'day',
                     periodIncrement: 1,
                     format({ timeStart }) {
-                        return timeStart.format('DD MMMM YYYY'); // full list of formats: https://day.js.org/docs/en/display/format
+                        return timeStart.format('YYYY MM DD'); // full list of formats: https://day.js.org/docs/en/display/format
                     },
                 },
             ];
