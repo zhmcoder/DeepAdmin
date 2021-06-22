@@ -84,17 +84,17 @@
                     label: 'Item 1',
                     rowId: '1',
                     time: {
-                        start: GSTC.api.date('2021-06-21 00:00:00').valueOf(),
-                        end: GSTC.api.date('2021-06-21 00:00:00').endOf('hour').valueOf(),
+                        start: GSTC.api.date('2020-01-01 00:00:00').valueOf(),
+                        end: GSTC.api.date('2020-01-01 00:30:00').endOf('minute').valueOf(),
                     },
                 },
                 {
                     id: '2',
                     label: 'Item 2',
-                    rowId: '1',
+                    rowId: '2',
                     time: {
-                        start: GSTC.api.date('2021-06-21 08:00:00').startOf('hour').valueOf(),
-                        end: GSTC.api.date('2021-06-21 10:00:00').endOf('hour').valueOf(),
+                        start: GSTC.api.date('2020-01-01 08:00:00').startOf('minute').valueOf(),
+                        end: GSTC.api.date('2020-01-01 10:00:00').endOf('minute').valueOf(),
                     },
                 },
             ];
@@ -121,29 +121,29 @@
                     },
                 },
             ];
-
-            const hours = [
+            const days = [
                 {
                     zoomTo: 100, // we want to display this format for all zoom levels until 100
                     period: 'day',
                     periodIncrement: 1,
                     format({ timeStart }) {
-                        return timeStart.format('YYYY-MM-DD'); // full list of formats: https://day.js.org/docs/en/display/format
+                        return timeStart.format('DD MMMM YYYY'); // full list of formats: https://day.js.org/docs/en/display/format
                     },
                 },
             ];
 
-            const minutes = [
+            const hours = [
                 {
-                    zoomTo: 100, // we want to display this format for all zoom levels until 100
+                    zoomTo: 16,
                     period: 'hour',
-                    periodIncrement: 1,
                     main: true,
+                    periodIncrement: 1,
                     format({ timeStart }) {
-                        return timeStart.format('HH'); // full list of formats: https://day.js.org/docs/en/display/format
+                        return timeStart.format('HH:mm');
                     },
                 },
             ];
+
             /**
              * @type { import("gantt-schedule-timeline-calendar").Config }
              */
@@ -152,17 +152,20 @@
                 licenseKey: this.attrs.licenseKey,
 
                 list: {
-                    columns: this.attrs.lists.columns,
-                    rows: this.attrs.lists.rows
+                    columns: {
+                        data: GSTC.api.fromArray(columnsFromDB),
+                    },
+                    rows: GSTC.api.fromArray(rowsFromDB),
                 },
                 chart: {
-                    items: this.attrs.chart.items,
-                    calendarLevels: [hours, minutes],
+                    items: GSTC.api.fromArray(itemsFromDB),
+                    calendarLevels: [days, hours],
                     time: {
-                        zoom: 100,
-                        from: GSTC.api.date('2021-06-21').startOf('day').valueOf(),
-                        to: GSTC.api.date('2021-06-21').endOf('day').valueOf(),
+                        zoom: 15.5,
+                        from: GSTC.api.date('2020-01-01').startOf('day').valueOf(),
+                        to: GSTC.api.date('2020-01-01').endOf('day').valueOf(),
                     },
+
                 },
             };
             console.log(config);
