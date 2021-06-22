@@ -67,237 +67,80 @@
         mounted() {
             console.log(GSTC.api.GSTCID('id'));
             console.log(this.attrs);
-            const calendarLevel1 = [
+            const rowsFromDB = [
                 {
-                    zoomTo: 16,
-                    period: 'hour',
-                    main: true,
-                    periodIncrement: 1,
-                    format({ timeStart }) {
-                        return timeStart.format('HH:mm');
+                    id: '1',
+                    label: 'Row 1',
+                },
+                {
+                    id: '2',
+                    label: 'Row 2',
+                },
+            ];
+
+            const itemsFromDB = [
+                {
+                    id: '1',
+                    label: 'Item 1',
+                    rowId: '1',
+                    time: {
+                        start: GSTC.api.date('2021-06-21 00:00:00').valueOf(),
+                        end: GSTC.api.date('2021-06-21 00:00:00').endOf('hour').valueOf(),
                     },
                 },
                 {
-                    zoomTo: 17,
-                    period: 'hour',
-                    main: true,
-                    periodIncrement: 1,
-                    format({ timeStart }) {
-                        return timeStart.format('HH');
-                    },
-                },
-                {
-                    zoomTo: 19,
-                    period: 'day',
-                    main: true,
-                    periodIncrement: 1,
-                    classNames: ['gstc-date-medium'],
-                    format({ timeStart, className, vido }) {
-                        return vido.html`<span class="${className}-content gstc-date-bold">${timeStart.format(
-                            'DD'
-                        )}</span> <span class="${className}-content gstc-date-thin">${timeStart.format(
-                            'dddd'
-                        )}</span>`;
-                    },
-                },
-                {
-                    zoomTo: 20,
-                    period: 'day',
-                    main: true,
-                    periodIncrement: 1,
-                    format({ timeStart, vido, className }) {
-                        return vido.html`<div class="${className}-content gstc-date-top">${timeStart.format(
-                            'DD'
-                        )}</div><div class="${className}-content gstc-date-small">${timeStart.format(
-                            'dddd'
-                        )}</div>`;
-                    },
-                },
-                {
-                    zoomTo: 21,
-                    period: 'day',
-                    main: true,
-                    periodIncrement: 1,
-                    format({ timeStart, vido, className }) {
-                        return vido.html`<div class="${className}-content gstc-date-top">${timeStart.format(
-                            'DD'
-                        )}</div><div class="${className}-content gstc-date-small">${timeStart.format(
-                            'ddd'
-                        )}</div>`;
-                    },
-                },
-                {
-                    zoomTo: 22,
-                    period: 'day',
-                    main: true,
-                    periodIncrement: 1,
-                    classNames: ['gstc-date-vertical'],
-                    format({ timeStart, className, vido }) {
-                        return vido.html`<div class="${className}-content gstc-date-top">${timeStart.format(
-                            'DD'
-                        )}</div><div class="${className}-content gstc-date-extra-small">${timeStart.format(
-                            'ddd'
-                        )}</div>`;
-                    },
-                },
-                {
-                    zoomTo: 23,
-                    period: 'week',
-                    main: true,
-                    periodIncrement: 1,
-                    format({ timeStart, timeEnd, className, vido }) {
-                        return vido.html`<div class="${className}-content gstc-date-top">${timeStart.format(
-                            'DD'
-                        )} - ${timeEnd.format(
-                            'DD'
-                        )}</div><div class="${className}-content gstc-date-small gstc-date-thin">${timeStart.format(
-                            'ddd'
-                        )} - ${timeEnd.format('dd')}</div>`;
-                    },
-                },
-                {
-                    zoomTo: 25,
-                    period: 'week',
-                    main: true,
-                    periodIncrement: 1,
-                    classNames: ['gstc-date-vertical'],
-                    format({ timeStart, timeEnd, className, vido }) {
-                        return vido.html`<div class="${className}-content gstc-date-top gstc-date-small gstc-date-normal">${timeStart.format(
-                            'DD'
-                        )}</div><div class="gstc-dash gstc-date-small">-</div><div class="${className}-content gstc-date-small gstc-date-normal">${timeEnd.format(
-                            'DD'
-                        )}</div>`;
-                    },
-                },
-                {
-                    zoomTo: 26,
-                    period: 'month',
-                    main: true,
-                    periodIncrement: 1,
-                    classNames: ['gstc-date-month-level-1'],
-                    format({ timeStart, vido, className }) {
-                        return vido.html`<div class="${className}-content gstc-date-top">${timeStart.format(
-                            'MMM'
-                        )}</div><div class="${className}-content gstc-date-small gstc-date-bottom">${timeStart.format(
-                            'MM'
-                        )}</div>`;
-                    },
-                },
-                {
-                    zoomTo: 27,
-                    period: 'month',
-                    main: true,
-                    periodIncrement: 1,
-                    classNames: ['gstc-date-vertical'],
-                    format({ timeStart, className, vido }) {
-                        return vido.html`<div class="${className}-content gstc-date-top">${timeStart.format(
-                            'MM'
-                        )}</div><div class="${className}-content gstc-date-extra-small">${timeStart.format(
-                            'MMM'
-                        )}</div>`;
-                    },
-                },
-                {
-                    zoomTo: 28,
-                    period: 'year',
-                    main: true,
-                    periodIncrement: 1,
-                    classNames: ['gstc-date-big'],
-                    format({ timeStart }) {
-                        return timeStart.format('YYYY');
-                    },
-                },
-                {
-                    zoomTo: 29,
-                    period: 'year',
-                    main: true,
-                    periodIncrement: 1,
-                    classNames: ['gstc-date-medium'],
-                    format({ timeStart }) {
-                        return timeStart.format('YYYY');
-                    },
-                },
-                {
-                    zoomTo: 30,
-                    period: 'year',
-                    main: true,
-                    periodIncrement: 1,
-                    classNames: ['gstc-date-medium'],
-                    format({ timeStart }) {
-                        return timeStart.format('YY');
-                    },
-                },
-                {
-                    zoomTo: 100,
-                    period: 'year',
-                    main: true,
-                    periodIncrement: 1,
-                    format() {
-                        return null;
+                    id: '2',
+                    label: 'Item 2',
+                    rowId: '1',
+                    time: {
+                        start: GSTC.api.date('2021-06-21 08:00:00').startOf('hour').valueOf(),
+                        end: GSTC.api.date('2021-06-21 10:00:00').endOf('hour').valueOf(),
                     },
                 },
             ];
-            const calendarLevel0 = [
+
+            const columnsFromDB = [
                 {
-                    zoomTo: 17,
-                    period: 'day',
-                    periodIncrement: 1,
-                    classNames: ['gstc-date-medium gstc-date-left'],
-                    format({ timeStart }) {
-                        return timeStart.format('DD MMMM YYYY (dddd)');
+                    id: 'id',
+                    label: 'ID',
+                    data: ({ row }) => Number(GSTC.api.sourceID(row.id)), // show original id
+                    sortable: ({ row }) => Number(GSTC.api.sourceID(row.id)), // sort by id converted to number
+                    width: 80,
+                    header: {
+                        content: 'ID',
                     },
                 },
                 {
-                    zoomTo: 23,
-                    period: 'month',
-                    periodIncrement: 1,
-                    format({ timeStart }) {
-                        return timeStart.format('MMMM YYYY');
-                    },
-                },
-                {
-                    zoomTo: 24,
-                    period: 'month',
-                    periodIncrement: 1,
-                    format({ timeStart }) {
-                        return timeStart.format("MMMM 'YY");
-                    },
-                },
-                {
-                    zoomTo: 25,
-                    period: 'month',
-                    periodIncrement: 1,
-                    format({ timeStart }) {
-                        return timeStart.format('MMM YYYY');
-                    },
-                },
-                {
-                    zoomTo: 27,
-                    period: 'year',
-                    periodIncrement: 1,
-                    format({ timeStart }) {
-                        return timeStart.format('YYYY');
-                    },
-                },
-                {
-                    zoomTo: 100,
-                    period: 'year',
-                    periodIncrement: 1,
-                    format() {
-                        return null;
+                    id: 'label',
+                    data: 'label',
+                    sortable: 'label',
+                    isHTML: false,
+                    width: 300,
+                    header: {
+                        content: 'Label',
                     },
                 },
             ];
-            const date = GSTC.api.date;
 
             const hours = [
                 {
-                    zoomTo: 16,
-                    period: 'hour',
-                    main: true,
+                    zoomTo: 100, // we want to display this format for all zoom levels until 100
+                    period: 'day',
                     periodIncrement: 1,
                     format({ timeStart }) {
-                        return timeStart.format('HH:mm');
+                        return timeStart.format('YYYY-MM-DD'); // full list of formats: https://day.js.org/docs/en/display/format
+                    },
+                },
+            ];
+
+            const minutes = [
+                {
+                    zoomTo: 100, // we want to display this format for all zoom levels until 100
+                    period: 'hour',
+                    periodIncrement: 1,
+                    main: true,
+                    format({ timeStart }) {
+                        return timeStart.format('HH'); // full list of formats: https://day.js.org/docs/en/display/format
                     },
                 },
             ];
@@ -307,15 +150,20 @@
             const config = {
                 // licenseKey:'====BEGIN LICENSE KEY====\nXOfH/lnVASM6et4Co473t9jPIvhmQ/l0X3Ewog30VudX6GVkOB0n3oDx42NtADJ8HjYrhfXKSNu5EMRb5KzCLvMt/pu7xugjbvpyI1glE7Ha6E5VZwRpb4AC8T1KBF67FKAgaI7YFeOtPFROSCKrW5la38jbE5fo+q2N6wAfEti8la2ie6/7U2V+SdJPqkm/mLY/JBHdvDHoUduwe4zgqBUYLTNUgX6aKdlhpZPuHfj2SMeB/tcTJfH48rN1mgGkNkAT9ovROwI7ReLrdlHrHmJ1UwZZnAfxAC3ftIjgTEHsd/f+JrjW6t+kL6Ef1tT1eQ2DPFLJlhluTD91AsZMUg==||U2FsdGVkX1/SWWqU9YmxtM0T6Nm5mClKwqTaoF9wgZd9rNw2xs4hnY8Ilv8DZtFyNt92xym3eB6WA605N5llLm0D68EQtU9ci1rTEDopZ1ODzcqtTVSoFEloNPFSfW6LTIC9+2LSVBeeHXoLEQiLYHWihHu10Xll3KsH9iBObDACDm1PT7IV4uWvNpNeuKJc\npY3C5SG+3sHRX1aeMnHlKLhaIsOdw2IexjvMqocVpfRpX4wnsabNA0VJ3k95zUPS3vTtSegeDhwbl6j+/FZcGk9i+gAy6LuetlKuARjPYn2LH5Be3Ah+ggSBPlxf3JW9rtWNdUoFByHTcFlhzlU9HnpnBUrgcVMhCQ7SAjN9h2NMGmCr10Rn4OE0WtelNqYVig7KmENaPvFT+k2I0cYZ4KWwxxsQNKbjEAxJxrzK4HkaczCvyQbzj4Ppxx/0q+Cns44OeyWcwYD/vSaJm4Kptwpr+L4y5BoSO/WeqhSUQQ85nvOhtE0pSH/ZXYo3pqjPdQRfNm6NFeBl2lwTmZUEuw==\n====END LICENSE KEY====',
                 licenseKey: this.attrs.licenseKey,
-                plugins: [TimelinePointer(), Selection(), ItemResizing(), ItemMovement()],
+
                 list: {
                     columns: this.attrs.lists.columns,
                     rows: this.attrs.lists.rows
                 },
                 chart: {
                     items: this.attrs.chart.items,
-
-                }
+                    calendarLevels: [hours, minutes],
+                    time: {
+                        zoom: 100,
+                        from: GSTC.api.date('2021-06-21').startOf('day').valueOf(),
+                        to: GSTC.api.date('2021-06-21').endOf('day').valueOf(),
+                    },
+                },
             };
             console.log(config);
             console.log(JSON.stringify(config));
