@@ -152,20 +152,13 @@
                 licenseKey: this.attrs.licenseKey,
 
                 list: {
-                    columns: {
-                        data: GSTC.api.fromArray(columnsFromDB),
-                    },
-                    rows: GSTC.api.fromArray(rowsFromDB),
+                    columns: this.attrs.lists.columns,
+                    rows: this.attrs.lists.rows
                 },
                 chart: {
-                    items: GSTC.api.fromArray(itemsFromDB),
+                    items: this.attrs.chart.items,
                     calendarLevels: [days, hours],
-                    time: {
-                        zoom: 15.5,
-                        from: GSTC.api.date('2020-01-01').startOf('day').valueOf(),
-                        to: GSTC.api.date('2020-01-01').endOf('day').valueOf(),
-                    },
-
+                    time: this.attrs.chart.time,
                 },
             };
             console.log(config);

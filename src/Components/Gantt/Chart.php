@@ -33,4 +33,12 @@ class Chart extends AdminJsonBuilder
         $this->time = $time;
         return $this;
     }
+
+    public function addCalendarLevel($calendarLevel)
+    {
+        if (empty($this->calendarLevels)) {
+            $this->calendarLevels = [];
+        }
+        $this->calendarLevels[] = $calendarLevel;
+    }
 }

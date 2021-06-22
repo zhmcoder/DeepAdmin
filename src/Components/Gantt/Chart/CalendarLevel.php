@@ -1,8 +1,10 @@
 <?php
 
-namespace Andruby\DeepAdmin\Components\Gantt;
+namespace Andruby\DeepAdmin\Components\Gantt\Chart;
 
-class CalendarLevelFormat
+use SmallRuralDog\Admin\Traits\AdminJsonBuilder;
+
+class CalendarLevel extends AdminJsonBuilder
 {
 //ChartCalendarLevelFormat
 //ChartCalendarLevel is an array with formats (ChartCalendarLevelFormat) that are displayed inside calendar for specified chart.time.zoom property.
