@@ -33,15 +33,6 @@ class Lists extends AdminJsonBuilder
 
     public static function make()
     {
-        return new Lists();
-    }
-
-    public function jsonSerialize()
-    {
-        return [
-            'columns' => $this->columns,
-            'row' => $this->row,
-            'rows' => $this->rows
-        ];;
+        return (new Lists())->is_filter_null(true);
     }
 }

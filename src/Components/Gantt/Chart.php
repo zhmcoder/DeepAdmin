@@ -17,13 +17,13 @@ class Chart extends AdminJsonBuilder
 
     public static function make()
     {
-        return new Chart();
+        return (new Chart())->is_filter_null(true);
     }
 
     public function items(array $items)
     {
         foreach ($items as $item) {
-            $this->items[$item['id']] = $item;
+            $this->items[$item->getId()] = $item;
         }
         return $this;
     }

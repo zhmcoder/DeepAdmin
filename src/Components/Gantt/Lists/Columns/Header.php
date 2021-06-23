@@ -13,6 +13,10 @@ class Header extends  AdminJsonBuilder
 
 //    protected $html;// {string} - html string (be careful with this)
 
+    /**
+     * @param $content 列的标题
+     * @return $this
+     */
     public function content($content)
     {
         $this->content = $content;

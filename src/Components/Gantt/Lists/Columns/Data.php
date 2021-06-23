@@ -20,12 +20,20 @@ class Data extends AdminJsonBuilder
 //    protected $content;// {string | lit-html} - Label for this header it could be simple string or lit-html template or
 //    protected $html;// {string} - html string (be careful with this)
 
+    /**
+     * @param $id 列表的数据对应字段
+     * @return $this
+     */
     public function id($id)
     {
         $this->id = $id;
         return $this;
     }
 
+    /**
+     * @param $width 列的宽度
+     * @return $this
+     */
     public function width($width)
     {
         $this->width = $width;
@@ -38,6 +46,10 @@ class Data extends AdminJsonBuilder
         return $this;
     }
 
+    /**
+     * @param $data 列对应的数据字段key
+     * @return $this
+     */
     public function data($data)
     {
         $this->data = $data;
@@ -46,7 +58,7 @@ class Data extends AdminJsonBuilder
 
     public static function make()
     {
-        return new Data();
+        return (new Data())->is_filter_null(true);
     }
 
 
