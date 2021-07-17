@@ -10,13 +10,14 @@ class AddRow extends Component
     protected $data;
     protected $is_title;
     protected $columns;
+    protected $style = 'width:80%';
 
     public static function make()
     {
         return new AddRow();
     }
 
-    public function is_title($is_title)
+    public function is_title($is_title = true)
     {
         $this->is_title = $is_title;
         return $this;
@@ -31,6 +32,12 @@ class AddRow extends Component
     public function columns(array $column)
     {
         $this->columns = $column;
+        return $this;
+    }
+
+    public function style($style)
+    {
+        $this->style = $style;
         return $this;
     }
 

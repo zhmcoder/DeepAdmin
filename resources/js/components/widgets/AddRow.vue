@@ -2,7 +2,7 @@
     <div class="property-list">
         <!-- <el-form ref="ruleForm" :model="value" label-width="0px" class="demo-ruleForm" > -->
         <el-form-item>
-            <el-table :data="tableData" style="width: 50%" :show-header="attrs.is_title==1">
+            <el-table :data="tableData" :style="attrs.style" :show-header="attrs.is_title">
                 <el-table-column v-for="(col, i) in columns" :key="i" :prop="col.prop" :width="Number(col.width) + 20 + 'px'">
                     <template slot="header">
                         <span>{{col.label}}</span>
