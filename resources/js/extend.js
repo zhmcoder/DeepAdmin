@@ -29,4 +29,5 @@ VueAdmin.booting((Vue, router, store) => {
     Vue.component("PropertyList", require('./components/echarts/PropertyList.vue').default);
     Vue.component("GoodsSku", require('./components/GoodsSku.vue').default);
     Vue.component("GSTC", require('./components/gantt/GSTC.vue').default);
+    Vue.component("AddRow", require('./components/widgets/AddRow.vue').default);
 });
