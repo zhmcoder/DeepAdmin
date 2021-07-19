@@ -11,7 +11,7 @@
     }
 
     .demo-table-expand label {
-        width: 90px;
+        width: 100px;
         color: #99a9bf;
         height: 40px;
     }
