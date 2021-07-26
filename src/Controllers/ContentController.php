@@ -82,17 +82,10 @@ class ContentController extends AdminController
 
         $entityId = $this->entityId;
         $grid->toolbars(function (Grid\Toolbars $toolbars) use ($entityId, $actionsInfo, $time) {
-            $toolbars->hideCreateButton();
             if (!empty($actionsInfo) && in_array('create', $actionsInfo)) {
                 $uri = explode('?', request()->getRequestUri());
                 $params = isset($uri[1]) ? $uri[1] : '';
-
-                $toolbars->addRight(
-                    Grid\Tools\ToolButton::make("添加")
-                        ->icon("el-icon-plus")
-                        ->handler(Grid\Tools\ToolButton::HANDLER_ROUTE)
-                        ->uri($this->create_url() . $params)
-                );
+                $toolbars->createButton()->params($params)->content('添加');
             }
 
             $this->grid_toolbars($toolbars);
