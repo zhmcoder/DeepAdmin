@@ -529,7 +529,7 @@ class ContentController extends AdminController
             switch ($val['form_type']) {
                 case 'input' :
                     $obj->component(Input::make()->placeholder($val['form_comment'])->maxlength($val['field_length'])->showWordLimit())
-                        ->inputWidth(6)
+                        ->inputWidth(100)
                         ->help('')
                         ->required($val['is_required'], 'string')
                         ->unique($isUnique, $this->entity->table_name, $val['name'], $val['comment'])
