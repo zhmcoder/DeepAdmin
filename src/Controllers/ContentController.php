@@ -717,6 +717,8 @@ class ContentController extends AdminController
 
         }
 
+        $form = $this->form_add($form);
+
         // 操作人ID 隐藏显示
         $form->item('oper_user_id', '操作人')->component(
             Input::make(Admin::user()->id)->type('hidden')
@@ -776,6 +778,12 @@ class ContentController extends AdminController
     protected function grid_toolbars(Grid\Toolbars $toolbars)
     {
 
+    }
+
+    // 列表回调
+    protected function form_add(Form $form)
+    {
+        return $form;
     }
 
     // 保存成功回调
