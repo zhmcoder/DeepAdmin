@@ -10,6 +10,7 @@ class SortEdit extends Component
 {
     protected $componentName = "SortEdit";
     protected $action = null;
+    protected $width = 60;
 
     public static function make($value = null)
     {
@@ -19,6 +20,12 @@ class SortEdit extends Component
     public function action($action)
     {
         $this->action = $action;
+        return $this;
+    }
+
+    public function width($width)
+    {
+        $this->width = $width;
         return $this;
     }
 

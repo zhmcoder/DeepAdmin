@@ -1,6 +1,6 @@
 <template slot-scope="scope">
     <div class="rank">
-        <input type="text" v-model="sort_value" @blur="sort_change(1)"/>
+        <input type="text" v-model="sort_value" @blur="sort_change(1)" :style="{ width: attrs.width + 'px'}"/>
     </div>
 </template>
 
@@ -23,10 +23,6 @@
             };
         },
         mounted() {
-            console.log(this.scope);
-            console.log(this.attrs);
-            console.log(this.sort_value + " sort value");
-
         },
         methods: {
             onRequest(uri) {
@@ -58,10 +54,12 @@
 <style lang="scss" scoped>
     .rank {
         input {
-            width: 30px;
+            width: 100%;
             display: inline-block;
-            border: 1px solid #E0E0E0;
+            border: 1px solid #DCDFE6;
             outline: none;
+            padding: 5px;
+            color: #606266;
         }
     }
 
