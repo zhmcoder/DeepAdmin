@@ -717,7 +717,7 @@ class ContentController extends AdminController
 
         }
 
-        $form = $this->form_add($form);
+        $form = $this->form_add($form, $isEdit);
 
         // 操作人ID 隐藏显示
         $form->item('oper_user_id', '操作人')->component(
@@ -781,7 +781,7 @@ class ContentController extends AdminController
     }
 
     // 列表回调
-    protected function form_add(Form $form)
+    protected function form_add(Form $form, $isEdit)
     {
         return $form;
     }
