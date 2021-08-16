@@ -1,8 +1,7 @@
 <?php
 
-namespace Andruby\DeepAdmin\Components\form;
+namespace Andruby\DeepAdmin\Components\Form;
 
-use Andruby\DeepAdmin\Components\widgets\Column;
 use SmallRuralDog\Admin\Components\Component;
 
 class MultiItem extends Component

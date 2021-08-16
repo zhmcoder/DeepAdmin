@@ -1,6 +1,6 @@
 <?php
 
-namespace Andruby\DeepAdmin\Components\form;
+namespace Andruby\DeepAdmin\Components\Form;
 
 use SmallRuralDog\Admin\Components\Component;
 
