@@ -19,7 +19,7 @@
     .demo-table-expand .el-form-item {
         margin-right: 0;
         margin-bottom: 0;
-        width: 90%;
+        width: 100%;
         -webkit-font-smoothing: antialiased;
         font-size: 14px;
     }
