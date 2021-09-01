@@ -2,6 +2,8 @@
 
 namespace Andruby\DeepAdmin\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 /**
  * Class Entities.
  *
@@ -22,6 +24,8 @@ namespace Andruby\DeepAdmin\Models;
  */
 class ContentTimeStamp extends Content
 {
+    use SoftDeletes;
+
     /**
      * 默认使用时间戳戳功能
      *

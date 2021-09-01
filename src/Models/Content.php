@@ -3,6 +3,7 @@
 namespace Andruby\DeepAdmin\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Entities.
@@ -24,6 +25,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Content extends Model
 {
+    use SoftDeletes;
+
     protected $guarded = [];
     public $table = '';
 
