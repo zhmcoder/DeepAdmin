@@ -10,11 +10,9 @@ trait UploadTraits
     public function uploadFile(Request $request)
     {
         try {
-            /*
             \Admin::validatorData($request->all(), [
                 'file' => 'mimes:' . config('admin.upload.mimes', 'jpeg,bmp,png,gif,jpg')
             ]);
-            */
             return $this->upload($request);
         } catch (\Exception $exception) {
             if (method_exists($this, 'responseError')) {
