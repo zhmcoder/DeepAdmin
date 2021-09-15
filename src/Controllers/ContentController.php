@@ -206,7 +206,7 @@ class ContentController extends AdminController
 
         // 是否显示ID字段
         if (Schema::hasColumn($this->entity->table_name, 'id')) {
-            $grid->column('id', '序号')->sortable()->width(80);
+            $grid->column('id', '序号')->sortable()->width(80)->align('center');
         }
 
         $entityField = EntityField::query()->where('entity_id', $this->entityId)
