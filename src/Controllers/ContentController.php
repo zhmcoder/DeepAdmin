@@ -81,6 +81,7 @@ class ContentController extends AdminController
         $perPage = env('PER_PAGE', 15);
         $grid->perPage($perPage);
         $grid->size(env('TABLE_SIZE', ''));
+        $grid->border(env('TABLE_BORDER', false));
 
         $time = time();
 
