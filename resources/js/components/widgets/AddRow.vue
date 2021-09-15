@@ -126,7 +126,7 @@
 				this.showDelete();
 			},
 			showDelete() {
-				if (this.tableData.length > 3) {
+				if (this.tableData.length > this.attrs.min_num) {
 					this.show_delete = true;
 				} else {
 					this.show_delete = false;
