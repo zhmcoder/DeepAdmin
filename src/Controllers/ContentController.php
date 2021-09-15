@@ -78,8 +78,9 @@ class ContentController extends AdminController
             ->fit(true)
             ->emptyText("暂无数据");
 
-        $perPage = env('PERPAGE', 15);
+        $perPage = env('PER_PAGE', 15);
         $grid->perPage($perPage);
+        $grid->size(env('TABLE_SIZE', ''));
 
         $time = time();
 
