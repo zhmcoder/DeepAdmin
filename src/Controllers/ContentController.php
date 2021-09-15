@@ -78,8 +78,10 @@ class ContentController extends AdminController
             ->fit(true)
             ->emptyText("暂无数据");
 
-        $perPage = env('PERPAGE', 15);
+        $perPage = env('PER_PAGE', 15);
         $grid->perPage($perPage);
+        $grid->size(env('TABLE_SIZE', ''));
+        $grid->border(env('TABLE_BORDER', false));
 
         $time = time();
 
@@ -204,7 +206,7 @@ class ContentController extends AdminController
 
         // 是否显示ID字段
         if (Schema::hasColumn($this->entity->table_name, 'id')) {
-            $grid->column('id', '序号')->sortable()->width(80);
+            $grid->column('id', '序号')->sortable()->width(80)->align('center');
         }
 
         $entityField = EntityField::query()->where('entity_id', $this->entityId)
