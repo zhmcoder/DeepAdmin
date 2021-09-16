@@ -120,8 +120,10 @@
 			//删除行
 			deleteRow(index, rows) {
 				if (this.tableData.length > 1) {
-					rows.splice(index, 1);
+					this.tableData.splice(index, 1);
 				}
+				this.onChange();
+
 				this.showAdd();
 				this.showDelete();
 			},
