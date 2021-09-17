@@ -32,4 +32,7 @@ VueAdmin.booting((Vue, router, store) => {
     Vue.component("AddRow", require('./components/widgets/AddRow.vue').default);
     Vue.component("Info", require('./components/widgets/Info.vue').default);
     Vue.component("RowMulti", require('./components/form/RowMulti.vue').default);
+    // Vue.component("TestButton",require('./components/widgets/TestButton').default);
+    Vue.component("DeleteActionConfirm",require('./components/widgets/Actions/DeleteActionConfirm').default);
+    Vue.component("MessageDialog",require('./components/widgets/MessageDialog').default);
 });
