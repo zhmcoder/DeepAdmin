@@ -486,7 +486,8 @@ class ContentController extends AdminController
 
         $form->labelPosition('right')->statusIcon(true)->labelWidth('150px');
 
-        $form->action($form->getAction() . "?entity_id=" . $this->entityId);
+        $form->actionParams(['entity_id'=>$this->entityId]);
+//        $form->action($form->getAction() . "?entity_id=" . $this->entityId);
 
         $entityField = EntityField::query()->where('entity_id', $this->entityId)
             ->whereIn('is_show', $isEdit ? [2, 4] : [3, 4])
