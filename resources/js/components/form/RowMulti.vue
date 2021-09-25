@@ -28,13 +28,21 @@
 		},
 		created() {
 			this.columns = this.attrs.columns;
-			this.multiData = this.attrs.multiData.length <= 0 ? [{}] : this.attrs.multiData;
+			if(this.attrs.multiData){
+				this.multiData = this.attrs.multiData.length <= 0 ? [{}] : this.attrs.multiData;
+      }
+
 			console.log('multiItem');
 			console.log(this.multiData);
 			console.log(this.formData);
 			console.log(this.attrs);
 			console.log(this.attrs.component.prop);
 			this.$emit("change", this.multiData)
+		},
+		watch: {
+			value(value) {
+				this.multiData = value;
+			}
 		},
 		methods: {
 			onChange(value) {

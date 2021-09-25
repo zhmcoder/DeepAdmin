@@ -3,7 +3,7 @@
     <!-- <el-form ref="ruleForm" :model="value" label-width="0px" class="demo-ruleForm" > -->
     <el-form-item>
       <el-table
-          :data="tableData"
+          :data="value"
           :style="attrs.style"
           :show-header="attrs.is_title">
         <el-table-column
@@ -60,10 +60,19 @@
 		},
 		created() {
 			this.columns = this.attrs.columns;
-			this.tableData = this.attrs.data.length <= 0 ? [{}] : this.attrs.data;
+			console.log('this value');
+			console.log(this.value);
+			if(this.attrs.data){
+				this.tableData = this.attrs.data.length <= 0 ? [{}] : this.attrs.data;
+      }
 			this.showAdd();
 			this.showDelete();
 			this.$emit("change", this.tableData)
+		},
+		watch: {
+			value(value) {
+				this.tableData = value;
+			}
 		},
 		methods: {
 			onChange(value) {
