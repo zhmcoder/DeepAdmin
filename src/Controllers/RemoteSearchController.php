@@ -22,10 +22,14 @@ class RemoteSearchController extends AdminController
         $options = [];
         if (!empty($formParams) && count($formParams) == 3) {
             $model = new Content($formParams[0]);
-            $model = $model->where($formParams[1], 'like', "%{$query}%")->orWhere($formParams[2], 'like', "%{$query}%");
 
             if (!empty($tableWhere)) {
-                $model = $model->where("$tableWhere[0]", "$tableWhere[1]", "$tableWhere[2]");
+                $model = $model->where("$tableWhere[0]", "$tableWhere[1]", "$tableWhere[2]")->where(function ($q) use ($formParams, $query) {
+                    $q->orWhere($formParams[1], 'like', "%{$query}%");
+                    $q->orWhere($formParams[2], 'like', "%{$query}%");
+                });
+            } else {
+                $model = $model->where($formParams[1], 'like', "%{$query}%")->orWhere($formParams[2], 'like', "%{$query}%");
             }
 
             $count = $model->count();
