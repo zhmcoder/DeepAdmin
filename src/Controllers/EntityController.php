@@ -19,28 +19,41 @@ use Illuminate\Support\Facades\DB;
 
 class EntityController extends BaseController
 {
-
     protected function grid()
     {
         $entitiesModel = config('deep_admin.database.entities_model');
 
         $grid = new Grid(new $entitiesModel());
 
-        $grid->defaultSort('id', 'desc');
-        $grid->column('id', "ID")->width(80)->sortable();
+        $grid->addDialogForm($this->form()->isDialog()->className('p-15'), '600px');
+        $grid->editDialogForm($this->form(true)->isDialog()->className('p-15'), '600px');
+
+        $grid->stripe()
+            ->defaultSort('id', 'desc')
+            ->perPage(env('PER_PAGE', 15))
+            ->size(env('TABLE_SIZE', ''))
+            ->border(env('TABLE_BORDER', false))
+            ->emptyText("暂无模型");
+
+        $grid->column('id', "序号")->width(120)->sortable()->align('center');
 
         $grid->column('name', "模型名称");
         $grid->column('table_name', '数据库表名');
         $grid->column('description', "描述");
-        // $grid->column('created_at', '添加时间');
-        // $grid->column('updated_at', '更新时间');
+
         $grid->actions(function (Grid\Actions $actions) {
-            $actions->add(Grid\Actions\ActionButton::make("数据")->order(3)
-                ->handler('route')->uri('/entities/content?entity_id={id}'));
-            $actions->add(Grid\Actions\ActionButton::make("字段管理")->order(3)
-                ->handler('route')->uri('/entities/entity-field?entity_id={id}'));
+            $actions->add(Grid\Actions\ActionButton::make("数据")
+                ->order(3)
+                ->handler('route')
+                ->uri('/entities/content?entity_id={id}')
+            );
+            $actions->add(Grid\Actions\ActionButton::make("字段管理")
+                ->order(3)
+                ->handler('route')
+                ->uri('/entities/entity-field?entity_id={id}')
+            );
+            $actions->setDeleteAction(new Grid\Actions\DeleteDialogAction());
         })->actionWidth(120);
-        // $grid->column('is_show_content_manage', "状态")->width(100)->align("center")->component(Boole::make());
 
         return $grid;
     }
@@ -52,13 +65,14 @@ class EntityController extends BaseController
         $entitiesModel = config('deep_admin.database.entities_model');
 
         $form = new Form(new $entitiesModel());
+        $form->getActions()->buttonCenter();
 
-        $form->labelWidth('120px');
+        $form->labelWidth('150px');
 
         $entityRequest = new EntityValidate();
 
         $form->item('name', '模型名称')
-            ->inputWidth(8)
+            ->inputWidth(16)
             ->required()
             ->serveRules($entityRequest->rules()['name'])
             ->serveRulesMessage($entityRequest->rules()['name']);
@@ -67,7 +81,7 @@ class EntityController extends BaseController
             ->component(Input::make()
                 ->placeholder('模型对应的数据库表名称,保存后不能修改'))
             ->help('默认前缀' . config('deep_admin.database.prefix') . '，前缀如果需要修改，请修改配置文件')
-            ->inputWidth(10)
+            ->inputWidth(16)
             ->defaultValue(config('deep_admin.database.prefix'))
             ->required()
             ->serveRules($entityRequest->rules()['table_name'])
@@ -81,15 +95,15 @@ class EntityController extends BaseController
 
         $form->item('description', '描述')
             ->component(Input::make())
-            ->inputWidth(8);
+            ->inputWidth(16);
 
         $form->item('default_sort', '默认排序字段')
-            ->inputWidth(8)->defaultValue('id')
+            ->inputWidth(16)->defaultValue('id')
             ->help('排序的字段名称，支持单个字段排序');
 
         $form->item('sort_type', '排序类型')
             ->component(RadioGroup::make('desc', [Radio::make('desc', 'DESC'), Radio::make('asc', 'ASC')]))
-            ->inputWidth(8)
+            ->inputWidth(20)
             ->help('排序类型，支持 DESC、ASC');
 
         $form->item('actions', '支持操作')
@@ -111,20 +125,11 @@ class EntityController extends BaseController
                 Radio::make(2, '时间戳'),
             ]));
 
-        /*
-        $form->item('enable_comment', '评论')
-            ->component(RadioGroup::make(1, [
-                Radio::make(1, '是'),
-                Radio::make(0, '否'),
-            ]));
-        */
-
         $form->saving(function (Form $form) {
             if ($this->is_edit) {
                 $id = $form->model()->getKey();
                 $this->old_data = $form->model()->findOrFail($id);
             }
-
         });
         $form->saved(function (Form $form) {
             if (!$this->is_edit) {
@@ -141,7 +146,6 @@ class EntityController extends BaseController
                 $this->update_event($form, $this->old_data);
             }
         });
-
 
         return $form;
     }

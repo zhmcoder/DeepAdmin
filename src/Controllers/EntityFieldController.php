@@ -22,7 +22,6 @@ use Andruby\DeepAdmin\Models\EntityField;
 use Andruby\DeepAdmin\Models\Entity;
 use Andruby\DeepAdmin\Validates\EntityFieldValidate;
 
-
 class EntityFieldController extends AdminController
 {
     use HasResourceActions;
@@ -36,37 +35,41 @@ class EntityFieldController extends AdminController
         $entity_id = $data['entity_id'];
 
         $grid = new Grid(new $entityFieldModel());
-        $grid->model()->where('entity_id', $entity_id);
 
+        $grid->addDialogForm($this->form()->isDialog()->className('p-15'), '800px');
+        $grid->editDialogForm($this->form(true)->isDialog()->className('p-15'), '800px');
+
+        $grid->model()->where('entity_id', $entity_id);
 
         $grid->quickSearch(['name'])
             ->quickSearchPlaceholder("字段名称")
             ->pageBackground()
-            ->stripe(true)
             ->fit(true)
-            ->emptyText("暂无模型字段数据");
+            ->stripe()
+            ->defaultSort('list_order', 'asc')
+            ->perPage(env('PER_PAGE', 15))
+            ->size(env('TABLE_SIZE', ''))
+            ->border(env('TABLE_BORDER', false))
+            ->emptyText("暂无模型字段");
 
         $grid->toolbars(function (Grid\Toolbars $toolbars) use ($entity_id) {
-
+            /*
             $toolbars->hideCreateButton();
             $toolbars->addRight(Grid\Tools\ToolButton::make("添加")
                 ->icon("el-icon-plus")
                 ->handler(Grid\Tools\ToolButton::HANDLER_ROUTE)
                 ->uri("/entities/entity-field/create?entity_id=" . $entity_id));
-        });
-
-        $grid->actions(function (Grid\Actions $actions) {
-
+            */
+        })->actions(function (Grid\Actions $actions) {
+            $actions->setDeleteAction(new Grid\Actions\DeleteDialogAction());
         })->actionWidth(120)->actionFixed('right');
 
-        $grid->defaultSort('list_order', 'asc');
-
-        $grid->column('id', "ID")->width(60)->sortable();
+        $grid->column('id', "序号")->width(120)->sortable()->align('center');
         $grid->column('entity.name', "模型")->width(150);
         $grid->column('name', "字段名称")->width(150);
-        $grid->column('type', '字段类型');
+        $grid->column('type', '字段类型')->width(120);
         $grid->column('form_name', "表单名称")->width(150);
-        $grid->column('form_type', '表单类型')->sortable()->width(100);
+        $grid->column('form_type', '表单类型')->sortable()->width(150);
         //$grid->column('is_show_inline', "行内展示")->align("center")->component(Boole::make())->sortable();
         $grid->column('is_show', "表单显示")
             ->align("center")
@@ -90,7 +93,7 @@ class EntityFieldController extends AdminController
         return $grid;
     }
 
-    protected function form($isEdit = 0)
+    protected function form($isEdit = 0): Form
     {
         $entityFieldModel = config('deep_admin.database.entity_fields_model');
         $isFormShow = config('deep_admin.is_form_show');
@@ -103,6 +106,7 @@ class EntityFieldController extends AdminController
 
         $entityFieldRequest = new EntityFieldValidate();
         $form = new Form(new $entityFieldModel());
+        $form->getActions()->buttonCenter();
 
         $form->hideTab(false);
 
@@ -346,10 +350,8 @@ class EntityFieldController extends AdminController
 
             } else {
                 TableHelpers::create_field($entityInfo->table_name, $fieldInfo);
-
             }
         }
-
     }
 
 }

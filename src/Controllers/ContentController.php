@@ -20,7 +20,6 @@ use SmallRuralDog\Admin\Components\Form\DateTimePicker;
 use SmallRuralDog\Admin\Components\Form\Input;
 use SmallRuralDog\Admin\Components\Form\InputNumber;
 use SmallRuralDog\Admin\Components\Form\Radio;
-use SmallRuralDog\Admin\Components\Form\RadioButton;
 use SmallRuralDog\Admin\Components\Form\RadioGroup;
 use SmallRuralDog\Admin\Components\Form\Select;
 use SmallRuralDog\Admin\Components\Form\TimePicker;
@@ -76,12 +75,11 @@ class ContentController extends AdminController
             ->defaultSort($defaultSort, $sortType, $defaultSort)
             ->stripe(true)
             ->fit(true)
+            ->defaultSort('id', 'desc')
+            ->perPage(env('PER_PAGE', 15))
+            ->size(env('TABLE_SIZE', ''))
+            ->border(env('TABLE_BORDER', false))
             ->emptyText("暂无数据");
-
-        $perPage = env('PER_PAGE', 15);
-        $grid->perPage($perPage);
-        $grid->size(env('TABLE_SIZE', ''));
-        $grid->border(env('TABLE_BORDER', false));
 
         $time = time();
 
@@ -181,7 +179,6 @@ class ContentController extends AdminController
         }
 
         $grid->actions(function (Grid\Actions $actions) use ($actionsInfo, $editParams, $time) {
-
             // 隐藏编辑操作
             if (!empty($actionsInfo) && in_array('edit', $actionsInfo)) {
                 $actions->editAction()->params($editParams . 'version=' . $time);
@@ -195,6 +192,7 @@ class ContentController extends AdminController
             } else {
                 $actions->hideDeleteAction();
             }
+            $actions->setDeleteAction(new Grid\Actions\DeleteDialogAction());
 
             $this->grid_action($actions);
         })->actionWidth($actionsWidth)->actionFixed('right');
@@ -206,7 +204,7 @@ class ContentController extends AdminController
 
         // 是否显示ID字段
         if (Schema::hasColumn($this->entity->table_name, 'id')) {
-            $grid->column('id', '序号')->sortable()->width(80)->align('center');
+            $grid->column('id', '序号')->sortable()->width(120)->align('center');
         }
 
         $entityField = EntityField::query()->where('entity_id', $this->entityId)
@@ -483,10 +481,11 @@ class ContentController extends AdminController
         } else {
             $form = new Form(new Content($this->entity->table_name));
         }
+        $form->getActions()->buttonCenter();
 
         $form->labelPosition('right')->statusIcon(true)->labelWidth('150px');
 
-        $form->actionParams(['entity_id'=>$this->entityId]);
+        $form->actionParams(['entity_id' => $this->entityId]);
 //        $form->action($form->getAction() . "?entity_id=" . $this->entityId);
 
         $entityField = EntityField::query()->where('entity_id', $this->entityId)
@@ -914,7 +913,6 @@ class ContentController extends AdminController
         return $return;
     }
 
-
     // 连表下拉单选列表
     protected function _selectOptionTableList($fields)
     {
@@ -1082,6 +1080,5 @@ class ContentController extends AdminController
 
         return $options;
     }
-
 
 }
