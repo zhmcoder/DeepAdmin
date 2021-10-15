@@ -128,7 +128,7 @@
 			},
 			//删除行
 			deleteRow(index, rows) {
-				if (this.tableData.length > 1) {
+				if (this.tableData.length > 0) {
 					this.tableData.splice(index, 1);
 				}
 				this.onChange();
