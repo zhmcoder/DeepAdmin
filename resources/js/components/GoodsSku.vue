@@ -186,7 +186,7 @@
                 </div>
             </div>
         </div>
-        <div class="mt-10">
+        <div class="el-col-16">
             <GoodsSkuList
                 :GoodsAttrs="goods_attrs"
                 :edit_goods_sku_list="value.goods_sku_list"
@@ -411,6 +411,7 @@ $bg-color: #f5f7fa;
 
 .goods-sku-box {
     border: 1px solid $border-color;
+    width: 70%;
 
     .goods-attrs + .goods-attrs {
         border-top: 1px solid $border-color;
