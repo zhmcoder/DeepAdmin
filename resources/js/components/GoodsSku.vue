@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="sku-box">
         <div class="goods-sku-box">
             <div
                 class="goods-attrs"
@@ -408,7 +408,9 @@ const GoodsAttrItem = {
 <style lang="scss" scoped>
 $border-color: #ebeef5;
 $bg-color: #f5f7fa;
-
+.sku-box {
+    width: 100%;
+}
 .goods-sku-box {
     border: 1px solid $border-color;
     width: 70%;
