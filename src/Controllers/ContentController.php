@@ -42,24 +42,34 @@ class ContentController extends AdminController
 {
     use HasResourceActions;
 
-    private $entityId = null; //
-    private $entity = null; // 模型
-    private $entityField = null; // 模型字段
-    public $remoteUrl = '';
-    public $uploadImages = '';
-    private $createUrl = "/entities/content/create?";
-    public $dataUrl = "";
+    protected $entityId = null; //
+    protected $entity = null; // 模型
+    protected $entityField = null; // 模型字段
+    protected $remoteUrl = '';
+    protected $uploadImages = '';
+    protected $createUrl = "/entities/content/create?";
+    protected $dataUrl = "";
 
     public function __construct()
     {
         $this->entityId = request('entity_id');
         if ($this->entityId) {
             $this->entity = Entity::find($this->entityId);
-            $this->entityField = EntityField::query()->where('entity_id', $this->entityId)->get()->toArray();
+//            $this->entityField = EntityField::query()->where('entity_id', $this->entityId)->get()->toArray();
+        } else {
+            if ($this->getTableName()) {
+                $this->entity = Entity::where('table_name', $this->getTableName())->firstOr();
+                $this->entityId = $this->entity->id;
+            }
         }
 
         $this->remoteUrl = config('admin.route.api_prefix') . '/remote/search'; // 下拉远程搜索
         $this->uploadImages = config('admin.route.api_prefix') . '/upload/images'; // 编辑框上传图片
+    }
+
+    protected function getTableName()
+    {
+        return null;
     }
 
     protected function grid()
