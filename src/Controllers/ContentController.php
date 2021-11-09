@@ -198,11 +198,12 @@ class ContentController extends AdminController
 
             // 隐藏删除操作
             if (!empty($actionsInfo) && in_array('delete', $actionsInfo)) {
-                $actions->deleteAction()->params('entity_id=' . $this->entityId . '&version=' . $time);
+                $params = 'entity_id=' . $this->entityId . '&version=' . $time;
+                $actions->deleteAction()->params($params);
+                $actions->setDeleteAction(new Grid\Actions\DeleteDialogAction())->params($params);
             } else {
                 $actions->hideDeleteAction();
             }
-            $actions->setDeleteAction(new Grid\Actions\DeleteDialogAction());
 
             $this->grid_action($actions);
         })->actionWidth($actionsWidth)->actionFixed('right');
