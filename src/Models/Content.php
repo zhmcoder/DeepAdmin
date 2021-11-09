@@ -48,14 +48,15 @@ class Content extends Model
         if (empty($table)) {
             $entityId = request('entity_id');
             if ($entityId) {
-                $entity = Entity::find($entityId);
-                $table = $entity->table_name;
+                $table = Entity::where('id', $entityId)->value('table_name');
             }
+        } else {
+            $entityId = Entity::where('table_name', $table)->value('id');
         }
 
         // todo 多选需要标记字段类型
         $entityFieldList = EntityField::query()
-            ->where('entity_id', request('entity_id'))
+            ->where('entity_id', $entityId)
             ->whereIn('form_type', ['checkbox', 'checkboxTable', 'selectMulti', 'selectMultiTable', 'inputDecimal', 'cascade', 'cascadeMulti', 'uploadMulti'])
             ->get()->toArray();
 
