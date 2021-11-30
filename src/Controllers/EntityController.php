@@ -72,7 +72,7 @@ class EntityController extends BaseController
         $entityRequest = new EntityValidate();
 
         $form->item('name', '模型名称')
-            ->inputWidth(16)
+            ->inputWidth(20)
             ->required()
             ->serveRules($entityRequest->rules()['name'])
             ->serveRulesMessage($entityRequest->rules()['name']);
@@ -81,7 +81,7 @@ class EntityController extends BaseController
             ->component(Input::make()
                 ->placeholder('模型对应的数据库表名称,保存后不能修改'))
             ->help('默认前缀' . config('deep_admin.database.prefix') . '，前缀如果需要修改，请修改配置文件')
-            ->inputWidth(16)
+            ->inputWidth(20)
             ->defaultValue(config('deep_admin.database.prefix'))
             ->required()
             ->serveRules($entityRequest->rules()['table_name'])
@@ -90,7 +90,8 @@ class EntityController extends BaseController
         if (!$this->is_edit) {
             $form->item('is_modify_db', '新建数据库表')
                 ->component(CSwitch::make())
-                ->help('某些情况下可能数据库表结构已经通过其它方式建好，此处无需操作数据库表，添加字段主要是方便利用框架提供的模型增删改查功能');
+                ->help('某些情况下可能数据库表结构已经通过其它方式建好，此处无需操作数据库表，添加字段主要是方便利用框架提供的模型增删改查功能')
+                ->inputWidth(20);
         }
 
         $form->item('description', '描述')
@@ -107,13 +108,13 @@ class EntityController extends BaseController
             ->help('排序类型，支持 DESC、ASC');
 
         $form->item('actions', '支持操作')
-            ->component(CheckboxGroup::make(["create", "edit", "delete"])->options(
+            ->component(CheckboxGroup::make()->options(
                 [
                     Checkbox::make('create', '添加')->checked(),
                     Checkbox::make('edit', '编辑')->checked(),
                     Checkbox::make('delete', '删除')->checked()
                 ]
-            ));
+            ))->inputWidth(24);
 
         $form->item('actions_width', '操作栏宽度')
             ->component(InputNumber::make()->min(100))->defaultValue(100);

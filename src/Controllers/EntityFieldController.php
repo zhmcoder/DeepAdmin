@@ -129,13 +129,13 @@ class EntityFieldController extends AdminController
         $form->item('entity_id', '模型')
             ->component(Input::make()->disabled())
             ->defaultValue($entity_id)
-            ->inputWidth(4)
+            ->inputWidth(12)
             ->serveRules($entityFieldRequest->rules()['entity_id'])
             ->serveRulesMessage($entityFieldRequest->messages()['entity_id']);
 
         $form->item('name', '字段名称')
             ->component(Input::make()->placeholder('只能包含英文字母和数字，长度不超过64'))
-            ->inputWidth(8)
+            ->inputWidth(12)
             ->serveRules($entityFieldRequest->rules()['name'])
             ->serveRulesMessage($entityFieldRequest->messages()['name'])
             ->required();
@@ -153,7 +153,7 @@ class EntityFieldController extends AdminController
                         }
                         return $return;
                     })
-            )->required();
+            )->required()->inputWidth(20);
 
         $form->item('min', '最小值')
             ->component(InputNumber::make(256)->min(0))
@@ -194,20 +194,21 @@ class EntityFieldController extends AdminController
 
         $form->item('default_value', '字段默认值')
             ->component(Input::make()->placeholder('仅对字符串、数值类型的字段类型有效'))
-            ->inputWidth(6);
+            ->inputWidth(12);
         $form->item('comment', '字段注释')
-            ->inputWidth(4)
+            ->inputWidth(12)
             ->required();
 
         $form->item('is_modify_db', '变更表结构')
             ->component(CSwitch::make())
             ->defaultValue(!$isEdit)
-            ->help('某些情况下可能数据库表结构已经通过其它方式建好，此处无需操作数据库表，添加字段主要是方便利用框架提供的模型增删改查功能');
+            ->help('某些情况下可能数据库表结构已经通过其它方式建好，此处无需操作数据库表，添加字段主要是方便利用框架提供的模型增删改查功能')
+            ->inputWidth(20);
 
         $form->item('form_name', '表单名称')
-            ->inputWidth(4)
+            ->inputWidth(12)
             ->required();
-        $form->item('form_comment', '表单备注')->inputWidth(4);
+        $form->item('form_comment', '表单备注')->inputWidth(12);
         $form->item('form_type', '表单类型')
             ->help('下拉选择（远程搜索）、下拉选择（多选，远程搜索）只支持行内展示')
             ->component(
@@ -220,7 +221,7 @@ class EntityFieldController extends AdminController
                         }
                         return $return;
                     })
-            )->required();
+            )->required()->inputWidth(20);
 
         $form->item('children_id', '级联子节点')
             ->component(InputNumber::make())
@@ -237,9 +238,9 @@ class EntityFieldController extends AdminController
 
         $form->item('table_where', '连表查询条件')
             ->component(Input::make()->textarea(4)->placeholder('连表查询条件，参数格式为：字段名,条件,值'))
-            ->inputWidth(10);
+            ->inputWidth(20);
 
-        $form->item('prop', '列表显示表字段')->inputWidth(4)->tab('高级配置');
+        $form->item('prop', '列表显示表字段')->inputWidth(12)->tab('高级配置');
 
         $form->item('order', '表单排序')->help('值越小排序越靠前')->component(InputNumber::make(100)->min(0))->tab('高级配置');
 
@@ -249,17 +250,17 @@ class EntityFieldController extends AdminController
         foreach ($isFormShow as $key => $val) {
             $radio[] = Radio::make($key, $val);
         }
-        $form->item('is_show', '表单显示')->component(RadioGroup::make(4, $radio))->tab('高级配置');
+        $form->item('is_show', '表单显示')->component(RadioGroup::make(4, $radio))->inputWidth(20)->tab('高级配置');
 
         $form->item('show_where', '表单显示条件')
             ->component(Input::make()->textarea(2)->placeholder('表单显示条件，参数格式为：字段名,条件,值'))
-            ->inputWidth(10)->tab('高级配置');
+            ->inputWidth(15)->tab('高级配置');
 
         $radio = [];
         foreach ($isSearch as $key => $val) {
             $radio[] = Radio::make($key, $val);
         }
-        $form->item('is_search', '支持查询方式')->component(RadioGroup::make(1, $radio))->tab('高级配置');
+        $form->item('is_search', '支持查询方式')->component(RadioGroup::make(1, $radio))->inputWidth(20)->tab('高级配置');
 
         $form->item('is_list_show', '列表显示')->component(CSwitch::make())->tab('高级配置');
 
@@ -273,12 +274,12 @@ class EntityFieldController extends AdminController
 
         $form->item('list_width', '列表宽度')->help('列表宽度设置为0则自适应')->component(InputNumber::make(0)->max(500)->min(0))->tab('高级配置');
 
-        $form->item('vif_name', '关联字段名称')->inputWidth(4)->tab('高级配置');
-        $form->item('vif_value', '关联字段值')->inputWidth(4)->tab('高级配置');
+        $form->item('vif_name', '关联字段名称')->inputWidth(12)->tab('高级配置');
+        $form->item('vif_value', '关联字段值')->inputWidth(12)->tab('高级配置');
 
-        $form->item('desc', '下拉副标题')->inputWidth(4)->tab('定制配置');
-        $form->item('desc_prefix', '下拉副标题前缀')->inputWidth(4)->tab('定制配置');
-        $form->item('desc_suffix', '下拉副标题后缀')->inputWidth(4)->tab('定制配置');
+        $form->item('desc', '下拉副标题')->inputWidth(12)->tab('定制配置');
+        $form->item('desc_prefix', '下拉副标题前缀')->inputWidth(12)->tab('定制配置');
+        $form->item('desc_suffix', '下拉副标题后缀')->inputWidth(12)->tab('定制配置');
 
         $form->saved(function (Form $form) use ($isEdit) {
             if (!$isEdit) {
