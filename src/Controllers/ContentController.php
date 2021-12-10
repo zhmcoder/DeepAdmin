@@ -99,6 +99,8 @@ class ContentController extends AdminController
                 $uri = explode('?', request()->getRequestUri());
                 $params = isset($uri[1]) ? $uri[1] : '';
                 $toolbars->createButton()->params($params)->content('添加');
+            } else {
+                $toolbars->hideCreateButton();
             }
 
             $this->grid_toolbars($toolbars);
