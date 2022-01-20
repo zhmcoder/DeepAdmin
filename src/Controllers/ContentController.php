@@ -29,6 +29,7 @@ use SmallRuralDog\Admin\Components\Grid\Avatar;
 use SmallRuralDog\Admin\Components\Grid\Boole;
 use SmallRuralDog\Admin\Components\Grid\Image;
 use SmallRuralDog\Admin\Components\Grid\Tag;
+use SmallRuralDog\Admin\Components\Widgets\Markdown;
 use SmallRuralDog\Admin\Controllers\AdminController;
 use SmallRuralDog\Admin\Controllers\HasResourceActions;
 use SmallRuralDog\Admin\Facades\Admin;
@@ -730,7 +731,11 @@ class ContentController extends AdminController
                         Cascader::make()->filterable()->options($this->_cascadeOptions($val))->clearable()->multiple()->collapseTags()
                     )->inputWidth(20)->required(true, 'array');
                     break;
-
+                case 'markdown' : // markdown编辑器
+                    $obj->component(
+                        Markdown::make()
+                    )->inputWidth(500)->required($val['is_required'], 'string');
+                    break;
             }
 
         }
