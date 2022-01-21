@@ -7,6 +7,22 @@ use Illuminate\Http\Request;
 
 trait UploadTraits
 {
+    public function uploadXlsx(Request $request)
+    {
+        try {
+            \Admin::validatorData($request->all(), [
+                'file' => 'mimes:' . config('admin.upload.xlsx', 'xlsx')
+            ]);
+            return $this->upload($request);
+        } catch (\Exception $exception) {
+            if (method_exists($this, 'responseError')) {
+                $this->responseError($exception->getMessage());
+            } else {
+                return \Admin::responseError($exception->getMessage());
+            }
+        }
+    }
+
     public function uploadFile(Request $request)
     {
         try {
@@ -21,7 +37,6 @@ trait UploadTraits
                 return \Admin::responseError($exception->getMessage());
             }
         }
-
     }
 
     public function uploadImage(Request $request)
