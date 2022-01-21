@@ -40,6 +40,7 @@ return [
         'countTable' => '统计数量',
         'timePicker' => '时间选择',
         'timePickerRange' => '时间段选择',
+        'markdown' => 'markdown编辑器',
     ],
     // 表单是否显示
     'is_form_show' => [
