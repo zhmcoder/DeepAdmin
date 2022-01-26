@@ -733,7 +733,7 @@ class ContentController extends AdminController
                     break;
                 case 'markdown' : // markdown编辑器
                     $obj->component(
-                        Markdown::make()
+                        Markdown::make()->style('z-index: 10')
                     )->inputWidth(500)->required($val['is_required'], 'string');
                     break;
             }
