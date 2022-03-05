@@ -1,6 +1,6 @@
 <?php
 
-namespace Andruby\DeepAdmin\Components\widgets;
+namespace Andruby\DeepAdmin\Components\Widgets;
 
 use Andruby\DeepAdmin\Components\Component;
 

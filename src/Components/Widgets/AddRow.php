@@ -1,12 +1,12 @@
 <?php
 
-namespace Andruby\DeepAdmin\Components\widgets;
+namespace Andruby\DeepAdmin\Components\Widgets;
 
 use Andruby\DeepAdmin\Components\Component;
 
-class MessageDialog extends Component
+class AddRow extends Component
 {
-    protected $componentName = "MessageDialog";
+    protected $componentName = "AddRow";
     protected $data;
     protected $is_title;
     protected $columns;
@@ -30,7 +30,7 @@ class MessageDialog extends Component
 
     public static function make()
     {
-        return new MessageDialog();
+        return new AddRow();
     }
 
     public function is_title($is_title = true)
