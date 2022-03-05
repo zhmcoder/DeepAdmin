@@ -2,8 +2,8 @@
 
 namespace Andruby\DeepAdmin\Components\Grid;
 
-use SmallRuralDog\Admin\Components\Component;
-use SmallRuralDog\Admin\Components\Grid\Boole;
+use Andruby\DeepAdmin\Components\Component;
+use Andruby\DeepAdmin\Components\Grid\Boole;
 
 
 class SortEdit extends Component

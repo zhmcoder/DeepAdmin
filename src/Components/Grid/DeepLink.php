@@ -2,7 +2,7 @@
 
 namespace Andruby\DeepAdmin\Components\Grid;
 
-use SmallRuralDog\Admin\Components\GridComponent;
+use Andruby\DeepAdmin\Components\GridComponent;
 
 class DeepLink extends GridComponent
 {

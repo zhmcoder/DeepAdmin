@@ -2,7 +2,7 @@
 
 namespace Andruby\DeepAdmin\Components\Form;
 
-use SmallRuralDog\Admin\Components\Component;
+use Andruby\DeepAdmin\Components\Component;
 
 class RowMulti extends Component
 {

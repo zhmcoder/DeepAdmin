@@ -3,7 +3,7 @@
 namespace Andruby\DeepAdmin\Components\Gantt;
 
 use Andruby\DeepAdmin\Components\Gantt\Chart\Time;
-use SmallRuralDog\Admin\Traits\AdminJsonBuilder;
+use Andruby\DeepAdmin\Traits\AdminJsonBuilder;
 
 class Chart extends AdminJsonBuilder
 {

@@ -41,6 +41,9 @@
             "providers": [
                 "Andruby\\DeepAdmin\\AdminServiceProvider"
             ]
+        },
+        "aliases": {
+            "Admin": "Andruby\\DeepAdmin\\Facades\\Admin"
         }
     },
     "repositories": {

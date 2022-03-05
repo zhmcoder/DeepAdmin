@@ -2,7 +2,7 @@
 
 namespace Andruby\DeepAdmin\Components\Antv;
 
-use SmallRuralDog\Admin\Components\Antv\Line;
+use Andruby\DeepAdmin\Components\Antv\Line;
 
 class GroupColumn extends Line
 {

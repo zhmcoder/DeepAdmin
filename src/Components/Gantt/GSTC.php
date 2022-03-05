@@ -3,7 +3,7 @@
 namespace Andruby\DeepAdmin\Components\Gantt;
 
 use Illuminate\Support\Str;
-use SmallRuralDog\Admin\Components\Component;
+use Andruby\DeepAdmin\Components\Component;
 
 class GSTC extends Component
 {

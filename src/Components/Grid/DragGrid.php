@@ -2,9 +2,9 @@
 
 namespace Andruby\DeepAdmin\Components\Grid;
 
-use SmallRuralDog\Admin\Components\Component;
-use SmallRuralDog\Admin\Components\Grid\Boole;
-use SmallRuralDog\Admin\Grid;
+use Andruby\DeepAdmin\Components\Component;
+use Andruby\DeepAdmin\Components\Grid\Boole;
+use Andruby\DeepAdmin\Grid;
 
 
 class DragGrid extends Grid

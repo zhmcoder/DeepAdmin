@@ -3,8 +3,8 @@
 namespace Andruby\DeepAdmin\Controllers;
 
 use Andruby\DeepAdmin\Models\Content;
-use SmallRuralDog\Admin\Components\Attrs\SelectOption;
-use SmallRuralDog\Admin\Controllers\AdminController;
+use Andruby\DeepAdmin\Components\Attrs\SelectOption;
+use Andruby\DeepAdmin\Controllers\AdminController;
 
 class RemoteSearchController extends AdminController
 {

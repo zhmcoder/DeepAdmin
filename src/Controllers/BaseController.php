@@ -2,9 +2,9 @@
 
 namespace Andruby\DeepAdmin\Controllers;
 
-use SmallRuralDog\Admin\Controllers\AdminController;
-use SmallRuralDog\Admin\Controllers\HasResourceActions;
-use SmallRuralDog\Admin\Form;
+use Andruby\DeepAdmin\Controllers\AdminController;
+use Andruby\DeepAdmin\Controllers\HasResourceActions;
+use Andruby\DeepAdmin\Form;
 
 abstract class BaseController extends AdminController
 {

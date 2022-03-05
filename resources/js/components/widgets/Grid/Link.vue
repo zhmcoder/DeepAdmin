@@ -8,7 +8,6 @@
     :disabled="attrs.disabled"
     :href="attrs.href!==null?attrs.href:value"
     :icon='attrs.icon'
-    :target='attrs.target'
   >{{value}}</el-link>
 </template>
 <script>

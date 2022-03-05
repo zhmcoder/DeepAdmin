@@ -1,0 +1,10 @@
+<?php
+
+namespace DummyNamespace;
+
+use Andruby\DeepAdmin\Controllers\AuthController as BaseAuthController;
+
+class AuthController extends BaseAuthController
+{
+
+}

@@ -2,7 +2,7 @@
 
 namespace Andruby\DeepAdmin\Components\widgets;
 
-use SmallRuralDog\Admin\Components\Component;
+use Andruby\DeepAdmin\Components\Component;
 
 class DeleteActionConfirm extends Component
 {

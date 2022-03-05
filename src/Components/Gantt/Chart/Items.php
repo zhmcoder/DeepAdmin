@@ -2,7 +2,7 @@
 
 namespace Andruby\DeepAdmin\Components\Gantt\Chart;
 
-use SmallRuralDog\Admin\Traits\AdminJsonBuilder;
+use Andruby\DeepAdmin\Traits\AdminJsonBuilder;
 
 class Items extends AdminJsonBuilder
 {

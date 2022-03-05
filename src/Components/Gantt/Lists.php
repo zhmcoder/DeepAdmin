@@ -3,7 +3,7 @@
 namespace Andruby\DeepAdmin\Components\Gantt;
 
 use Andruby\DeepAdmin\Components\Gantt\Lists\Columns;
-use SmallRuralDog\Admin\Traits\AdminJsonBuilder;
+use Andruby\DeepAdmin\Traits\AdminJsonBuilder;
 
 class Lists extends AdminJsonBuilder
 {

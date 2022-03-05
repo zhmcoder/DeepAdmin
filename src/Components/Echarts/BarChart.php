@@ -3,7 +3,7 @@
 namespace Andruby\DeepAdmin\Components\Echarts;
 
 use Illuminate\Support\Str;
-use SmallRuralDog\Admin\Components\Component;
+use Andruby\DeepAdmin\Components\Component;
 
 class BarChart extends Component
 {

@@ -2,7 +2,7 @@
 
 namespace Andruby\DeepAdmin\Controllers;
 
-use SmallRuralDog\Admin\Controllers\AdminController;
+use Andruby\DeepAdmin\Controllers\AdminController;
 
 class UploadController extends AdminController
 {
