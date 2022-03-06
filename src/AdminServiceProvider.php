@@ -45,8 +45,8 @@ class AdminServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'deep-admin');
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'deep-admin');
         $this->loadRoutesFrom(__DIR__ . '/../routes/route.php');
-        Admin::script('deep-admin', __DIR__ . '/../dist/js/extend.js');
-        Admin::style('deep-admin', __DIR__ . '/../dist/css/extend.css');
+        // Admin::script('deep-admin', __DIR__ . '/../public/js/extend.js');
+        // Admin::style('deep-admin', __DIR__ . '/../public/css/extend.css');
 
         if (file_exists($routes = admin_path('routes.php'))) {
             $this->loadRoutesFrom($routes);
@@ -82,7 +82,7 @@ class AdminServiceProvider extends ServiceProvider
             $this->publishes([__DIR__ . '/../config' => config_path()], 'deep-admin-config');
             $this->publishes([__DIR__ . '/../resources/lang' => resource_path('lang')], 'deep-admin-lang');
             $this->publishes([__DIR__ . '/../database/migrations' => database_path('migrations')], 'deep-admin-migrations');
-            $this->publishes([__DIR__ . '/../dist' => public_path('vendor/deep-admin')], 'deep-admin-assets');
+            $this->publishes([__DIR__ . '/../public' => public_path('vendor/deep-admin')], 'deep-admin-assets');
         }
     }
 
