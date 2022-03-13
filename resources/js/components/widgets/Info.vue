@@ -1,7 +1,8 @@
 <template slot-scope="props">
     <el-form class="demo-table-expand">
         <el-form-item v-for="(item, i) in info_list" :key="i" :label="item.label">
-            <span class="text_value">{{item.name}}</span>
+            <span class="text_value" v-if="item.href"><a :href="item.href" target="_blank">{{item.name}}</a></span>
+            <span class="text_value" v-else>{{item.name}}</span>
         </el-form-item>
     </el-form>
 </template>item
