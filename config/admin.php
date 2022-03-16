@@ -2,11 +2,12 @@
 
 return [
     //后台名称 null不显示
-    'name' => null,
+    'name' => env('ADMIN_NAME', 'DeepAdmin'),
     //后台标题
-    'title' => 'DeepAdmin',
+    'title' => env('ADMIN_TITLE', 'DeepAdmin'),
     //登录界面描述
-    'loginDesc' => 'DeepAdmin 是开箱即用的 Laravel 后台扩展',
+    'loginDesc' => env('LOGIN_DESC', 'DeepAdmin 是开箱即用的 Laravel 后台扩展'),
+
     //logo 地址 null为内置默认 分为黑暗和明亮两种
     'logo_show' => true,
     'logo' => null,
@@ -42,7 +43,7 @@ return [
     'bootstrap' => app_path('Admin/bootstrap.php'),
     'route' => [
         'domain' => env('ADMIN_DOMAIN', ''),
-        'prefix' => env('ADMIN_ROUTE_PREFIX', 'admin'),
+        'prefix' => env('ADMIN_ROUTE_PREFIX', 'dadmin'),
         'api_prefix' => env('ADMIN_ROUTE_PREFIX', 'admin-api'),
         'namespace' => 'App\\Admin\\Controllers',
         'middleware' => ['web', 'admin'],
