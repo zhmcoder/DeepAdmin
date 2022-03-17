@@ -44,7 +44,7 @@ return [
     'route' => [
         'domain' => env('ADMIN_DOMAIN', ''),
         'prefix' => env('ADMIN_ROUTE_PREFIX', 'dadmin'),
-        'api_prefix' => env('ADMIN_ROUTE_PREFIX', 'admin-api'),
+        'api_prefix' => env('ADMIN_ROUTE_API_PREFIX', 'admin-api'),
         'namespace' => 'App\\Admin\\Controllers',
         'middleware' => ['web', 'admin'],
     ],
@@ -87,8 +87,8 @@ return [
         ],
         //文件上传类型
         'mimes' => 'jpeg,bmp,png,gif,jpg,mp3,mp4,mpga,apk',
-        'image_handle_router' => null,
-        'file_handle_router' => null
+        'image_handle_router' => 'upload.image_handle',
+        'file_handle_router' => 'upload.file_handler',
     ],
     'database' => [
         // Database connection for following tables.
