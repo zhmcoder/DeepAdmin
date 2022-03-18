@@ -6,8 +6,6 @@ use Andruby\DeepAdmin\Components\Widgets\Html;
 use Andruby\DeepAdmin\Layout\Content;
 
 if (!function_exists('debug_info')) {
-
-
     function debug_log_info($message, array $context = array())
     {
         Log::channel('debug_log')->info($message, $context);
@@ -16,15 +14,12 @@ if (!function_exists('debug_info')) {
 
 
 if (!function_exists('admin_path')) {
-
     /**
      * Get admin path.
-     *
      * @param string $path
-     *
      * @return string
      */
-    function admin_path($path = '')
+    function admin_path(string $path = ''): string
     {
         return ucfirst(config('admin.directory')) . ($path ? DIRECTORY_SEPARATOR . $path : $path);
     }
@@ -33,17 +28,13 @@ if (!function_exists('admin_path')) {
 if (!function_exists('admin_base_path')) {
     /**
      * Get admin url.
-     *
      * @param string $path
-     *
      * @return string
      */
-    function admin_base_path($path = '')
+    function admin_base_path(string $path = ''): string
     {
         $prefix = '/' . trim(config('admin.route.prefix'), '/');
-
         $prefix = ($prefix == '/') ? '' : $prefix;
-
         $path = trim($path, '/');
 
         if (is_null($path) || strlen($path) == 0) {
@@ -57,17 +48,13 @@ if (!function_exists('admin_base_path')) {
 if (!function_exists('admin_api_base_path')) {
     /**
      * Get admin url.
-     *
      * @param string $path
-     *
      * @return string
      */
-    function admin_api_base_path($path = '')
+    function admin_api_base_path(string $path = ''): string
     {
         $prefix = '/' . trim(config('admin.route.prefix_api'), '/');
-
         $prefix = ($prefix == '/') ? '' : $prefix;
-
         $path = trim($path, '/');
 
         if (is_null($path) || strlen($path) == 0) {
@@ -81,14 +68,12 @@ if (!function_exists('admin_api_base_path')) {
 if (!function_exists('admin_url')) {
     /**
      * Get admin url.
-     *
      * @param string $path
      * @param mixed $parameters
-     * @param bool $secure
-     *
+     * @param bool|null $secure
      * @return string
      */
-    function admin_url($path = '', $parameters = [], $secure = null)
+    function admin_url(string $path = '', $parameters = [], bool $secure = null): string
     {
         if (\Illuminate\Support\Facades\URL::isValidUrl($path)) {
             return $path;
@@ -101,14 +86,12 @@ if (!function_exists('admin_url')) {
 if (!function_exists('admin_api_url')) {
     /**
      * Get admin url.
-     *
      * @param string $path
      * @param mixed $parameters
-     * @param bool $secure
-     *
+     * @param bool|null $secure
      * @return string
      */
-    function admin_api_url($path = '', $parameters = [], $secure = null)
+    function admin_api_url(string $path = '', $parameters = [], bool $secure = null): string
     {
         if (\Illuminate\Support\Facades\URL::isValidUrl($path)) {
             return $path;
@@ -130,15 +113,13 @@ if (!function_exists('admin_file_url')) {
 };
 
 if (!function_exists('admin_toastr')) {
-
     /**
      * Flash a toastr message bag to session.
-     *
      * @param string $message
      * @param string $type
      * @param array $options
      */
-    function admin_toastr($message = '', $type = 'success', $options = [])
+    function admin_toastr(string $message = '', string $type = 'success', array $options = [])
     {
         $toastr = new MessageBag(get_defined_vars());
 
@@ -147,19 +128,17 @@ if (!function_exists('admin_toastr')) {
 }
 
 if (!function_exists('admin_asset')) {
-
     /**
      * @param $path
-     *
      * @return string
      */
-    function admin_asset($path)
+    function admin_asset($path): string
     {
         return (config('admin.https') || config('admin.secure')) ? secure_asset($path) : asset($path);
     }
 }
-if (!function_exists('instance_content')) {
 
+if (!function_exists('instance_content')) {
     function instance_content($content = '')
     {
         if (is_string($content)) {
@@ -171,5 +150,17 @@ if (!function_exists('instance_content')) {
         } else {
             return $content;
         }
+    }
+}
+
+// 从一个标准url里取出文件的扩展名
+if (!function_exists('getFileExt')) {
+    function getFileExt($url)
+    {
+        $arr = parse_url($url);
+        $file = basename($arr['path']);
+        $ext = explode('.', $file);
+
+        return $ext[count($ext) - 1] ?? '';
     }
 }
