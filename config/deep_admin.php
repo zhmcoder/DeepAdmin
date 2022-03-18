@@ -4,7 +4,7 @@ return [
     'name' => env('ADMIN_NAME', 'DeepAdmin'), // 后台名称 null不显示
     'title' => env('ADMIN_TITLE', 'DeepAdmin'), // 后台标题
     'loginDesc' => env('LOGIN_DESC', 'DeepAdmin 是开箱即用的 Laravel 后台扩展'), // 登录界面描述
-    'logo_show' => true,
+    'logo_show' => false,
     'logo' => null, // logo 地址 null为内置默认 分为黑暗和明亮两种
     'logo_mini' => null,
     'logo_light' => null,
