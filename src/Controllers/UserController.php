@@ -15,7 +15,7 @@ class UserController extends AdminController
 {
     protected function grid()
     {
-        $userModel = config('admin.database.users_model');
+        $userModel = config('deep_admin.database.users_model');
 
         $grid = new Grid(new $userModel());
 
@@ -47,16 +47,16 @@ class UserController extends AdminController
 
     protected function form($isEdit = 0)
     {
-        $userModel = config('admin.database.users_model');
-        $permissionModel = config('admin.database.permissions_model');
-        $roleModel = config('admin.database.roles_model');
+        $userModel = config('deep_admin.database.users_model');
+        $permissionModel = config('deep_admin.database.permissions_model');
+        $roleModel = config('deep_admin.database.roles_model');
 
         $form = new Form(new $userModel());
         $form->getActions()->buttonCenter();
         $form->labelWidth('150px');
 
-        $userTable = config('admin.database.users_table');
-        $connection = config('admin.database.connection');
+        $userTable = config('deep_admin.database.users_table');
+        $connection = config('deep_admin.database.connection');
 
         $form->item('username', '用户名')->inputWidth(15)
             ->serveCreationRules(['required', "unique:{$connection}.{$userTable}"])

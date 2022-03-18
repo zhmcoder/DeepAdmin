@@ -33,11 +33,11 @@ class Permission extends Model
      */
     public function __construct(array $attributes = [])
     {
-        $connection = config('admin.database.connection') ?: config('database.default');
+        $connection = config('deep_admin.database.connection') ?: config('database.default');
 
         $this->setConnection($connection);
 
-        $this->setTable(config('admin.database.permissions_table'));
+        $this->setTable(config('deep_admin.database.permissions_table'));
 
         parent::__construct($attributes);
     }
@@ -49,9 +49,9 @@ class Permission extends Model
      */
     public function roles(): BelongsToMany
     {
-        $pivotTable = config('admin.database.role_permissions_table');
+        $pivotTable = config('deep_admin.database.role_permissions_table');
 
-        $relatedModel = config('admin.database.roles_model');
+        $relatedModel = config('deep_admin.database.roles_model');
 
         return $this->belongsToMany($relatedModel, $pivotTable, 'permission_id', 'role_id');
     }
@@ -73,7 +73,7 @@ class Permission extends Model
 
 
         $web_matches = array_map(function ($path) use ($method) {
-            $path = trim(config('admin.route.prefix'), '/') . $path;
+            $path = trim(config('deep_admin.route.prefix'), '/') . $path;
             if (Str::contains($path, ':')) {
                 list($method, $path) = explode(':', $path);
                 $method = explode(',', $method);
@@ -82,7 +82,7 @@ class Permission extends Model
         }, explode("\n", $this->http_path));
 
         $api_matches = array_map(function ($path) use ($method) {
-            $path = trim(config('admin.route.api_prefix'), '/') . $path;
+            $path = trim(config('deep_admin.route.api_prefix'), '/') . $path;
             if (Str::contains($path, ':')) {
                 list($method, $path) = explode(':', $path);
                 $method = explode(',', $method);

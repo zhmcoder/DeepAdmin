@@ -23,7 +23,7 @@
     Admin = {};
     Admin.token = "{{csrf_token()}}";
     window.config = {
-        'apiRoot': "{{config('admin.route.api_prefix')}}"
+        'apiRoot': "{{config('deep_admin.route.api_prefix')}}"
     }
 </script>
 @yield('js')

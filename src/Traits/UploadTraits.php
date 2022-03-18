@@ -11,7 +11,7 @@ trait UploadTraits
     {
         try {
             \Admin::validatorData($request->all(), [
-                'file' => 'mimes:' . config('admin.upload.xlsx', 'xlsx')
+                'file' => 'mimes:' . config('deep_admin.upload.xlsx', 'xlsx')
             ]);
             return $this->upload($request);
         } catch (\Exception $exception) {
@@ -27,7 +27,7 @@ trait UploadTraits
     {
         try {
             \Admin::validatorData($request->all(), [
-                'file' => 'mimes:' . config('admin.upload.mimes', 'jpeg,bmp,png,gif,jpg')
+                'file' => 'mimes:' . config('deep_admin.upload.mimes', 'jpeg,bmp,png,gif,jpg')
             ]);
             return $this->upload($request);
         } catch (\Exception $exception) {
@@ -65,8 +65,8 @@ trait UploadTraits
             $type = $request->file('type');
             $path = $request->input('path', 'images');
             $path_1 = $request->input('path', 'images');
-            $uniqueName = $request->input('uniqueName', config('admin.upload.uniqueName', false));
-            $disk = config('admin.upload.disk');
+            $uniqueName = $request->input('uniqueName', config('deep_admin.upload.uniqueName', false));
+            $disk = config('deep_admin.upload.disk');
             $name = $file->getClientOriginalName();
 
             $file_md5 = md5_file($file->getRealPath());

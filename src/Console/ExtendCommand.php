@@ -120,12 +120,12 @@ class ExtendCommand extends Command
 
     protected function extendPath()
     {
-        return config('admin.directory') . '/Extends/' . $this->extendClass();
+        return config('deep_admin.directory') . '/Extends/' . $this->extendClass();
     }
 
     protected function relativeExtendPath()
     {
-        return config('admin.directory') . '/Extends/' . $this->extendClass();
+        return config('deep_admin.directory') . '/Extends/' . $this->extendClass();
     }
 
     protected function escapedExtendNamespace()

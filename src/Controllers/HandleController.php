@@ -14,7 +14,7 @@ class HandleController extends Controller
     {
         try {
             \Admin::validatorData($request->all(), [
-                'file' => 'mimes:' . config('admin.upload.mimes', 'jpeg,bmp,png,gif,jpg')
+                'file' => 'mimes:' . config('deep_admin.upload.mimes', 'jpeg,bmp,png,gif,jpg')
             ]);
             return $this->upload($request);
         } catch (\Exception $exception) {
@@ -44,8 +44,8 @@ class HandleController extends Controller
             $file = $request->file('file');
             $type = $request->file('type');
             $path = $request->input('path', 'images');
-            $uniqueName = $request->input('uniqueName', config('admin.upload.uniqueName', false));
-            $disk = config('admin.upload.disk');
+            $uniqueName = $request->input('uniqueName', config('deep_admin.upload.uniqueName', false));
+            $disk = config('deep_admin.upload.disk');
             $name = $file->getClientOriginalName();
             if ($uniqueName == "true" || $uniqueName == true) {
                 $path = $file->store($path, $disk);

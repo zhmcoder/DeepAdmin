@@ -8,7 +8,7 @@ Route::group([
     'domain' => config('deep_admin.route.domain'),
     'prefix' => config('deep_admin.route.api_prefix'),
     'namespace' => '\Andruby\DeepAdmin\Controllers',
-    'middleware' => config('admin.route.middleware')
+    'middleware' => config('deep_admin.route.middleware')
 ], function (Router $router) {
     //模型操作
     $router->resource('entities/entity-field', 'EntityFieldController')->names('entityField');
@@ -27,11 +27,11 @@ Route::group([
 });
 
 Route::group([
-    'domain' => config('admin.route.domain'),
-    'prefix' => config('admin.route.prefix'),
-    'middleware' => config('admin.route.middleware'),
+    'domain' => config('deep_admin.route.domain'),
+    'prefix' => config('deep_admin.route.prefix'),
+    'middleware' => config('deep_admin.route.middleware'),
 ], function (Router $router) {
-    $authController = config('admin.auth.controller', AuthController::class);
+    $authController = config('deep_admin.auth.controller', AuthController::class);
     $router->get('auth/login', $authController . '@getLogin')->name('admin.login');
     $router->post('auth/login', $authController . '@postLogin')->name('admin.post.login');
     $router->get('auth/logout', $authController . '@getLogout')->name('admin.logout');
@@ -41,14 +41,14 @@ Route::group([
 });
 
 Route::group([
-    'domain' => config('admin.route.domain'),
-    'prefix' => config('admin.route.api_prefix'),
+    'domain' => config('deep_admin.route.domain'),
+    'prefix' => config('deep_admin.route.api_prefix'),
     'namespace' => '\Andruby\DeepAdmin\Controllers'
 ], function (Router $router) {
     $router->get('scripts/{script}', 'ScriptController@show')->name('admin.scripts');
     $router->get('styles/{style}', 'StyleController@show')->name('admin.styles');
 
-    $router->group(['middleware' => config('admin.route.middleware')], function (Router $router) {
+    $router->group(['middleware' => config('deep_admin.route.middleware')], function (Router $router) {
         $router->resource('auth/users', 'UserController')->names('admin.auth.users');
         $router->resource('auth/roles', 'RoleController')->names('admin.auth.roles');
         $router->resource('auth/permissions', 'PermissionController')->names('admin.auth.permissions');

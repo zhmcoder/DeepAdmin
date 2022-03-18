@@ -33,11 +33,11 @@ class OperationLog extends Model
      */
     public function __construct(array $attributes = [])
     {
-        $connection = config('admin.database.connection') ?: config('database.default');
+        $connection = config('deep_admin.database.connection') ?: config('database.default');
 
         $this->setConnection($connection);
 
-        $this->setTable(config('admin.database.operation_log_table'));
+        $this->setTable(config('deep_admin.database.operation_log_table'));
 
         parent::__construct($attributes);
     }

@@ -66,7 +66,7 @@ class Admin
      */
     public function title()
     {
-        return self::$metaTitle ? self::$metaTitle : config('admin.title');
+        return self::$metaTitle ? self::$metaTitle : config('deep_admin.title');
     }
 
     public function menu()
@@ -74,7 +74,7 @@ class Admin
         if (!empty($this->menu)) {
             return $this->menu;
         }
-        $menuClass = config('admin.database.menu_model');
+        $menuClass = config('deep_admin.database.menu_model');
         /** @var Menu $menuModel */
         $menuModel = new $menuClass();
         $allNodes = $menuModel->allNodes();
@@ -86,7 +86,7 @@ class Admin
         if (!empty($this->menuList)) {
             return $this->menuList;
         }
-        $menuClass = config('admin.database.menu_model');
+        $menuClass = config('deep_admin.database.menu_model');
         /** @var Menu $menuModel */
         $menuModel = new $menuClass();
         return  $this->menuList = collect($menuModel->allNodes())->map(function ($item){
@@ -103,7 +103,7 @@ class Admin
 
     public function bootstrap()
     {
-        require config('admin.bootstrap', admin_path('bootstrap.php'));
+        require config('deep_admin.bootstrap', admin_path('bootstrap.php'));
     }
 
 
@@ -122,7 +122,7 @@ class Admin
      */
     public function guard()
     {
-        $guard = config('admin.auth.guard') ?: 'admin';
+        $guard = config('deep_admin.auth.guard') ?: 'admin';
 
         return Auth::guard($guard);
     }

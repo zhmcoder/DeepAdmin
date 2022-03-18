@@ -63,7 +63,7 @@ class MenuController extends AdminController
 
     protected function grid()
     {
-        $userModel = config('admin.database.menu_model');
+        $userModel = config('deep_admin.database.menu_model');
         $grid = new Grid(new $userModel());
 
         $grid->addDialogForm($this->form()->isDialog()->className('p-15'));
@@ -98,9 +98,9 @@ class MenuController extends AdminController
     protected function form()
     {
         /**@var Model $model */
-        $model = config('admin.database.menu_model');
-        $permissionModel = config('admin.database.permissions_model');
-        $roleModel = config('admin.database.roles_model');
+        $model = config('deep_admin.database.menu_model');
+        $permissionModel = config('deep_admin.database.permissions_model');
+        $roleModel = config('deep_admin.database.roles_model');
 
         $form = new Form(new $model());
         $form->getActions()->buttonCenter();

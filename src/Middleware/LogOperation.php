@@ -45,7 +45,7 @@ class LogOperation
      */
     protected function shouldLogOperation(Request $request)
     {
-        return config('admin.operation_log.enable')
+        return config('deep_admin.operation_log.enable')
             && !$this->inExceptArray($request)
             && $this->inAllowedMethods($request->method())
             && Admin::user();
@@ -60,7 +60,7 @@ class LogOperation
      */
     protected function inAllowedMethods($method)
     {
-        $allowedMethods = collect(config('admin.operation_log.allowed_methods'))->filter();
+        $allowedMethods = collect(config('deep_admin.operation_log.allowed_methods'))->filter();
 
         if ($allowedMethods->isEmpty()) {
             return true;
@@ -80,7 +80,7 @@ class LogOperation
      */
     protected function inExceptArray($request)
     {
-        foreach (config('admin.operation_log.except') as $except) {
+        foreach (config('deep_admin.operation_log.except') as $except) {
             if ($except !== '/') {
                 $except = trim($except, '/');
             }

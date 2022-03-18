@@ -12,7 +12,7 @@ class RoleController extends AdminController
 {
     protected function grid()
     {
-        $roleModel = config('admin.database.roles_model');
+        $roleModel = config('deep_admin.database.roles_model');
 
         $grid = new Grid(new $roleModel());
 
@@ -40,8 +40,8 @@ class RoleController extends AdminController
 
     public function form()
     {
-        $permissionModel = config('admin.database.permissions_model');
-        $roleModel = config('admin.database.roles_model');
+        $permissionModel = config('deep_admin.database.permissions_model');
+        $roleModel = config('deep_admin.database.roles_model');
 
         $form = new Form(new $roleModel());
 

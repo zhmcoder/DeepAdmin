@@ -48,11 +48,11 @@ class Menu extends Model
      */
     public function __construct(array $attributes = [])
     {
-        $connection = config('admin.database.connection') ?: config('database.default');
+        $connection = config('deep_admin.database.connection') ?: config('database.default');
 
         $this->setConnection($connection);
 
-        $this->setTable(config('admin.database.menu_table'));
+        $this->setTable(config('deep_admin.database.menu_table'));
 
         parent::__construct($attributes);
     }
@@ -74,9 +74,9 @@ class Menu extends Model
      */
     public function roles(): BelongsToMany
     {
-        $pivotTable = config('admin.database.role_menu_table');
+        $pivotTable = config('deep_admin.database.role_menu_table');
 
-        $relatedModel = config('admin.database.roles_model');
+        $relatedModel = config('deep_admin.database.roles_model');
 
         return $this->belongsToMany($relatedModel, $pivotTable, 'menu_id', 'role_id');
     }
@@ -86,16 +86,16 @@ class Menu extends Model
      */
     public function allNodes(): array
     {
-        $connection = config('admin.database.connection') ?: config('database.default');
+        $connection = config('deep_admin.database.connection') ?: config('database.default');
         $orderColumn = DB::connection($connection)->getQueryGrammar()->wrap($this->orderColumn);
         $byOrder = 'ROOT ASC,' . $orderColumn;
         $query = static::query();
-        if (config('admin.check_menu_roles') !== false) {
+        if (config('deep_admin.check_menu_roles') !== false) {
             $query->with('roles:id,name,slug');
         }
         $all_list = $query->selectRaw('*, ' . $orderColumn . ' ROOT')->orderByRaw($byOrder)->get()->toArray();
-        if (config('admin.check_route_permission') !== false) {
-            $permissions = config('admin.database.permissions_model')::query()->get();
+        if (config('deep_admin.check_route_permission') !== false) {
+            $permissions = config('deep_admin.database.permissions_model')::query()->get();
             $all_list = collect($all_list)->map(function ($item) use ($permissions) {
                 $permissionIds = collect(Arr::get($item, 'permission', []))->toArray();
                 $permission = collect($permissions)->filter(function ($permissionItem) use ($permissionIds) {
@@ -123,7 +123,7 @@ class Menu extends Model
      */
     public function withPermission()
     {
-        return (bool)config('admin.menu_bind_permission');
+        return (bool)config('deep_admin.menu_bind_permission');
     }
 
     /**

@@ -79,13 +79,13 @@ class EntityFieldController extends AdminController
                 return Tag::make()->type('info');
             })->sortable()->width(120);
         $grid->column('order', '表单排序')->component(
-            SortEdit::make()->action(config('admin.route.api_prefix') . '/entities/content/grid_sort_change?column=order&entity_id=2')
+            SortEdit::make()->action(config('deep_admin.route.api_prefix') . '/entities/content/grid_sort_change?column=order&entity_id=2')
         )->align("center")->sortable()->width(120);
         $grid->column('list_order', '列表排序')->component(
-            SortEdit::make()->action(config('admin.route.api_prefix') . '/entities/content/grid_sort_change?column=list_order&entity_id=2')
+            SortEdit::make()->action(config('deep_admin.route.api_prefix') . '/entities/content/grid_sort_change?column=list_order&entity_id=2')
         )->align("center")->sortable()->width(120);
         $grid->column('list_width', '列表宽度')->component(
-            SortEdit::make()->action(config('admin.route.api_prefix') . '/entities/content/grid_sort_change?column=list_width&entity_id=2')
+            SortEdit::make()->action(config('deep_admin.route.api_prefix') . '/entities/content/grid_sort_change?column=list_width&entity_id=2')
         )->align("center")->sortable()->width(120);
         $grid->column('is_list_show', '列表显示')->align("center")->component(Boole::make())->sortable()->width(120);;
         //$grid->column('is_show', '显示')->component(CSwitch::make())->sortable();

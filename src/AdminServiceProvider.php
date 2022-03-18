@@ -67,7 +67,6 @@ class AdminServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/deep_admin.php', 'deep_admin');
-        $this->mergeConfigFrom(__DIR__ . '/../config/admin.php', 'admin');
 
         $this->loadAdminAuthConfig();
 
@@ -88,7 +87,7 @@ class AdminServiceProvider extends ServiceProvider
 
     protected function loadAdminAuthConfig()
     {
-        config(Arr::dot(config('admin.auth', []), 'auth.'));
+        config(Arr::dot(config('deep_admin.auth', []), 'auth.'));
     }
 
 

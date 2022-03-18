@@ -21,7 +21,7 @@ if (!function_exists('admin_path')) {
      */
     function admin_path(string $path = ''): string
     {
-        return ucfirst(config('admin.directory')) . ($path ? DIRECTORY_SEPARATOR . $path : $path);
+        return ucfirst(config('deep_admin.directory')) . ($path ? DIRECTORY_SEPARATOR . $path : $path);
     }
 }
 
@@ -33,7 +33,7 @@ if (!function_exists('admin_base_path')) {
      */
     function admin_base_path(string $path = ''): string
     {
-        $prefix = '/' . trim(config('admin.route.prefix'), '/');
+        $prefix = '/' . trim(config('deep_admin.route.prefix'), '/');
         $prefix = ($prefix == '/') ? '' : $prefix;
         $path = trim($path, '/');
 
@@ -53,7 +53,7 @@ if (!function_exists('admin_api_base_path')) {
      */
     function admin_api_base_path(string $path = ''): string
     {
-        $prefix = '/' . trim(config('admin.route.prefix_api'), '/');
+        $prefix = '/' . trim(config('deep_admin.route.prefix_api'), '/');
         $prefix = ($prefix == '/') ? '' : $prefix;
         $path = trim($path, '/');
 
@@ -78,7 +78,7 @@ if (!function_exists('admin_url')) {
         if (\Illuminate\Support\Facades\URL::isValidUrl($path)) {
             return $path;
         }
-        $secure = $secure ?: (config('admin.https') || config('admin.secure'));
+        $secure = $secure ?: (config('deep_admin.https') || config('deep_admin.secure'));
         return url(admin_base_path($path), $parameters, $secure);
     }
 }
@@ -96,7 +96,7 @@ if (!function_exists('admin_api_url')) {
         if (\Illuminate\Support\Facades\URL::isValidUrl($path)) {
             return $path;
         }
-        $secure = $secure ?: (config('admin.https') || config('admin.secure'));
+        $secure = $secure ?: (config('deep_admin.https') || config('deep_admin.secure'));
         return url(admin_api_base_path($path), $parameters, $secure);
     }
 }
@@ -108,7 +108,7 @@ if (!function_exists('admin_file_url')) {
             return $path;
         }
 
-        return \Storage::disk(config('admin.upload.disk'))->url($path);
+        return \Storage::disk(config('deep_admin.upload.disk'))->url($path);
     }
 };
 
@@ -134,7 +134,7 @@ if (!function_exists('admin_asset')) {
      */
     function admin_asset($path): string
     {
-        return (config('admin.https') || config('admin.secure')) ? secure_asset($path) : asset($path);
+        return (config('deep_admin.https') || config('deep_admin.secure')) ? secure_asset($path) : asset($path);
     }
 }
 

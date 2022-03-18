@@ -23,7 +23,7 @@ class PermissionController extends AdminController
 
     protected function grid()
     {
-        $permissionModel = config('admin.database.permissions_model');
+        $permissionModel = config('deep_admin.database.permissions_model');
 
         $grid = new Grid(new $permissionModel());
 
@@ -53,7 +53,7 @@ class PermissionController extends AdminController
 
     protected function form($isEdit = false)
     {
-        $permissionModel = config('admin.database.permissions_model');
+        $permissionModel = config('deep_admin.database.permissions_model');
 
         $form = new Form(new $permissionModel());
 
@@ -77,7 +77,7 @@ class PermissionController extends AdminController
 
     protected function getHttpMethodsOptions()
     {
-        $model = config('admin.database.permissions_model');
+        $model = config('deep_admin.database.permissions_model');
 
         return collect($model::$httpMethods)->map(function ($item) {
             return SelectOption::make($item, $item);

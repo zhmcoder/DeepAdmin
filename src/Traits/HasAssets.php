@@ -138,7 +138,7 @@ trait HasAssets
             return static::$baseCss = $css;
         }
 
-        $skin = config('admin.skin', 'skin-blue-light');
+        $skin = config('deep_admin.skin', 'skin-blue-light');
 
         array_unshift(static::$baseCss, "vendor/laravel-admin/AdminLTE/dist/css/skins/{$skin}.min.css");
 
@@ -286,7 +286,7 @@ trait HasAssets
      */
     protected static function getMinifiedCss()
     {
-        if (!config('admin.minify_assets') || !file_exists(public_path(static::$manifest))) {
+        if (!config('deep_admin.minify_assets') || !file_exists(public_path(static::$manifest))) {
             return false;
         }
 
@@ -298,7 +298,7 @@ trait HasAssets
      */
     protected static function getMinifiedJs()
     {
-        if (!config('admin.minify_assets') || !file_exists(public_path(static::$manifest))) {
+        if (!config('deep_admin.minify_assets') || !file_exists(public_path(static::$manifest))) {
             return false;
         }
 

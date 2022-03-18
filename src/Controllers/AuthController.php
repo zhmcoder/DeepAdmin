@@ -28,18 +28,18 @@ class AuthController extends AdminController
             return redirect($this->redirectPath());
         }
 
-        if (config('admin.https')) {
+        if (config('deep_admin.https')) {
             app('request')->server->set('HTTPS', true);
         }
 
         $data = $this->vueData();
 
-        $data['backgroundImage'] = config('admin.login_background_image');
-        $data['logoShow'] = config('admin.logo_show');
-        $data['logo'] = config('admin.logo');
-        $data['name'] = config('admin.name');
-        $data['desc'] = config('admin.loginDesc');
-        $data['auto_user'] = config('admin.auto_user');
+        $data['backgroundImage'] = config('deep_admin.login_background_image');
+        $data['logoShow'] = config('deep_admin.logo_show');
+        $data['logo'] = config('deep_admin.logo');
+        $data['name'] = config('deep_admin.name');
+        $data['desc'] = config('deep_admin.loginDesc');
+        $data['auto_user'] = config('deep_admin.auto_user');
 
         $data['url']['postLogin'] = route('admin.post.login');
 
@@ -93,7 +93,7 @@ class AuthController extends AdminController
 
         $request->session()->invalidate();
 
-        return redirect(config('admin.route.prefix'));
+        return redirect(config('deep_admin.route.prefix'));
     }
 
     /**
@@ -136,7 +136,7 @@ class AuthController extends AdminController
      */
     protected function settingForm()
     {
-        $class = config('admin.database.users_model');
+        $class = config('deep_admin.database.users_model');
 
         $form = new Form(new $class());
 
@@ -189,7 +189,7 @@ class AuthController extends AdminController
             return $this->redirectTo();
         }
 
-        return property_exists($this, 'redirectTo') ? $this->redirectTo : config('admin.route.prefix');
+        return property_exists($this, 'redirectTo') ? $this->redirectTo : config('deep_admin.route.prefix');
     }
 
 

@@ -37,9 +37,9 @@ class Upload extends Component
     public function __construct($value = null)
     {
         ##deep admin start
-        $this->action = route(config('admin.upload.image_handle_router', 'admin.handle-upload-image'));
+        $this->action = route(config('deep_admin.upload.image_handle_router', 'admin.handle-upload-image'));
         ##deep admin end
-        $this->host = Storage::disk(config('admin.upload.disk'))->url('/');
+        $this->host = Storage::disk(config('deep_admin.upload.disk'))->url('/');
         $this->componentValue($value);
     }
 
@@ -57,7 +57,7 @@ class Upload extends Component
         } else {
             $files[] = $formItem->original;
         }
-        $storage = Storage::disk(config('admin.upload.disk'));
+        $storage = Storage::disk(config('deep_admin.upload.disk'));
         collect($files)->each(function ($file) use ($storage) {
 
             if (!empty($this->valueName)) {
@@ -200,7 +200,7 @@ class Upload extends Component
     {
         $this->type = "file";
         ##deep admin start
-        $this->action = route(config('admin.upload.file_handle_router', 'admin.handle-upload-file'));
+        $this->action = route(config('deep_admin.upload.file_handle_router', 'admin.handle-upload-file'));
         ##deep admin end
         return $this;
     }

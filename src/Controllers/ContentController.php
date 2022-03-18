@@ -64,8 +64,8 @@ class ContentController extends AdminController
             }
         }
 
-        $this->remoteUrl = config('admin.route.api_prefix') . '/remote/search'; // 下拉远程搜索
-        $this->uploadImages = config('admin.route.api_prefix') . '/upload/images'; // 编辑框上传图片
+        $this->remoteUrl = config('deep_admin.route.api_prefix') . '/remote/search'; // 下拉远程搜索
+        $this->uploadImages = config('deep_admin.route.api_prefix') . '/upload/images'; // 编辑框上传图片
     }
 
     protected function getTableName()
@@ -407,8 +407,8 @@ class ContentController extends AdminController
 
             if ($val['name'] == 'sort') {
                 $obj->component(
-                // SortUpDown::make(110)->setSortAction(config('admin.route.api_prefix') . '/entities/content/sort_up_down?entity_id=' . $entityId)
-                    SortEdit::make()->action(config('admin.route.api_prefix') . '/entities/content/grid_sort_change?entity_id=' . $entityId)
+                // SortUpDown::make(110)->setSortAction(config('deep_admin.route.api_prefix') . '/entities/content/sort_up_down?entity_id=' . $entityId)
+                    SortEdit::make()->action(config('deep_admin.route.api_prefix') . '/entities/content/grid_sort_change?entity_id=' . $entityId)
                 );
             }
         }

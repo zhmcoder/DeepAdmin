@@ -17,7 +17,7 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
-        $redirectTo = admin_base_path(config('admin.auth.redirect_to', 'auth/login'));
+        $redirectTo = admin_base_path(config('deep_admin.auth.redirect_to', 'auth/login'));
 
         if (Admin::guard()->guest() && !$this->shouldPassThrough($request)) {
             return redirect()->guest($redirectTo);
@@ -35,7 +35,7 @@ class Authenticate
      */
     protected function shouldPassThrough($request)
     {
-        $excepts = config('admin.auth.excepts', [
+        $excepts = config('deep_admin.auth.excepts', [
             'auth/login',
             'auth/logout',
             'scripts/*',
