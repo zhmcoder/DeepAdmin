@@ -33,7 +33,7 @@ return [
     'route' => [
         'domain' => env('ADMIN_DOMAIN', ''),
         'prefix' => env('ADMIN_ROUTE_PREFIX', 'dadmin'),
-        'api_prefix' => env('ADMIN_ROUTE_PREFIX', 'admin-api'),
+        'api_prefix' => env('ADMIN_ROUTE_API_PREFIX', 'admin-api'),
         'namespace' => 'App\\Admin\\Controllers',
         'middleware' => ['web', 'admin'],
     ],
