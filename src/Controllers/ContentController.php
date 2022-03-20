@@ -742,10 +742,12 @@ class ContentController extends AdminController
 
         $form = $this->form_add($form, $isEdit);
 
+        /*
         // 操作人ID 隐藏显示
         $form->item('oper_user_id', '操作人')->component(
             Input::make(Admin::user()->id)->type('hidden')
         )->hideLabel()->inputWidth(2);
+        */
 
         $form->saved(function (Form $form) use ($isEdit) {
             return $this->saved_event($form);
@@ -755,7 +757,7 @@ class ContentController extends AdminController
             return $this->deleted_event($form);
         });
 
-        $form->saving(function (Form $form) use ($cascadeFields) {
+        $form->saving(function (Form $form) use ($cascadeFields, $isEdit) {
             // 级联选择拆分字段
             if (!empty($cascadeFields)) {
                 foreach ($cascadeFields as $parentField => $childrenField) {
@@ -777,6 +779,12 @@ class ContentController extends AdminController
                     }
                 }
 
+            }
+
+            if ($isEdit) {
+                $form->edit_user_id = \Admin::user()->id;
+            } else {
+                $form->add_user_id = \Admin::user()->id;
             }
 
             return $this->saving_event($form);
