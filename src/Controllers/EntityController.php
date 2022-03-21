@@ -114,7 +114,7 @@ class EntityController extends BaseController
                     Checkbox::make('edit', '编辑')->checked(),
                     Checkbox::make('delete', '删除')->checked()
                 ]
-            ))->inputWidth(24);
+            ))->defaultValue(["create", "delete", "edit"])->inputWidth(24);
 
         $form->item('actions_width', '操作栏宽度')
             ->component(InputNumber::make()->min(100))->defaultValue(100);

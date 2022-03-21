@@ -25,6 +25,11 @@ class TableHelpers
                 $table->increments('id');
                 $table->softDeletes();
                 $table->timestamps();
+
+                $table->integer('add_user_id')->default(0)->nullable(); // 添加用户
+                $table->integer('edit_user_id')->default(0)->nullable(); // 编辑用户
+                $table->integer('del_user_id')->default(0)->nullable(); // 删除用户
+
                 $table->engine = 'InnoDB';
             });
         } catch (\Exception $e) {
