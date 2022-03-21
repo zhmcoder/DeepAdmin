@@ -781,13 +781,7 @@ class ContentController extends AdminController
 
             }
 
-            if ($isEdit) {
-                $form->edit_user_id = \Admin::user()->id;
-            } else {
-                $form->add_user_id = \Admin::user()->id;
-            }
-
-            return $this->saving_event($form);
+            return $this->saving_event($form, $isEdit);
         });
 
         return $form;
@@ -802,13 +796,13 @@ class ContentController extends AdminController
     // 操作栏回调
     protected function grid_action(Grid\Actions $actions)
     {
-
+        return $actions;
     }
 
     // 工具栏回调
     protected function grid_toolbars(Grid\Toolbars $toolbars)
     {
-
+        return $toolbars;
     }
 
     // 列表回调
@@ -820,19 +814,25 @@ class ContentController extends AdminController
     // 保存成功回调
     protected function saved_event(Form $form)
     {
-
+        return $form;
     }
 
     // 删除回调
     protected function deleted_event(Form $form)
     {
-
+        return $form;
     }
 
     // 保存之前回调
-    protected function saving_event(Form $form)
+    protected function saving_event(Form $form, $isEdit = true)
     {
+        if ($isEdit) {
+            $form->edit_user_id = \Admin::user()->id;
+        } else {
+            $form->add_user_id = \Admin::user()->id;
+        }
 
+        return $form;
     }
 
     // 添加地址
