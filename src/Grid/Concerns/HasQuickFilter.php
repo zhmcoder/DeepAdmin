@@ -21,6 +21,7 @@ trait HasQuickFilter
     public $quickFilter;
     private $or = false;
     private $operator = '=';
+    private $position = 'left';
 
     public function quickFilter()
     {

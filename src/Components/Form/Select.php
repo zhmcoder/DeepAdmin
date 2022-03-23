@@ -10,7 +10,7 @@ class Select extends Component
 {
     use Depend;
 
-    public $componentName = 'Select';
+    protected $componentName = 'Select';
 
     protected $multiple = false;
 
@@ -38,6 +38,10 @@ class Select extends Component
 
     protected $isTab = false;
     protected $tabAction;
+
+    protected $isOpen = false; // 是否展开显示
+    protected $isMore = false; // 更多是否开启
+    protected $isRow = true; // 是否一行展示
 
 
     /**
@@ -317,6 +321,24 @@ class Select extends Component
     public function tabAction($tabAction)
     {
         $this->tabAction = $tabAction;
+        return $this;
+    }
+
+    public function isOpen($isOpen = true)
+    {
+        $this->isOpen = $isOpen;
+        return $this;
+    }
+
+    public function isMore($isMore = true)
+    {
+        $this->isMore = $isMore;
+        return $this;
+    }
+
+    public function isRow($isRow = true)
+    {
+        $this->isRow = $isRow;
         return $this;
     }
 
