@@ -23,8 +23,39 @@
                 @keyup.enter.native="getData"
               ></el-input>
             </el-form-item>
-
-            <el-form-item
+            <template v-for="(item, index) in attrs.filter.filters">
+              <!-- 单独展示一行 -->
+              <el-row v-if="item.component.isRow" :key="index">
+                <el-col :span="24">
+                  <el-form-item
+                    class="rowForm form-bottom"
+                    :key="index"
+                    :label="item.label"
+                  >
+                      <ItemDiaplsy
+                        v-model="filterFormData[item.column]"
+                        :form-item="item"
+                        :form-items="attrs.filters"
+                        :form-data="filterFormData"
+                      />
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-form-item
+                v-else
+                :key="index"
+                :label="item.label"
+                class="form-bottom"
+              >
+                <ItemDiaplsy
+                  v-model="filterFormData[item.column]"
+                  :form-item="item"
+                  :form-items="attrs.filters"
+                  :form-data="filterFormData"
+                />
+              </el-form-item>
+            </template>
+            <!-- <el-form-item
               v-for="(item, index) in attrs.filter.filters"
               :key="index"
               :label="item.label"
@@ -35,7 +66,7 @@
                 :form-items="attrs.filters"
                 :form-data="filterFormData"
               />
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item>
               <el-button type="primary" @click="onFilterSubmit">搜索</el-button>
               <el-button @click="onFilterReset">重置</el-button>
@@ -47,113 +78,120 @@
 
     <el-card shadow="never" :body-style="{ padding: 0 }" v-loading="loading">
       <div class="bottom-border" ref="toolbarsView" v-if="attrs.toolbars.show">
-        <div class="grid-top-container">
-          <div class="grid-top-container-left">
-            <BatchActions
-              :routers="attrs.routers"
-              :key_name="attrs.keyName"
-              :rows="selectionRows"
-              :actions="attrs.batchActions"
-              v-if="attrs.selection"
-            />
-            <div
-              class="search-view mr-10"
-              v-if="attrs.quickSearch && attrs.filter.filters.length <= 0"
-            >
-              <el-input
-                v-model="quickSearch"
-                :placeholder="attrs.quickSearch.placeholder"
-                :clearable="true"
-                @clear="getData"
-                @keyup.enter.native="getData"
+        <div class="grid-top-container-wrap">
+          <div class="grid-top-container-tabs" >
+            <el-tabs v-model="tabFilter" @tab-click="handleClick">
+              <el-tab-pane v-for="(item,index) in attrs.quickFilter.options" :key="index" :label="item.title" :name="item.label"></el-tab-pane>
+            </el-tabs>
+          </div>
+          <div class="grid-top-container" :class="1==2?'left':'right'">
+            <div class="grid-top-container-left">
+              <BatchActions
+                :routers="attrs.routers"
+                :key_name="attrs.keyName"
+                :rows="selectionRows"
+                :actions="attrs.batchActions"
+                v-if="attrs.selection"
+              />
+              <div
+                class="search-view mr-10"
+                v-if="attrs.quickSearch && attrs.filter.filters.length <= 0"
               >
-                <el-button @click="getData" :loading="loading" slot="append"
-                  >搜索</el-button
+                <el-input
+                  v-model="quickSearch"
+                  :placeholder="attrs.quickSearch.placeholder"
+                  :clearable="true"
+                  @clear="getData"
+                  @keyup.enter.native="getData"
                 >
-              </el-input>
+                  <el-button @click="getData" :loading="loading" slot="append"
+                    >搜索</el-button
+                  >
+                </el-input>
+              </div>
+              <div class="flex-c">
+                <component
+                  v-for="(component, index) in attrs.toolbars.left"
+                  :key="component.componentName + index"
+                  :is="component.componentName"
+                  :attrs="component"
+                />
+
+                  <el-radio-group
+                      v-if="attrs.quickFilter"
+                      v-model="quickFilter"
+                      :style="attrs.quickFilter.style"
+                      :class="attrs.quickFilter.className"
+                      :disabled="attrs.quickFilter.disabled"
+                      @change="getData"
+                  >
+                      <el-radio-button
+                          v-if="attrs.quickFilter"
+                          v-for="(radio, index) in attrs.quickFilter.options"
+                          :style="radio.style"
+                          :class="radio.className"
+                          :key="index"
+                          :label="radio.label"
+                          :disabled="radio.disabled"
+                          :border="radio.border"
+                          :size="radio.size"
+                      >{{ radio.title }}</el-radio-button>
+                  </el-radio-group>
+
+              </div>
             </div>
-            <div class="flex-c">
+            <div class="grid-top-container-right">
               <component
-                v-for="(component, index) in attrs.toolbars.left"
+                v-for="(component, index) in attrs.toolbars.right"
                 :key="component.componentName + index"
                 :is="component.componentName"
                 :attrs="component"
+                :filterData="filterFormData"
               />
+                <!-- deep-admin filterData -->
+              <template v-if="attrs.attributes.topTool">
+                <el-divider
+                  direction="vertical"
+                  v-if="!attrs.attributes.hideCreateButton"
+                ></el-divider>
+                <div class="icon-actions">
+                  <el-dropdown trigger="click">
+                    <el-tooltip
+                      class="item"
+                      effect="dark"
+                      content="密度"
+                      placement="top"
+                    >
+                      <i class="el-icon-rank hover"></i>
+                    </el-tooltip>
+                    <el-dropdown-menu slot="dropdown">
+                      <a @click="attrs.attributes.size = null">
+                        <el-dropdown-item>正常</el-dropdown-item>
+                      </a>
+                      <a @click="attrs.attributes.size = 'medium'">
+                        <el-dropdown-item>中等</el-dropdown-item>
+                      </a>
+                      <a @click="attrs.attributes.size = 'small'">
+                        <el-dropdown-item>紧凑</el-dropdown-item>
+                      </a>
+                      <a @click="attrs.attributes.size = 'mini'">
+                        <el-dropdown-item>迷你</el-dropdown-item>
+                      </a>
+                    </el-dropdown-menu>
+                  </el-dropdown>
 
-                <el-radio-group
-                    v-if="attrs.quickFilter"
-                    v-model="quickFilter"
-                    :style="attrs.quickFilter.style"
-                    :class="attrs.quickFilter.className"
-                    :disabled="attrs.quickFilter.disabled"
-                    @change="getData"
-                >
-                    <el-radio-button
-                        v-if="attrs.quickFilter"
-                        v-for="(radio, index) in attrs.quickFilter.options"
-                        :style="radio.style"
-                        :class="radio.className"
-                        :key="index"
-                        :label="radio.label"
-                        :disabled="radio.disabled"
-                        :border="radio.border"
-                        :size="radio.size"
-                    >{{ radio.title }}</el-radio-button>
-                </el-radio-group>
-
-            </div>
-          </div>
-          <div class="grid-top-container-right">
-            <component
-              v-for="(component, index) in attrs.toolbars.right"
-              :key="component.componentName + index"
-              :is="component.componentName"
-              :attrs="component"
-              :filterData="filterFormData"
-            />
-              <!-- deep-admin filterData -->
-            <template v-if="attrs.attributes.topTool">
-              <el-divider
-                direction="vertical"
-                v-if="!attrs.attributes.hideCreateButton"
-              ></el-divider>
-              <div class="icon-actions">
-                <el-dropdown trigger="click">
                   <el-tooltip
                     class="item"
                     effect="dark"
-                    content="密度"
+                    content="刷新"
                     placement="top"
                   >
-                    <i class="el-icon-rank hover"></i>
+                    <i class="el-icon-refresh hover" @click="getData"></i>
                   </el-tooltip>
-                  <el-dropdown-menu slot="dropdown">
-                    <a @click="attrs.attributes.size = null">
-                      <el-dropdown-item>正常</el-dropdown-item>
-                    </a>
-                    <a @click="attrs.attributes.size = 'medium'">
-                      <el-dropdown-item>中等</el-dropdown-item>
-                    </a>
-                    <a @click="attrs.attributes.size = 'small'">
-                      <el-dropdown-item>紧凑</el-dropdown-item>
-                    </a>
-                    <a @click="attrs.attributes.size = 'mini'">
-                      <el-dropdown-item>迷你</el-dropdown-item>
-                    </a>
-                  </el-dropdown-menu>
-                </el-dropdown>
-
-                <el-tooltip
-                  class="item"
-                  effect="dark"
-                  content="刷新"
-                  placement="top"
-                >
-                  <i class="el-icon-refresh hover" @click="getData"></i>
-                </el-tooltip>
-              </div>
-            </template>
-          </div>
+                </div>
+              </template>
+            </div>
+        </div>
         </div>
       </div>
       <div>
@@ -288,6 +326,7 @@ import BatchActions from "./BatchActions/Index";
 import ItemDiaplsy from "../form/ItemDiaplsy";
 import DialogForm from "./DialogForm";
 import DrawerForm from "./DrawerForm";
+import SelectMenu from "../widgets/Form/SelectMenu.vue";
 export default {
   mixins: [BaseComponent],
   components: {
@@ -296,7 +335,8 @@ export default {
     ItemDiaplsy,
     BatchActions,
     DialogForm,
-    DrawerForm
+    DrawerForm,
+    SelectMenu
   },
   props: {
     attrs: Object,
@@ -315,6 +355,7 @@ export default {
       page: 1, //当前页
       quickSearch: null, //快捷搜索内容
       quickFilter: '', //快捷筛选内容 <!--deep admin-->
+      tabFilter:'',
       selectionRows: [], //已选择的row
       filterFormData: null, //表单搜索数据
       tabsSelectdata: {},
@@ -325,6 +366,7 @@ export default {
     };
   },
   mounted() {
+    console.log('attrs.filter.filters===',this.attrs);
     //初始化默认设置值
     this.filterFormData = this._.cloneDeep(this.attrs.filter.filterFormData);
     this.sort = this._.cloneDeep(this.attrs.defaultSort);
@@ -334,6 +376,15 @@ export default {
               this.attrs.quickFilter.defaultValue
           );
       }
+    //tab搜索的默认值
+    if(this.attrs.tabFilter){
+      // this.tabFilter = this._.cloneDeep(
+      //     this.attrs.tabFilter.defaultValue
+      // );
+      this.tabFilter = String(this._.cloneDeep(
+          this.attrs.quickFilter.defaultValue
+      ));
+    }
       //deep admin end
     //初始化vuex状态值
     if (this.$store.getters.thisPage.grids.page) {
@@ -383,17 +434,18 @@ export default {
       this.topViewHeight = this.$refs.topView.offsetHeight;
       this.toolbarsViewHeight = this.$refs.toolbarsView.offsetHeight;
     });
+
   },
-	updated() {
-		this.$nextTick(() => {
-			this.$refs.table.doLayout()
-		})
+  updated() {
+    this.$nextTick(() => {
+      this.$refs.table.doLayout()
+    })
     this.$bus.on("showDialogGridFrom", ({ isShow, key , addOrEdit }) => {
       this.addOrEdit = addOrEdit || this.addOrEdit ;
       this.$refs["DialogGridFrom"].dialogVisible = isShow;
       this.$refs["DialogGridFrom"].key = key;
     });
-	},
+  },
   destroyed() {
     //取消监听
     try {
@@ -403,6 +455,11 @@ export default {
     } catch (e) {}
   },
   methods: {
+    // 切换tab状态
+    handleClick(tab, event) {
+      console.log(tab,event)
+      this.getData();
+    },
     onTabClick(e) {
       const name = this._.split(e.name, "----");
       this.tabsSelectdata[name[0]] = name[1];
@@ -427,6 +484,9 @@ export default {
     },
     //获取数据
     getData() {
+      console.log('quickFilter===1',this.quickFilter);
+      console.log('tab_filter===',this.tab_filter);
+      console.log('filterFormData',this.filterFormData);
       this.loading = true;
       this.$http
         [this.attrs.method](this.attrs.dataUrl, {
@@ -437,6 +497,7 @@ export default {
             ...this.sort,
             ...this.q_search,
             ...this.quick_filter, //deep admin
+            ...this.tab_filter,
             ...this.filterFormData,
             ...this.tabsSelectdata,
             ...this.$route.query,
@@ -679,6 +740,17 @@ export default {
         (q_search[this.attrs.quickSearch.searchKey] = this.quickSearch);
       return q_search;
     },
+    // tabs
+    tab_filter() {
+      // const tab_filter = new Object();
+      // this.attrs.tabFilter &&
+      // (tab_filter[this.attrs.tabFilter.filterKey] = this.tabFilter);
+      // return tab_filter;
+      const tab_filter = new Object();
+      this.attrs.quickFilter &&
+          (tab_filter[this.attrs.quickFilter.filterKey] = this.tabFilter);
+          return tab_filter;
+    },
     //deep admin start
       quick_filter() {
           const quick_filter = new Object();
@@ -709,14 +781,22 @@ export default {
   .bottom-border {
     border-bottom: 1px solid #ebeef5;
   }
+  .grid-top-container-wrap {
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    min-height: 32px;
+  }
   .grid-top-container {
     padding: 8px;
     display: flex;
     justify-content: space-between;
     min-height: 32px;
+    flex: 1;
     .grid-top-container-left {
       display: flex;
       align-items: center;
+      margin-right: 5px;
     }
     .grid-top-container-right {
       display: flex;
@@ -772,4 +852,21 @@ export default {
     }
   }
 }
+.rowForm {
+  width: 100%;
+  display: flex !important;
+  .el-form-item__content {
+    flex: 1;
+  }
+}
+.right {
+  justify-content: flex-end !important;
+}
+.grid-container .el-tabs__nav-wrap::after {
+  height: 0px !important;
+}
+.form-bottom {
+  margin-bottom: 4px !important;
+}
 </style>
+

@@ -2,8 +2,8 @@
     <div class="checkBox isMore">
         <div class="checkboxMenu clearfix" :class="toggle ? 'showMore':''">
             <ul class="checkboxMenuUl" ref="checkboxMenuUl">
-                <li v-for="(item,index) in list" :key="index" class="item" @click="changeLi(item,index)">
-                    <div class="itemBox" :class="{'active':index==clickIndex}"><span >{{item.name}}</span></div>
+                <li v-for="(item,index) in attrs.options" :key="index" class="item" @click="changeLi(item,index)">
+                    <div class="itemBox" :class="{'active':index==clickIndex}"><span >{{item.label}}</span></div>
                 </li>
             </ul>
         </div>
@@ -23,109 +23,13 @@ export default {
     return {
       toggle: false , //是否展开，默认否
       height: 0,
-      list:[
-          {
-              name:'全部',
-              id:1
-          },{
-              name:'全部',
-              id:2
-          },{
-              name:'全部',
-              id:3
-          },{
-              name:'全部',
-              id:4
-          },{
-              name:'全部',
-              id:5
-          },{
-              name:'全部',
-              id:6
-          },{
-              name:'全部',
-              id:7
-          },{
-              name:'全部',
-              id:8
-          },{
-              name:'全部',
-              id:9
-          },{
-              name:'全部',
-              id:10
-          },{
-              name:'全部',
-              id:11
-          },{
-              name:'全部',
-              id:12
-          },{
-              name:'全部',
-              id:13
-          },{
-              name:'全部',
-              id:14
-          },{
-              name:'全部',
-              id:15
-          },{
-              name:'全部',
-              id:16
-          },{
-              name:'全部',
-              id:17
-          },{
-              name:'全部',
-              id:18
-          },{
-              name:'全部',
-              id:19
-          },{
-              name:'全部',
-              id:20
-          },{
-              name:'全部',
-              id:21
-          },{
-              name:'全部',
-              id:22
-          },{
-              name:'全部',
-              id:23
-          },{
-              name:'全部',
-              id:24
-          },{
-              name:'全部',
-              id:25
-          },{
-              name:'全部',
-              id:26
-          },{
-              name:'全部',
-              id:27
-          },{
-              name:'全部全部',
-              id:28
-          },{
-              name:'全部',
-              id:29
-          },{
-              name:'全部1',
-              id:30
-          },{
-              name:'全部2',
-              id:31
-          },
-      ],
       clickIndex: 0
     };
   },
   mounted() {
+    this.toggle = this.attrs.isMore;
     this.$nextTick(() => {
       this.height = this.$refs.checkboxMenuUl.offsetHeight;
-      console.log(this.height);
     });
   },
   methods: {
@@ -136,7 +40,7 @@ export default {
     // 选择选项
     changeLi(item,index) {
       this.clickIndex = index;
-      this.$emit("change", item);
+      this.$emit("change", item.value);
     },
   }
 };
@@ -156,6 +60,7 @@ export default {
   -webkit-box-direction: normal;
   -ms-flex-direction: row;
   flex-direction: row;
+  // margin: 4px 0px 0px 0px;
   .checkboxMenu {
     height: 30px;
     overflow: hidden;
