@@ -1,5 +1,16 @@
 <template>
   <div>
+    <!-- <SelectMenu
+      v-if="attrs"
+      :value="value"
+      :defaultPropValues="defaultPropValues"
+      :attrs="attrs"
+      :form-data="formData"
+      :form-items="formItems"
+      :form-item="formItem"
+      @change="onChange"
+      @changeRelation="onChangeRelation"
+    /> -->
     <component
       v-if="formItem.componentTopComponent"
       :is="formItem.componentTopComponent.componentName"
@@ -39,8 +50,12 @@
 <script>
 import { BaseComponent } from "@/mixins.js";
 import { getArrayValue } from "../../utils";
+import SelectMenu from "../widgets/Form/SelectMenu.vue";
 export default {
   mixins: [BaseComponent],
+  components: {
+    SelectMenu
+  },
   props: {
     value: {
       default: null,
