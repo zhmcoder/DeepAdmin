@@ -100,7 +100,8 @@ export default {
       }
       .active {
         color: #fff;
-        background: #29cc5f!important;
+        // background: #29cc5f!important;
+        background: #409EFF !important;
       }
     }
   }
@@ -110,7 +111,8 @@ export default {
   .more {
     width: 80px;
     font-size: 14px;
-    color: #29cc5f;
+    // color: #29cc5f;
+    color: #409EFF;
     cursor: pointer;
     -webkit-user-select: none;
     -moz-user-select: none;
