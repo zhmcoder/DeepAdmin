@@ -39,11 +39,6 @@ class Select extends Component
     protected $isTab = false;
     protected $tabAction;
 
-    protected $isOpen = false; // 是否展开显示
-    protected $isMore = false; // 更多是否开启
-    protected $isRow = true; // 是否一行展示
-
-
     /**
      * @var SelectOption[]
      */
