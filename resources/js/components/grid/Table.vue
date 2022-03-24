@@ -79,9 +79,10 @@
     <el-card shadow="never" :body-style="{ padding: 0 }" v-loading="loading">
       <div class="bottom-border" ref="toolbarsView" v-if="attrs.toolbars.show">
         <div class="grid-top-container-wrap">
-          <div class="grid-top-container-tabs" >
+          <div class="grid-top-container-tabs" v-if="attrs.tabFilter">
             <el-tabs v-model="tabFilter" @tab-click="handleClick">
-              <el-tab-pane v-for="(item,index) in attrs.quickFilter.options" :key="index" :label="item.title" :name="item.label"></el-tab-pane>
+              <el-tab-pane v-for="(item,index) in attrs.tabFilter.options" :key="index" :label="item.title" :name="setName(item.label)">
+              </el-tab-pane>
             </el-tabs>
           </div>
           <div class="grid-top-container" :class="1==2?'left':'right'">
@@ -366,7 +367,6 @@ export default {
     };
   },
   mounted() {
-    console.log('attrs.filter.filters===',this.attrs);
     //初始化默认设置值
     this.filterFormData = this._.cloneDeep(this.attrs.filter.filterFormData);
     this.sort = this._.cloneDeep(this.attrs.defaultSort);
@@ -378,11 +378,8 @@ export default {
       }
     //tab搜索的默认值
     if(this.attrs.tabFilter){
-      // this.tabFilter = this._.cloneDeep(
-      //     this.attrs.tabFilter.defaultValue
-      // );
       this.tabFilter = String(this._.cloneDeep(
-          this.attrs.quickFilter.defaultValue
+          this.attrs.tabFilter.defaultValue
       ));
     }
       //deep admin end
@@ -455,6 +452,10 @@ export default {
     } catch (e) {}
   },
   methods: {
+    // 更改为String类型
+    setName(value) {
+      return String(value)
+    },
     // 切换tab状态
     handleClick(tab, event) {
       console.log(tab,event)
@@ -739,14 +740,10 @@ export default {
     },
     // tabs
     tab_filter() {
-      // const tab_filter = new Object();
-      // this.attrs.tabFilter &&
-      // (tab_filter[this.attrs.tabFilter.filterKey] = this.tabFilter);
-      // return tab_filter;
       const tab_filter = new Object();
-      this.attrs.quickFilter &&
-          (tab_filter[this.attrs.quickFilter.filterKey] = this.tabFilter);
-          return tab_filter;
+      this.attrs.tabFilter &&
+      (tab_filter[this.attrs.tabFilter.filterKey] = this.tabFilter);
+      return tab_filter;
     },
     //deep admin start
       quick_filter() {

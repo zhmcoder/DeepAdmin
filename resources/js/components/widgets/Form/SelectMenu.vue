@@ -3,7 +3,7 @@
         <div class="checkboxMenu clearfix" :class="toggle ? 'showMore':''">
             <ul class="checkboxMenuUl" ref="checkboxMenuUl">
                 <li v-for="(item,index) in attrs.options" :key="index" class="item" @click="changeLi(item,index)">
-                    <div class="itemBox" :class="{'active':index==clickIndex}" :style="index==clickIndex ? attrs.style:''"><span >{{item.label}}</span></div>
+                    <div class="itemBox" :class="{'active':item.value==clickIndex}"><span >{{item.label}}</span></div>
                 </li>
             </ul>
         </div>
@@ -23,11 +23,14 @@ export default {
     return {
       toggle: false , //是否展开，默认否
       height: 0,
-      clickIndex: 0
+      clickIndex: null
     };
   },
   mounted() {
-    console.log('attrs',attrs);
+    if(this.formItem.defaultValue){
+      this.clickIndex = this.formItem.defaultValue;
+      this.$emit("change", this.formItem.defaultValue );
+    }
     this.toggle = this.attrs.isMore;
     this.$nextTick(() => {
       this.height = this.$refs.checkboxMenuUl.offsetHeight;
