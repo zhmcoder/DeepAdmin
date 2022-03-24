@@ -484,9 +484,6 @@ export default {
     },
     //获取数据
     getData() {
-      console.log('quickFilter===1',this.quickFilter);
-      console.log('tab_filter===',this.tab_filter);
-      console.log('filterFormData',this.filterFormData);
       this.loading = true;
       this.$http
         [this.attrs.method](this.attrs.dataUrl, {

@@ -3,7 +3,7 @@
         <div class="checkboxMenu clearfix" :class="toggle ? 'showMore':''">
             <ul class="checkboxMenuUl" ref="checkboxMenuUl">
                 <li v-for="(item,index) in attrs.options" :key="index" class="item" @click="changeLi(item,index)">
-                    <div class="itemBox" :class="{'active':index==clickIndex}"><span >{{item.label}}</span></div>
+                    <div class="itemBox" :class="{'active':index==clickIndex}" :style="index==clickIndex ? attrs.style:''"><span >{{item.label}}</span></div>
                 </li>
             </ul>
         </div>
@@ -27,6 +27,7 @@ export default {
     };
   },
   mounted() {
+    console.log('attrs',attrs);
     this.toggle = this.attrs.isMore;
     this.$nextTick(() => {
       this.height = this.$refs.checkboxMenuUl.offsetHeight;
@@ -101,7 +102,7 @@ export default {
       .active {
         color: #fff;
         // background: #29cc5f!important;
-        background: #409EFF !important;
+        background: #409EFF;
       }
     }
   }
@@ -124,7 +125,8 @@ export default {
     .icon-color {
       font-size: 16px;
       font-weight: bold;
-      color: #29cc5f;
+      // color: #29cc5f;
+      color: #409EFF;
       cursor: pointer;
       margin-left: 2px;
     }
