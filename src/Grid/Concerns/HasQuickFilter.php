@@ -27,6 +27,7 @@ trait HasQuickFilter
     {
         $this->quickFilter = new QuickFilter();
         $this->quickFilter->defaultValue = '';
+        $this->quickFilter->position = $this->position;
         return $this;
     }
 
@@ -73,6 +74,12 @@ trait HasQuickFilter
     public function operator($operator = '=')
     {
         $this->operator = $operator;
+        return $this;
+    }
+
+    public function position($position)
+    {
+        $this->tabFilter->position = $position;
         return $this;
     }
 

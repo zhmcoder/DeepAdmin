@@ -4,8 +4,7 @@ namespace Andruby\DeepAdmin\Grid\Tools;
 
 use JsonSerializable;
 
-//<!--deep admin start-->
-class QuickFilter implements JsonSerializable
+class TabFilter implements JsonSerializable
 {
     public $filterKey;
     public $options;
@@ -25,4 +24,3 @@ class QuickFilter implements JsonSerializable
         ];
     }
 }
-//<!--deep admin end-->

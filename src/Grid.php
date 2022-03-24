@@ -4,6 +4,7 @@
 namespace Andruby\DeepAdmin;
 
 
+use Andruby\DeepAdmin\Grid\Concerns\HasTabFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\Relations;
@@ -28,7 +29,7 @@ use Andruby\DeepAdmin\Layout\Content;
 
 class Grid extends Component
 {
-    use HasGridAttributes, HasPageAttributes, HasDefaultSort, HasQuickSearch, HasFilter, HasQuickFilter;
+    use HasGridAttributes, HasPageAttributes, HasDefaultSort, HasQuickSearch, HasFilter, HasQuickFilter, HasTabFilter;
 
     //<!--deep admin-->
     /**
@@ -304,6 +305,7 @@ class Grid extends Component
         $this->applyQuickSearch();
         //<!--deep admin start-->
         $this->applyQuickFilter();
+        $this->applyTabFilter();
         //<!--deep admin end-->
         $this->applyFilter(false);
 
@@ -551,6 +553,7 @@ class Grid extends Component
             $viewData['quickSearch'] = $this->quickSearch;
             //<!--deep admin start-->
             $viewData['quickFilter'] = $this->quickFilter;
+            $viewData['tabFilter'] = $this->tabFilter;
             //<!--deep admin end-->
             $viewData['filter'] = $this->filter->buildFilter();
             $viewData['leftFilter'] = $this->leftFilter->buildFilter();
