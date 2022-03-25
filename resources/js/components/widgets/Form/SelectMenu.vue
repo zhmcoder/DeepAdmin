@@ -43,7 +43,7 @@ export default {
     },
     // 选择选项
     changeLi(item,index) {
-      this.clickIndex = index;
+      this.clickIndex = item.value;
       this.$emit("change", item.value);
     },
   }
