@@ -85,7 +85,7 @@
               </el-tab-pane>
             </el-tabs>
           </div>
-          <div class="grid-top-container" :class="1==2?'left':'right'">
+          <div class="grid-top-container">
             <div class="grid-top-container-left">
               <BatchActions
                 :routers="attrs.routers"
@@ -110,13 +110,15 @@
                   >
                 </el-input>
               </div>
-              <div class="flex-c">
-                <component
-                  v-for="(component, index) in attrs.toolbars.left"
-                  :key="component.componentName + index"
-                  :is="component.componentName"
-                  :attrs="component"
-                />
+              <div class="flex-c flex-all" :class="attrs.quickFilter && attrs.quickFilter.position=='right'?'right':''">
+                <div class="flex-c">
+                  <component
+                    v-for="(component, index) in attrs.toolbars.left"
+                    :key="component.componentName + index"
+                    :is="component.componentName"
+                    :attrs="component"
+                  />
+                </div>
 
                   <el-radio-group
                       v-if="attrs.quickFilter"
@@ -791,6 +793,10 @@ export default {
       display: flex;
       align-items: center;
       margin-right: 5px;
+      flex: 1;
+      .flex-all {
+        flex: 1;
+      }
     }
     .grid-top-container-right {
       display: flex;
@@ -854,7 +860,7 @@ export default {
   }
 }
 .right {
-  justify-content: flex-end !important;
+  justify-content: space-between !important;
 }
 .grid-container .el-tabs__nav-wrap::after {
   height: 0px !important;
