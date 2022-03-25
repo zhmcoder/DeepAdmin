@@ -79,7 +79,7 @@ trait HasQuickFilter
 
     public function position($position)
     {
-        $this->tabFilter->position = $position;
+        $this->quickFilter->position = $position;
         return $this;
     }
 
