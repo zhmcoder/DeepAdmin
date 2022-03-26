@@ -1,64 +1,80 @@
 <template>
-  <div class="upload-component">
-    <div class="upload-images">
-      <template v-for="(item, index) in list">
-        <div :key="index" class="upload-images-item">
-          <el-image
-            title="预览图片"
-            v-if="attrs.type == 'image'"
-            :src="item.url"
-            :style="{ width: attrs.width + 'px', height: attrs.height + 'px' }"
-            fit="cover"
-            class="upload-show-image"
-            :preview-src-list="urlList"
-          />
-          <el-avatar
-            v-if="attrs.type == 'file'"
-            :size="attrs.width"
-            shape="square"
-            :title="item.name"
-            fit="cover"
-            icon="el-icon-document-checked"
-          />
-          <el-avatar v-else-if="attrs.type == 'avatar'" :size="attrs.width" :src="item.url" />
-          <i @click="onDelete(index)" class="mask el-icon-close" title="删除图片"></i>
+  <div>
+    <div class="upload-component">
+      <div class="upload-images">
+        <div>
+          <template v-for="(item, index) in list">
+            <div :key="index" class="upload-images-item">
+              <el-image
+                title="预览图片"
+                v-if="attrs.type == 'image'"
+                :src="item.url"
+                :style="{ width: attrs.width + 'px', height: attrs.height + 'px' }"
+                fit="cover"
+                class="upload-show-image"
+                :preview-src-list="urlList"
+              />
+              <el-avatar
+                v-if="attrs.type == 'file'"
+                :size="attrs.width"
+                shape="square"
+                :title="item.name"
+                fit="cover"
+                icon="el-icon-document-checked"
+              />
+              <el-avatar v-else-if="attrs.type == 'avatar'" :size="attrs.width" :src="item.url" />
+              <i @click="onDelete(index,item)" class="mask el-icon-close" title="删除图片"></i>
+            </div>
+          </template>
         </div>
-      </template>
-    </div>
-    <div
-      class="upload-block"
-      :class="{ 'ml-10': list.length > 0 }"
-      v-if="list.length < attrs.limit"
-    >
-      <el-upload
-        :style="attrs.style"
-        :class="attrs.className"
-        :action="attrs.action"
-        :multiple="attrs.multiple"
-        :data="data"
-        :show-file-list="false"
-        :drag="attrs.drag"
-        :accept="attrs.accept"
-        list-type="text"
-        :disabled="attrs.disabled"
-        :on-exceed="onExceed"
-        :on-success="onSuccess"
-        :on-remove="onRemove"
-        :limit="attrs.limit" 
-        :file-list="list || []"
+      </div>
+      <div
+        class="upload-block"
+        :class="{ 'ml-10': list.length > 0 }"
       >
-        <el-button
-          plain
-          :class="attrs.type"
-          :style="{ width: attrs.width + 'px', height: attrs.height + 'px' }"
-        >上传</el-button>
-      </el-upload>
+        <!-- v-if="list.length < attrs.limit" -->
+        <el-upload
+          :style="attrs.style"
+          :class="attrs.className"
+          :action="attrs.action"
+          multiple="multiple"
+          :data="data"
+          :show-file-list="false"
+          :drag="attrs.drag"
+          :accept="attrs.accept"
+          list-type="text"
+          :disabled="attrs.disabled"
+          :on-exceed="onExceed"
+          :on-success="onSuccess"
+          :on-remove="onRemove"
+          :file-list="list || []"
+        >
+          <!-- :limit="attrs.limit"  -->
+          <el-button
+            plain
+            :class="attrs.type"
+            :style="{ width: attrs.width + 'px', height: attrs.height + 'px' }"
+          >上传</el-button>
+        </el-upload>
+        
+      </div>
+    </div>
+    <div>
+      <div v-for="(item,index) in progressList" :key="index" class="progress-wrap">
+        <div class="progress-file-name-wrap">
+          <i class="el-icon-document"></i>
+          <div class="progress-file-name">{{item.name}}</div>
+          <div class="progress">{{item.progressPercent}}%</div>
+        </div>
+        <el-progress :percentage="item.progressPercent" :status="item.status"></el-progress>
+      </div>
     </div>
   </div>
 </template>
 <script>
 import { getFileUrl, getFileName } from "@/utils";
 import { FormItemComponent } from "@/mixins.js";
+import axios from 'axios';
 export default {
   mixins: [FormItemComponent],
   data() {
@@ -67,13 +83,110 @@ export default {
         _token: Admin.token,
         ...this.attrs.data
       },
-      fileList: []
+      fileList: [],
+      progressPercent: 0,
+      uidList: [], //存储每个uid信息数据
+      progressList: [], //展示所有上传文件进度的列表
     };
   },
   mounted() {},
   destroyed() {},
   methods: {
-    onDelete(index) {
+    uploadFile(param,config) {
+        let axiosConfig = {
+            url: 'http://deep-admin:8888/admin-api/_deep_admin_upload_image_', 
+            method: 'post',
+            data: param,
+        }
+        if(config instanceof Object){
+            for(let key in config){
+                axiosConfig[key] = config[key]
+            }
+        }
+        return axios(axiosConfig)
+    },
+
+    handleRequest (data) {
+        var file = data.file;
+        file.progressPercent = 0;
+        this.progressList.push(file);
+        let formdata = new FormData()
+        formdata.append('file', data.file)
+        formdata.append('_token','Gr7wOU126GE1SU3lePt77VDIwk0eiMBBQO7XagTe');
+        formdata.append('uniqueName',true);
+
+        //进度条配置
+        let config = {
+            onUploadProgress: ProgressEvent => {
+                let progressPercent = (ProgressEvent.loaded / ProgressEvent.total * 100)
+                // 进行中的进度条
+                if(progressPercent<100){
+                  var newProgressList = JSON.parse(JSON.stringify(this.progressList))
+                  newProgressList.map((item)=>{
+                    if(item.uid == file.uid){
+                      item.progressPercent = progressPercent,
+                      item.name = file.name
+                    }
+                  })
+                  this.progressList = newProgressList;
+                }
+            }
+        }
+        this.uploadFile(formdata,config).then(response=>{
+
+            // 成功后的进度条
+            var newProgressList = JSON.parse(JSON.stringify(this.progressList))
+            newProgressList.map((item)=>{
+              if(item.uid == file.uid){
+                item.progressPercent = 100
+                item.name = file.name
+                item.status = 'success'
+              }
+            })
+            this.progressList = newProgressList;
+
+            if (!this.attrs.multiple) {
+              this.onChange(response.data.path);
+              this.uidList.push({
+                uid:file.uid,
+                value: response.data.path
+              })
+            } else {
+              let t_value = this._.clone(this.value);
+              t_value = this._.isArray(t_value) ? t_value : [];
+              t_value.push(this.getObject(response.data.path, 0));
+              this.onChange(t_value);
+              this.uidList.push({
+                uid:file.uid,
+                value: t_value
+              })
+            }
+
+        }).catch(res=>{
+          // 失败时的进度条
+          var newProgressList = JSON.parse(JSON.stringify(this.progressList))
+          newProgressList.map((item)=>{
+            if(item.uid == file.uid){
+              item.status = 'exception';
+              item.name = file.name;
+            }
+          })
+          this.progressList = newProgressList;
+          this.$message.error('上传失败');
+        })
+    },
+
+
+
+    onDelete(index,item) {
+      // 删除下面的进度条
+      this.uidList.map((items,index)=>{
+        if(items.value == item.path){
+          this.uidList.splice(index,1) 
+          this.progressList = this.progressList.filter(item=>item.uid!=items.uid)
+        }
+      })
+
       if (this._.isArray(this.value)) {
         let t_value = this._.clone(this.value);
         // t_value[index][this.attrs.remove_flag_name] = 1;     
@@ -239,6 +352,31 @@ export default {
     }
     .avatar {
       border-radius: 50%;
+    }
+  }
+}
+.progress-wrap {
+  width: 270px;
+  margin-top: 2px;
+  .progress-file-name-wrap {
+    display: flex;
+    align-items: center;
+    line-height: 20px;
+    .progress-file-name {
+      font-size: 12px;
+      flex: 1;
+      margin-left: 2px;
+      vertical-align: middle;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      display: -webkit-box;
+		  -webkit-box-orient: vertical;
+		  -webkit-line-clamp: 1;
+    }
+    .progress {
+      font-size: 12px;
+      margin-right: 50px;
+      margin-left: 20px;
     }
   }
 }
