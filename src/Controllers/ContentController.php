@@ -636,7 +636,7 @@ class ContentController extends AdminController
                     $obj->component(
                         Upload::make()->image()->multiple()->uniqueName()
                             ->limit((int)$val['form_params'])->drag()
-                    )->inputWidth(12)->required($val['is_required'], 'array');
+                    )->inputWidth(24)->required($val['is_required'], 'array');
                     break;
 
                 case 'uploadFile' : // 文件上传 单个
