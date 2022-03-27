@@ -34,6 +34,8 @@ class Upload extends Component
 
     protected $remove_flag_name = Form::REMOVE_FLAG_NAME;
 
+    protected $showProgress = true;
+
     public function __construct($value = null)
     {
         ##deep admin start
@@ -225,5 +227,14 @@ class Upload extends Component
         return $this;
     }
 
+    /**
+     * @param float $showProgress
+     * @return $this
+     */
+    public function showProgress($showProgress = true)
+    {
+        $this->showProgress = $showProgress;
+        return $this;
+    }
 
 }
