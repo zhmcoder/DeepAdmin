@@ -2,7 +2,6 @@
   <div>
     <div class="upload-component">
       <div class="upload-images">
-        <div>
           <template v-for="(item, index) in list">
             <div :key="index" class="upload-images-item">
               <el-image
@@ -26,7 +25,6 @@
               <i @click="onDelete(index,item)" class="mask el-icon-close" title="删除图片"></i>
             </div>
           </template>
-        </div>
       </div>
       <div
         class="upload-block"
