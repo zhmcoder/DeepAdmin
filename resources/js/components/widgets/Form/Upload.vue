@@ -31,13 +31,12 @@
       <div
         class="upload-block"
         :class="{ 'ml-10': list.length > 0 }"
+        v-if="list.length < attrs.limit"
       >
-        <!-- v-if="list.length < attrs.limit" -->
         <el-upload
           :style="attrs.style"
           :class="attrs.className"
-          :action="attrs.action"
-          multiple="multiple"
+          :multiple="attrs.multiple"
           :data="data"
           :show-file-list="false"
           :drag="attrs.drag"
@@ -47,16 +46,42 @@
           :on-exceed="onExceed"
           :on-success="onSuccess"
           :on-remove="onRemove"
-          :file-list="list || []"
+          action="#"
+          :file-list="fileList"
+          :http-request="handleRequest"
+          v-if="attrs.showProgress"
         >
-          <!-- :limit="attrs.limit"  -->
           <el-button
             plain
             :class="attrs.type"
             :style="{ width: attrs.width + 'px', height: attrs.height + 'px' }"
           >上传</el-button>
         </el-upload>
-        
+
+        <el-upload
+          :style="attrs.style"
+          :class="attrs.className"
+          :action="attrs.action"
+          :multiple="attrs.multiple"
+          :data="data"
+          :show-file-list="false"
+          :drag="attrs.drag"
+          :accept="attrs.accept"
+          list-type="text"
+          :disabled="attrs.disabled"
+          :on-exceed="onExceed"
+          :on-success="onSuccess"
+          :on-remove="onRemove"
+          :limit="attrs.limit" 
+          :file-list="list || []"
+          v-else
+        >
+          <el-button
+            plain
+            :class="attrs.type"
+            :style="{ width: attrs.width + 'px', height: attrs.height + 'px' }"
+          >上传</el-button>
+        </el-upload>
       </div>
     </div>
     <div>
@@ -94,7 +119,7 @@ export default {
   methods: {
     uploadFile(param,config) {
         let axiosConfig = {
-            url: 'http://deep-admin:8888/admin-api/_deep_admin_upload_image_', 
+            url: this.attrs.action, 
             method: 'post',
             data: param,
         }
@@ -107,13 +132,17 @@ export default {
     },
 
     handleRequest (data) {
+        var params = this.data;
+
         var file = data.file;
         file.progressPercent = 0;
         this.progressList.push(file);
+
         let formdata = new FormData()
+        for(let i in params){
+          formdata.append(i,params[i])
+        }
         formdata.append('file', data.file)
-        formdata.append('_token','Gr7wOU126GE1SU3lePt77VDIwk0eiMBBQO7XagTe');
-        formdata.append('uniqueName',true);
 
         //进度条配置
         let config = {
@@ -175,8 +204,6 @@ export default {
           this.$message.error('上传失败');
         })
     },
-
-
 
     onDelete(index,item) {
       // 删除下面的进度条
