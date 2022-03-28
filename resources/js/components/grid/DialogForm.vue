@@ -66,9 +66,9 @@
 		methods: {
 			onClose() {
 				this.showForm = false;
-				this.key = null;
-				this.selfDialogForm = this._.cloneDeep(this.dialogForm);
-				this.$bus.emit("resetFormData");
+				// this.key = null;
+				// this.selfDialogForm = this._.cloneDeep(this.dialogForm);
+				// this.$bus.emit("resetFormData");
 			},
 		},
 	};
