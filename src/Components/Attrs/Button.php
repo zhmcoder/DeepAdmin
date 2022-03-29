@@ -13,6 +13,7 @@ trait Button
     protected $disabled = false;
     protected $icon;
     protected $autofocus = false;
+    protected $isDialog = false;
 
     /**
      * @param mixed $content
@@ -102,6 +103,12 @@ trait Button
     public function autofocus(bool $autofocus = true)
     {
         $this->autofocus = $autofocus;
+        return $this;
+    }
+
+    public function isDialog(bool $isDialog = true)
+    {
+        $this->isDialog = true;
         return $this;
     }
 
