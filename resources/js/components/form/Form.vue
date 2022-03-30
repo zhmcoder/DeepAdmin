@@ -446,7 +446,11 @@
         if(this.attrs.isGetData){
 				  this.$bus.emit("closeDialog");
         }else{
-				  this.$bus.emit("showDialogGridFrom", {isShow: false});
+          if(this.attrs.actions.cancelButton.isDialog){
+				    this.$bus.emit("closeDialog");
+          }else{
+				    this.$bus.emit("showDialogGridFrom", {isShow: false});
+          }
         }
 			},
 		},
