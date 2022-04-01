@@ -26,6 +26,11 @@ export default {
       clickIndex: null
     };
   },
+  watch:{
+    value(val){
+      this.clickIndex = val;
+    }
+  },
   mounted() {
     if(this.formItem.defaultValue){
       this.clickIndex = this.formItem.defaultValue;
@@ -43,7 +48,7 @@ export default {
     },
     // 选择选项
     changeLi(item,index) {
-      this.clickIndex = item.value;
+      // this.clickIndex = item.value;
       this.$emit("change", item.value);
     },
   }
