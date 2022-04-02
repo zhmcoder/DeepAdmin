@@ -31,13 +31,13 @@
 			this.columns = this.attrs.columns;
 			if(this.attrs.multiData){
 				this.multiData = this.attrs.multiData.length <= 0 ? [{}] : this.attrs.multiData;
-      }
+      		}
 
-			console.log('multiItem');
-			console.log(this.multiData);
-			console.log(this.formData);
-			console.log(this.attrs);
-			console.log(this.attrs.component.prop);
+			// console.log('multiItem');
+			// console.log(this.multiData);
+			// console.log(this.formData);
+			// console.log(this.attrs);
+			// console.log(this.attrs.component.prop);
 			this.$emit("change", this.multiData)
 		},
 		watch: {
@@ -53,6 +53,22 @@
 				var newAttrs = JSON.parse(JSON.stringify(this.attrs))
 				if(component.isRelatedSelect){
 					this.$emit("changeMoreRelation", newAttrs , component ,value);
+
+					// 循环遍历，将后面的关联数据重置
+					this.resetFormData(component);
+				}
+			},
+			// 使用递归重置关联数据
+			resetFormData(component){
+				if(component.isRelatedSelect){
+					if(component.relatedSelectRef){
+						this.multiData[component.relatedSelectRef] = null;
+					}
+					this.attrs.component.map(item=>{
+						if(item.prop == component.relatedSelectRef){
+							this.resetFormData(item.component)
+						}
+					})
 				}
 			},
 			// 增加

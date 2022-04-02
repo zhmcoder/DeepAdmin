@@ -325,6 +325,14 @@
 					})
 					.then(({data}) => {
 						let temp_data = JSON.parse(JSON.stringify(data));
+            
+            // 后台获取联动数据后，处理数据
+            this.attrs['formItems'].forEach(item => {
+              if(item['component'] && item['component']['componentName']=='RowMulti'){
+                this.getNewFormData(item['component'],data[item.prop],item.prop)
+              }
+            })
+
 						//处理远程接口下拉
 						console.log('attrs');
 						console.log(this.attrs);
@@ -375,6 +383,37 @@
 						this.loading = false;
 					});
 			},
+      // 递归查询编辑里面的数据
+			getNewFormData(attrs,data,prop) {
+				var newAttrs = JSON.parse(JSON.stringify(attrs));
+        this.deepFormData(newAttrs,data,prop,newAttrs.component,0);
+      },
+      deepFormData(newAttrs , data , prop ,  arr , i) {
+        var _this = this;
+        var attrsList = JSON.parse(JSON.stringify(newAttrs));
+        var newFormItems = JSON.parse(JSON.stringify(this.attrs.formItems));
+        if(arr[i].component.isRelatedSelect && arr[i].component.relatedSelectRef){
+          attrsList.component.map(item=>{
+            if(item.prop == arr[i].component.relatedSelectRef){
+              this.$http.get(item.component.remoteUrl, {
+                params: {
+                  [arr[i].component.ref]: data[arr[i].prop]
+                }
+              })
+              .then(res => {
+                item.component.options = res.data.data;
+                newFormItems.map(citem=>{
+                  if(citem.prop == prop){
+                    citem['component'] = attrsList
+                  }
+                })
+                _this.attrs.formItems = newFormItems;
+                this.deepFormData(attrsList , data , prop , arr , i+1);
+              })
+            }
+          })
+        }
+      },
 			submitForm(formName) {
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
