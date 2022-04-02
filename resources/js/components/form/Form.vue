@@ -256,10 +256,6 @@
 		methods: {
       handleClick(tab, event){
           this.activeName = tab.name;
-          // if(this.attrs.reloadData){
-          //   this.isEdit && this.getEditData();
-          //   this.attrs.dataUrl && this.attrs.isGetData && this.getFormData();
-          // }
       },
       getFormData(){
         this.$http

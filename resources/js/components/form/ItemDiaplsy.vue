@@ -144,7 +144,12 @@ export default {
       },
     onChange(value) {
       this.$emit("change", value);
-
+      
+      if(this.attrs.componentName=='RowMulti'){
+        if(this.attrs.multiData){
+          this.attrs.multiData = value;
+        }
+      }
       //触发动态注入
       this.$nextTick(() => {
         if (this.formItem.refData) {
