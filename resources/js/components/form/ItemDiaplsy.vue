@@ -33,6 +33,7 @@
         :form-item="formItem"
         @change="onChange"
         @changeRelation="onChangeRelation"
+        @changeMoreRelation="onChangeMoreRelation"
       />
       <component
         v-if="formItem.componentRightComponent"
@@ -125,6 +126,22 @@ export default {
           }
       },
       //deep admin end
+      onChangeMoreRelation(attrs,component,resValue){
+          var newAttrs = JSON.parse(JSON.stringify(attrs));
+          newAttrs.component.map(citem=>{
+						if(citem.prop == component.relatedSelectRef){
+							this.$http.get(citem.component.remoteUrl, {
+								params: {
+									[component.ref]: resValue
+								}
+							})
+							.then(res => {
+								citem.component.options = res.data.data;
+                this.formItem['component'] = newAttrs
+							})
+						}
+					})
+      },
     onChange(value) {
       this.$emit("change", value);
 

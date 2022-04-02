@@ -6,10 +6,11 @@
       </template>
       <component
           v-model="multiData[item.prop]"
+		  :key="i"
           v-if="item.component"
           :is="item.component.componentName"
           :attrs="item.component"
-          @change="onChange"
+          @change="value=>onChange(value,item.component)"
       />
       <span :style="item.labelStyle" :class="item.className">
        {{item.afterLabel}}
@@ -45,10 +46,14 @@
 			}
 		},
 		methods: {
-			onChange(value) {
-				console.log('change');
-				console.log(value);
+			onChange(value,component) {
 				this.$emit("change", this.multiData);
+
+				// 如果是关联属性，修改attrs的值
+				var newAttrs = JSON.parse(JSON.stringify(this.attrs))
+				if(component.isRelatedSelect){
+					this.$emit("changeMoreRelation", newAttrs , component ,value);
+				}
 			},
 			// 增加
 			addRow() {
