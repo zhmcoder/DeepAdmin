@@ -381,6 +381,9 @@
 			},
       // 递归查询编辑里面的数据
 			getNewFormData(attrs,data,prop) {
+        if(attrs.multiData){
+          attrs.multiData = data;
+        }
 				var newAttrs = JSON.parse(JSON.stringify(attrs));
         this.deepFormData(newAttrs,data,prop,newAttrs.component,0);
       },
