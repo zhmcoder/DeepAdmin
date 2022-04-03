@@ -747,11 +747,12 @@ class Form extends Component
 
                         }
                         //过滤不存在的字段
-                        foreach ($related as $key => $value) {
-                            if (\Schema::hasColumn($instance->getTable(), $key)) {
-                                $instance->setAttribute($key, $value);
+                        if (is_array($related)) {
+                            foreach ($related as $key => $value) {
+                                if (\Schema::hasColumn($instance->getTable(), $key)) {
+                                    $instance->setAttribute($key, $value);
+                                }
                             }
-
                         }
                         $instance->save();
                     }
