@@ -689,9 +689,9 @@ class ContentController extends AdminController
                     $editId = request()->route()->parameter('content');
                     $options = [];
                     if (!empty($editId)) {
-                        $form->editData($editId);
-                        $formInfo = $form->model()->toArray();
-                        $value = $formInfo[$val['name']];
+                        $table = new Content($this->entity->table_name);
+                        $formInfo = $table::query()->find($editId);
+                        $value = $formInfo[$val['name']] ?? '';
 
                         $formParams = !empty($val['form_params']) ? explode("\n", $val['form_params']) : '';
                         $val['table_where'] = $formParams[1] . ",=," . $value;
