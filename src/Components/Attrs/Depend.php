@@ -12,6 +12,7 @@ trait Depend
     protected $relatedComponents;
     protected $isRelatedSelect;
     protected $relatedSelectRef;
+    protected $findByParent = false;
     //deep admin end
 
     /**
@@ -33,6 +34,7 @@ trait Depend
         $this->paginate = $paginate;
         return $this;
     }
+
     /**
      * @param mixed $extUrlParams
      * @return $this
@@ -42,6 +44,7 @@ trait Depend
         $this->extUrlParams = $extUrlParams;
         return $this;
     }
+
     /**
      * 远程加载时的默认显示名称，因远程时一般仅有value
      * @param object form 所属表单
@@ -83,6 +86,12 @@ trait Depend
     public function isRelatedSelect($isRelatedSelect)
     {
         $this->isRelatedSelect = $isRelatedSelect;
+        return $this;
+    }
+
+    public function findByParent($findByParent = true)
+    {
+        $this->findByParent = $findByParent;
         return $this;
     }
     //deep admin end
