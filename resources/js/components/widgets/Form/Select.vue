@@ -55,6 +55,7 @@
 import { FormItemComponent } from "@/mixins.js";
 export default {
   mixins: [FormItemComponent],
+  props: ['multiData',"itemprop"],
   data() {
     return {
       options: this.attrs.options,
@@ -130,6 +131,15 @@ export default {
         });
     },
     remoteMethod(query, next = null) {
+      var newParams = {};
+      if(this.multiData){
+        var newMultiData = JSON.parse(JSON.stringify(this.multiData));
+        delete newMultiData[this.itemprop];
+        if(this.attrs.findByParent) {
+          newParams = newMultiData
+        }
+      }
+
       if (!next) {
         this.options = [];
         this.query = query;
@@ -141,7 +151,8 @@ export default {
             ...this.meta,
             query: this.query,
             depend: this.depend,
-            extUrlParams: this.extUrlParams
+            extUrlParams: this.extUrlParams,
+            ...newParams
           }
         })
         .then(res => {

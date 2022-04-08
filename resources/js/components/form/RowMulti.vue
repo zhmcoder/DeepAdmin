@@ -10,6 +10,8 @@
           v-if="item.component"
           :is="item.component.componentName"
           :attrs="item.component"
+		  :multiData="multiData"
+		  :itemprop="item.prop"
           @change="value=>onChange(value,item.component)"
       />
       <span :style="item.labelStyle" :class="item.className">
