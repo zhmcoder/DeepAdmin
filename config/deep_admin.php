@@ -72,7 +72,9 @@ return [
             'file' => 'files',
         ],
         //文件上传类型
-        'mimes' => 'jpeg,bmp,png,gif,jpg,mp3,mp4,mpga,apk',
+        'xlsx' => 'xls,xlsx',
+        'file' => 'doc,docx,mp3,mp4,apk',
+        'image' => 'jpeg,bmp,png,gif,jpg',
         'image_handle_router' => 'upload.image_handle',
         'file_handle_router' => 'upload.file_handler',
     ],

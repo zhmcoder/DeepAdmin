@@ -11,7 +11,7 @@ trait UploadTraits
     {
         try {
             \Admin::validatorData($request->all(), [
-                'file' => 'mimes:' . config('deep_admin.upload.xlsx', 'xlsx')
+                'file' => 'mimes:' . config('deep_admin.upload.xlsx', 'xls,xlsx')
             ]);
             return $this->upload($request);
         } catch (\Exception $exception) {
@@ -27,7 +27,7 @@ trait UploadTraits
     {
         try {
             \Admin::validatorData($request->all(), [
-                'file' => 'mimes:' . config('deep_admin.upload.mimes', 'jpeg,bmp,png,gif,jpg')
+                'file' => 'mimes:' . config('deep_admin.upload.file', 'doc,docx')
             ]);
             return $this->upload($request);
         } catch (\Exception $exception) {
@@ -43,7 +43,7 @@ trait UploadTraits
     {
         try {
             \Admin::validatorData($request->all(), [
-                'file' => 'image'
+                'file' => 'mimes:' . config('deep_admin.upload.image', 'jpg,jpeg,gif')
             ]);
 
             return $this->upload($request);
