@@ -878,7 +878,7 @@ class ContentController extends AdminController
     }
 
     // 普通下拉单选
-    protected function _selectOption($fields, $value = 0, $label = 1)
+    protected function _selectOption($fields, $value = 0, $label = 1, $labelLen = 30)
     {
         $formParams = !empty($fields['form_params']) ? explode("\n", $fields['form_params']) : '';
         $type = !empty($fields['type']) ? $fields['type'] : 'integer';
@@ -890,7 +890,10 @@ class ContentController extends AdminController
                 if (!empty($v)) {
                     $v[$value] = ($type == 'integer') ? (int)$v[$value] : (string)$v[$value];
                     $disabled = (isset($v[3]) && $v[3]) ? true : false;
-                    $return[] = SelectOption::make($v[$value], $v[$label])->disabled($disabled);
+
+                    $name = $v[$label];
+                    $name = strlen($name) > $labelLen ? substr($name, 0, $labelLen) . '...' : $name;
+                    $return[] = SelectOption::make($v[$value], $name)->disabled($disabled);
                 }
             }
         }
