@@ -892,7 +892,7 @@ class ContentController extends AdminController
                     $disabled = (isset($v[3]) && $v[3]) ? true : false;
 
                     $name = $v[$label];
-                    $name = strlen($name) > $labelLen ? substr($name, 0, $labelLen) . '...' : $name;
+                    $name = strlen($name) > $labelLen ? stringToText($name, $labelLen) : $name;
                     $return[] = SelectOption::make($v[$value], $name)->disabled($disabled);
                 }
             }
