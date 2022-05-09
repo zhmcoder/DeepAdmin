@@ -9,7 +9,7 @@ return [
     'logo_mini' => null,
     'logo_light' => null,
     'logo_mini_light' => null,
-    'copyright' => 'Copyright © 2022 DeepAdmin', // 版权
+    'copyright' => env('ADMIN_COPYRIGHT', 'Copyright © 2022 DeepAdmin'), // 版权
     'default_avatar' => 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png', // 默认头像
     'login_background_image' => 'https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg', // 登录页面背景
     // 登录框默认用户
