@@ -1,42 +1,35 @@
 <?php
 
-
 namespace Andruby\DeepAdmin\Controllers;
-
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class HandleController extends Controller
 {
-
     public function uploadFile(Request $request)
     {
         try {
             \Admin::validatorData($request->all(), [
-                'file' => 'mimes:' . config('deep_admin.upload.mimes', 'jpeg,bmp,png,gif,jpg')
+                'file' => 'mimes:' . config('deep_admin.upload.file', 'doc,docx,mp3,mp4,apk,xlsx')
             ]);
             return $this->upload($request);
         } catch (\Exception $exception) {
             return \Admin::responseError($exception->getMessage());
         }
-
     }
 
     public function uploadImage(Request $request)
     {
         try {
             \Admin::validatorData($request->all(), [
-                'file' => 'image'
+                'file' => 'mimes:' . config('deep_admin.upload.image', 'jpeg,bmp,png,gif,jpg')
             ]);
-
             return $this->upload($request);
-
         } catch (\Exception $exception) {
             return \Admin::responseError($exception->getMessage());
         }
     }
-
 
     protected function upload(Request $request)
     {
@@ -61,7 +54,6 @@ class HandleController extends Controller
         } catch (\Exception $exception) {
             return \Admin::responseError($exception->getMessage());
         }
-
     }
 
 }
