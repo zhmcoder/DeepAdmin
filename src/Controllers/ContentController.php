@@ -281,7 +281,7 @@ class ContentController extends AdminController
 
                 case 'selectTable' :
                 case 'selectRemote' :
-                    debug_log_info($val['form_params']);
+                    // debug_log_info($val['form_params']);
                     $formParams = explode("\n", $val['form_params']);
 
                     $obj->customValue(function ($row, $value) use ($formParams, $val) {
