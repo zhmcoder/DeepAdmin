@@ -17,6 +17,8 @@ class AddTag extends Component
     protected $effect = 'plain';
     protected $btnName = '添加';
     protected $dynamicTags = [];
+    protected $max = 100;
+    protected $tagLen = 20;
 
     static public function make($value = '')
     {
@@ -108,6 +110,28 @@ class AddTag extends Component
     public function dynamicTags(array $dynamicTags)
     {
         $this->dynamicTags = $dynamicTags;
+        return $this;
+    }
+
+    /**
+     * AddTag 最多可以输入的字符长度
+     * @param integer $max
+     * @return $this
+     */
+    public function max($max)
+    {
+        $this->max = $max;
+        return $this;
+    }
+
+    /**
+     * AddTag 最多可以输入多少个tag
+     * @param integer $tagLen
+     * @return $this
+     */
+    public function tagLen($tagLen)
+    {
+        $this->tagLen = $tagLen;
         return $this;
     }
 
