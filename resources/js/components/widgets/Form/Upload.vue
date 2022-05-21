@@ -185,7 +185,8 @@ export default {
               this.onChange(t_value);
               this.uidList.push({
                 uid:file.uid,
-                value: t_value
+                // value: t_value
+                value : response.data.path
               })
             }
 
