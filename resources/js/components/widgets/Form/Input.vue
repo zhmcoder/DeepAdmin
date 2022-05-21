@@ -57,7 +57,7 @@ export default {
   height: 100%;
   color: #C0C4CC;
   text-align: center;
-  z-index: 99999999999;
+  z-index: 2000;
   background-color: #FFF;
   height: 30px;
   box-sizing: border-box;

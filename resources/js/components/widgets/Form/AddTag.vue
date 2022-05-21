@@ -23,11 +23,14 @@
       size="small"
       @keyup.enter.native="handleInputConfirm"
       @blur="handleInputConfirm"
+      :maxlength="attrs.max || null"
     >
     </el-input>
-    <el-button v-else class="button-new-tag" size="small" @click="showInput"
-      > {{ attrs.btnName || "New Tag" }}</el-button
-    >
+    <div v-else>
+      <el-button v-if="(attrs.tagLen && dynamicTags.length < attrs.tagLen) || !attrs.tagLen" class="button-new-tag" size="small" @click="showInput"
+        > {{ attrs.btnName || "New Tag" }}</el-button
+      >
+    </div>
   </div>
 </template>
 <script>
@@ -41,6 +44,8 @@
  * effect:主题 dark / light / plain
  * btnName:添加按钮文本
  * dynamicTags:编辑时的原始数据，Array['第一'，第二]
+ * max: 最多可以输入的字符长度
+ * taglen : 最多可以输入多少个tag
  */
 import { FormItemComponent } from "@/mixins.js";
 export default {
