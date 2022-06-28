@@ -1,5 +1,5 @@
 <template>
-    <div class="display-list">
+    <div class="display-list" :style="wrapStyle">
       <div class="display-list-status"
         :style="{'background-color': deviceStatusColor[item.status].backgoundColor, 'border-left': `6px solid ${deviceStatusColor[item.status].borderColor}`}"
         v-for="(item,index) in attrs.data" :key="index">
@@ -18,17 +18,16 @@
           1: { backgoundColor: '#CEF3F8', borderColor: '#31C1EB' },
           2: { backgoundColor: '#FFF3E3', borderColor: '#FCB422' },
           3: { backgoundColor: '#FDD4D4', borderColor: '#F65677' }
+        },
+        wrapStyle: this.attrs.style || {
+          width: '100%',
+          height: '360px'
         }
       }
     }
   };
 </script>
 <style lang="scss">
-.display-list {
-  height: 360px;
-  overflow: auto;
-  width: 100%;
-}
 .display-list::-webkit-scrollbar-thumb{/*滚动条里面的滑块*/
   background: #DDDDDD;
   border-radius:10px;
