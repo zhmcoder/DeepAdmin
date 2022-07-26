@@ -34,10 +34,14 @@ class UploadController extends AdminController
 
     public function images_v4()
     {
-        $amount = request('amount', 1);
+        $amount = request('amount', 100);
 
         $images = [];
         for ($i = 1; $i <= $amount; $i++) {
+            if (!isset($_FILES["file" . $i])) {
+                break;
+            }
+
             // 图片文件的生成
             // localResizeIMG压缩后的图片都是jpeg格式
             $saveName = date('YmdHis', time()) . mt_rand(0, 9999) . $i . '.jpeg';
