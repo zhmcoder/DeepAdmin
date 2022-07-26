@@ -8,7 +8,7 @@
         :editor.sync="editor"
       />
     </div>
-    <div ref="editor" :style="attrs.style" :class="attrs.className"></div>
+    <div ref="editor" :style="attrs.style" id="w-e-text-container" :class="attrs.className"></div>
   </div>
 </template>
 <script>
@@ -28,26 +28,51 @@ export default {
     this.defaultValue = this._.cloneDeep(this.attrs.componentValue);
 
     this.editor = new E(this.$refs.toolbar, this.$refs.editor);
-    this.editor.customConfig.menus = this.attrs.menus;
-    this.editor.customConfig.zIndex = this.attrs.zIndex;
-    this.editor.customConfig.uploadImgShowBase64 = this.attrs.uploadImgShowBase64;
-    if (this.attrs.uploadImgServer) {
-      this.editor.customConfig.uploadImgServer = this.attrs.uploadImgServer;
+    // this.editor.customConfig.menus = this.attrs.menus;
+    // this.editor.customConfig.zIndex = this.attrs.zIndex;
+    // this.editor.customConfig.uploadImgShowBase64 = this.attrs.uploadImgShowBase64;
+    // if (this.attrs.uploadImgServer) {
+    //   this.editor.customConfig.uploadImgServer = this.attrs.uploadImgServer;
 
-      this.editor.customConfig.uploadImgParams = {
+    //   this.editor.customConfig.uploadImgParams = {
+    //     _token: Admin.token
+    //   };
+    // }
+    // //自定义 fileName
+    // if (this.attrs.uploadFileName) {
+    //   this.editor.customConfig.uploadFileName = this.attrs.uploadFileName;
+    // }
+    // //自定义 header
+    // if (this.attrs.uploadImgHeaders) {
+    //   this.editor.customConfig.uploadImgHeaders = this.attrs.uploadImgHeaders;
+    // }
+
+    // this.editor.customConfig.onchange = html => {
+    //   this.onChange(html);
+    // };
+
+    this.editor.config.menus = this.attrs.menus;
+    console.log('this.attrs.zIndex', this.attrs.zIndex)
+    this.editor.config.zIndex = this.attrs.zIndex;
+    this.editor.config.uploadImgShowBase64 = this.attrs.uploadImgShowBase64;
+    if (this.attrs.uploadImgServer) {
+      console.log('this.attrs.uploadImgServer', this.attrs.uploadImgServer)
+      this.editor.config.uploadImgServer = this.attrs.uploadImgServer;
+
+      this.editor.config.uploadImgParams = {
         _token: Admin.token
       };
     }
     //自定义 fileName
     if (this.attrs.uploadFileName) {
-      this.editor.customConfig.uploadFileName = this.attrs.uploadFileName;
+      this.editor.config.uploadFileName = this.attrs.uploadFileName;
     }
     //自定义 header
     if (this.attrs.uploadImgHeaders) {
-      this.editor.customConfig.uploadImgHeaders = this.attrs.uploadImgHeaders;
+      this.editor.config.uploadImgHeaders = this.attrs.uploadImgHeaders;
     }
 
-    this.editor.customConfig.onchange = html => {
+    this.editor.config.onchange = html => {
       this.onChange(html);
     };
 
@@ -75,28 +100,56 @@ export default {
     try {
       this.$bus.off("EditDataLoadingCompleted");
     } catch (e) {}
+  },
+  methods: {
+    insertImgFn() {
+      console.log('插入图片')
+    }
   }
 };
 </script>
 <style lang="scss">
+// .wangeditor-main {
+//   border: 1px solid #dcdcdc;
+//   .toolbar {
+//     background: #f7f7f7;
+//   }
+//   .w-e-text-container{
+//     position: relative;
+//     .w-e-text{
+//       position: absolute;
+//       left: 0px;
+//       top: 0px;
+//       right: 0px;
+//       bottom: 0px;
+//     }
+//   }
+//   .w-e-text-container {
+//     // 文本框里面的层级调低
+//     z-index: 1 !important;
+//     background-color: var(--w-e-textarea-bg-color);
+//     color: var(--w-e-textarea-color);
+//     height: 100%;
+//   }
+//   .w-e-toolbar {
+//     // 给工具栏换行
+//     flex-wrap: wrap;
+//   }
+//   .w-e-menu {
+//     // 最重要的一句代码
+//     z-index: auto !important;
+
+//     .w-e-droplist {
+//       // 触发工具栏后的显示框调高
+//       z-index: 2 !important;
+//     }
+  // }
+// }
+
 .wangeditor-main {
   border: 1px solid #dcdcdc;
   .toolbar {
     background: #f7f7f7;
-  }
-  .w-e-text-container{
-    position: relative;
-    .w-e-text{
-      position: absolute;
-      left: 0px;
-      top: 0px;
-      right: 0px;
-      bottom: 0px;
-    }
-  }
-  .w-e-text-container {
-    // 文本框里面的层级调低
-    z-index: 1 !important;
   }
   .w-e-toolbar {
     // 给工具栏换行
