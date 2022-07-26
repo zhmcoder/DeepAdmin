@@ -37,7 +37,7 @@ class UploadController extends AdminController
         $amount = request('amount', 100);
 
         $images = [];
-        for ($i = 1; $i <= $amount; $i++) {
+        for ($i = 0; $i < $amount; $i++) {
             if (!isset($_FILES["file" . $i])) {
                 break;
             }
