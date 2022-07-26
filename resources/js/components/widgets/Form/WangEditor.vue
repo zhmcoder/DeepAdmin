@@ -25,6 +25,7 @@ export default {
     };
   },
   mounted() {
+    var _this = this;
     this.defaultValue = this._.cloneDeep(this.attrs.componentValue);
 
     this.editor = new E(this.$refs.toolbar, this.$refs.editor);
@@ -75,6 +76,25 @@ export default {
     this.editor.config.onchange = html => {
       this.onChange(html);
     };
+    this.editor.config.customUploadImg = function (resultFiles, insertImgFn) {
+      // resultFiles 是 input 中选中的文件列表
+      // insertImgFn 是获取图片 url 后，插入到编辑器的方法
+
+      // 上传图片，返回结果，将图片插入到编辑器中
+      let formdata = new FormData()
+      for(let i in resultFiles){
+        formdata.append('file'+ i,resultFiles[i])
+      }
+      formdata.append('amount', resultFiles.length)
+      formdata.append('_token', Admin.token)
+      _this.$http
+        .post(_this.attrs.uploadImgServer, formdata)
+        .then((data) => {
+          for(let i = 0 ; i <= data.data.length-1 ; i++) {
+            insertImgFn(data.data[i].url)
+          }
+        })
+    }
 
     this.$nextTick(() => {
       this.editor.create();
