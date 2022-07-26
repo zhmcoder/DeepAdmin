@@ -20,6 +20,7 @@ Route::group([
 
     $router->get('remote/search', 'RemoteSearchController@search')->name('remote.search');
     $router->post('upload/images', 'UploadController@images')->name('upload.images');
+    $router->post('upload/images_v4', 'UploadController@images_v4')->name('upload.images_v4');
 
     $router->post('_deep_admin_upload_image_', 'HandleController@uploadImage')->name('upload.image_handle');
     $router->post('_deep_admin_upload_file_', 'HandleController@uploadFile')->name('upload.file_handler');

@@ -65,7 +65,7 @@ class ContentController extends AdminController
         }
 
         $this->remoteUrl = config('deep_admin.route.api_prefix') . '/remote/search'; // 下拉远程搜索
-        $this->uploadImages = config('deep_admin.route.api_prefix') . '/upload/images'; // 编辑框上传图片
+        $this->uploadImages = config('deep_admin.route.api_prefix') . '/upload/images_v4'; // 编辑框上传图片
     }
 
     protected function getTableName()
