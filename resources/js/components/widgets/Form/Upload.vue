@@ -48,6 +48,7 @@
           :file-list="fileList"
           :http-request="handleRequest"
           v-if="attrs.showProgress"
+          :limit="attrs.limit"
         >
           <el-button
             plain
