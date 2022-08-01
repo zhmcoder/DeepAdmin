@@ -239,7 +239,7 @@ export default {
       }
     },
     onExceed() {
-      this.$message.error("超出上传数量");
+      this.$message.error("超出上传数量，最多上传"+this.attrs.limit+'张');
     },
     getObject(path, id) {
       let keyName = this.attrs.keyName;
