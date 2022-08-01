@@ -41,7 +41,11 @@ class Upload extends Component
         ##deep admin start
         $this->action = route(config('deep_admin.upload.image_handle_router', 'admin.handle-upload-image'));
         ##deep admin end
-        $this->host = Storage::disk(config('deep_admin.upload.disk'))->url('/');
+        if ((Storage::exists('public/' . $value))) {
+            $this->host = config('filesystems.disks.public.url') . '/';
+        } else {
+            $this->host = Storage::disk(config('deep_admin.upload.disk'))->url('/');
+        }
         $this->componentValue($value);
     }
 
