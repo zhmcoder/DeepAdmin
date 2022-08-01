@@ -48,7 +48,7 @@ class HandleController extends Controller
             }
 
             if (config('filesystems.disks.' . $disk . '.isSign')) {
-                $url = \Storage::disk($disk)->signUrl($path, 60, ['x-oss-process' => 'image/circle,r_100']);
+                $url = \Storage::disk($disk)->signUrl($path, 60);
             } else {
                 $url = \Storage::disk($disk)->url($path);
             }

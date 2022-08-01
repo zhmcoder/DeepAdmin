@@ -2,19 +2,29 @@
 
 namespace Andruby\DeepAdmin\Controllers;
 
+use Illuminate\Http\Request;
+
 class UploadController extends AdminController
 {
-    public function images()
+    public function images(Request $request)
     {
-        // 图片文件的生成
-        // localResizeIMG压缩后的图片都是jpeg格式
-        $saveName = date('YmdHis', time()) . mt_rand(0, 9999) . '.jpeg';
+        $file = $request->file('file');
+        $type = $request->file('type');
+        $path = $request->input('path', 'images');
+        $uniqueName = $request->input('uniqueName', config('deep_admin.upload.uniqueName', false));
+        $disk = config('deep_admin.upload.disk');
+        $name = $file->getClientOriginalName();
+        if ($uniqueName == "true" || $uniqueName == true) {
+            $path = $file->store($path, $disk);
+        } else {
+            $path = $file->storeAs($path, $name, $disk);
+        }
 
-        // 生成文件
-        $savePath = storage_path("app/public/images/" . $saveName);
-
-        // 生成一个URL获取图片的地址
-        $url = env('APP_URL') . '/storage/images/' . $saveName;
+        if (config('filesystems.disks.' . $disk . '.isSign')) {
+            $url = \Storage::disk($disk)->signUrl($path, 60);
+        } else {
+            $url = \Storage::disk($disk)->url($path);
+        }
 
         // 返回数据。wangEditor3 需要用到的数据 json格式的
         $data = [
@@ -24,15 +34,12 @@ class UploadController extends AdminController
             ],
         ];
 
-        // 图片文件移动。
-        move_uploaded_file($_FILES["file"]["tmp_name"], $savePath);
-
         // 返回数据
         echo json_encode($data);
     }
 
 
-    public function images_v4()
+    public function images_v4(Request $request)
     {
         $amount = request('amount', 100);
 
@@ -42,18 +49,23 @@ class UploadController extends AdminController
                 break;
             }
 
-            // 图片文件的生成
-            // localResizeIMG压缩后的图片都是jpeg格式
-            $saveName = date('YmdHis', time()) . mt_rand(0, 9999) . $i . '.jpeg';
+            $file = $request->file('file' . $i);
+            $type = $request->file('type');
+            $path = $request->input('path', 'images');
+            $uniqueName = $request->input('uniqueName', config('deep_admin.upload.uniqueName', false));
+            $disk = config('deep_admin.upload.disk');
+            $name = $file->getClientOriginalName();
+            if ($uniqueName == "true" || $uniqueName == true) {
+                $path = $file->store($path, $disk);
+            } else {
+                $path = $file->storeAs($path, $name, $disk);
+            }
 
-            // 生成文件
-            $savePath = storage_path("app/public/images/" . $saveName);
-
-            // 生成一个URL获取图片的地址
-            $url = env('APP_URL') . '/storage/images/' . $saveName;
-
-            // 图片文件移动。
-            move_uploaded_file($_FILES["file" . $i]["tmp_name"], $savePath);
+            if (config('filesystems.disks.' . $disk . '.isSign')) {
+                $url = \Storage::disk($disk)->signUrl($path, 60);
+            } else {
+                $url = \Storage::disk($disk)->url($path);
+            }
 
             $images[] = [
                 'url' => $url,
@@ -66,7 +78,6 @@ class UploadController extends AdminController
             'errno' => 0,
             'data' => $images,
         ];
-
 
         // 返回数据
         echo json_encode($data);
