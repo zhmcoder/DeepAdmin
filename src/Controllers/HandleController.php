@@ -33,6 +33,7 @@ class HandleController extends Controller
 
     protected function upload(Request $request)
     {
+
         try {
             $file = $request->file('file');
             $type = $request->file('type');
@@ -45,10 +46,17 @@ class HandleController extends Controller
             } else {
                 $path = $file->storeAs($path, $name, $disk);
             }
+
+            if (config('filesystems.disks.' . $disk . '.isSign')) {
+                $url = \Storage::disk($disk)->signUrl($path, 60, ['x-oss-process' => 'image/circle,r_100']);
+            } else {
+                $url = \Storage::disk($disk)->url($path);
+            }
+
             $data = [
                 'path' => $path,
                 'name' => $name,
-                'url' => \Storage::disk($disk)->url($path)
+                'url' => $url
             ];
             return \Admin::response($data);
         } catch (\Exception $exception) {
