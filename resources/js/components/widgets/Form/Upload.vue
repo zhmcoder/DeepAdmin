@@ -2,6 +2,7 @@
   <div>
     <div class="upload-component">
       <div class="upload-images">
+        <draggable class="upload-images-draggable" tag="ul" v-model="list" v-bind="dragOptions" @update="datadragEnd" @start="drag = true" @end="drag = false" style="margin-:-40px;">
           <template v-for="(item, index) in list">
             <div :key="index" class="upload-images-item">
               <el-image
@@ -25,11 +26,12 @@
               <i @click="onDelete(index,item)" class="mask el-icon-close" title="删除图片"></i>
             </div>
           </template>
+        </draggable>
       </div>
       <div
         class="upload-block"
         :class="{ 'ml-10': list.length > 0 }"
-        v-if="list.length < attrs.limit"
+        v-if="(attrs.limit && list.length < attrs.limit) || !attrs.limit"
       >
         <el-upload
           :style="attrs.style"
@@ -98,9 +100,13 @@
 <script>
 import { getFileUrl, getFileName } from "@/utils";
 import { FormItemComponent } from "@/mixins.js";
+import draggable from "vuedraggable";
 import axios from 'axios';
 export default {
   mixins: [FormItemComponent],
+  components: {
+    draggable,
+  },
   data() {
     return {
       data: {
@@ -271,42 +277,70 @@ export default {
         return item[keyName];
       }
       return item;
+    },
+    // 拖动排序
+    datadragEnd(evt) {
+      // console.log('拖动前的索引 :' + evt.oldIndex)
+      // console.log('拖动后的索引 :' + evt.newIndex)
+      let item = this.value.splice(evt.oldIndex, 1)		// arr删除2，把2给item
+      this.value.splice(evt.newIndex, 0, item[0])	// 把2添加到arr最后
+      // console.log('this.value',this.value)
+      this.onChange(this.value);
+      // this.list.map((item, index) => {
+      //   item.index = index
+      // })
+      // console.log(this.list)
+      // this.$emit('list', this.list)
     }
   },
   watch: {},
 
   computed: {
+    dragOptions() {
+      return {
+        animation: 200,
+        group: "description",
+        disabled: false,
+        ghostClass: "ghost"
+      };
+    },
     list() {
-      if (this._.isArray(this.value)) {
-        return this.value
-          .filter(item => {
-            if (item[this.attrs.remove_flag_name]) {
-              return item[this.attrs.remove_flag_name] == 0;
-            }
-            return true;
-          })
-          .map(item => {
-            let itemPath = this.getObjectPath(item);
-            return {
-              id: this.getObjectKey(item),
+      try {
+        if (this._.isArray(this.value)) {
+          return this.value
+            .filter(item => {
+              if (item[this.attrs.remove_flag_name]) {
+                return item[this.attrs.remove_flag_name] == 0;
+              }
+              return true;
+            })
+            .map((item,index) => {
+              let itemPath = this.getObjectPath(item);
+              return {
+                index: index,
+                id: this.getObjectKey(item),
+                name: getFileName(itemPath),
+                path: itemPath,
+                url: getFileUrl(this.attrs.host, itemPath)
+              };
+            });
+        } else {
+          if (!this.value) return [];
+          let itemPath = this.value;
+          if (this._.isObject()) {
+            itemPath = this.getObjectPath(this.value);
+          }
+          return [
+            {
+              index: 0,
               name: getFileName(itemPath),
               path: itemPath,
               url: getFileUrl(this.attrs.host, itemPath)
-            };
-          });
-      } else {
-        if (!this.value) return [];
-        let itemPath = this.value;
-        if (this._.isObject()) {
-          itemPath = this.getObjectPath(this.value);
+            }
+          ];
         }
-        return [
-          {
-            name: getFileName(itemPath),
-            path: itemPath,
-            url: getFileUrl(this.attrs.host, itemPath)
-          }
-        ];
+      } catch (error) {
+        console.log('error', error)
       }
     },
     urlList() {
@@ -369,6 +403,12 @@ export default {
       box-sizing: border-box;
       border-radius: 3px;
     }
+  }
+  .upload-images-draggable {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0px !important;
+    padding: 0px;
   }
   .upload-block {
     .el-upload-dragger {

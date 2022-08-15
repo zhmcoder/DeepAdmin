@@ -47,6 +47,7 @@
         "mavon-editor": "^2.10.4",
         "vue": "^2.6.14",
         "vue-progressbar": "^0.7.5",
-        "vue-router": "^3.5.3"
+        "vue-router": "^3.5.3",
+        "vuedraggable": "^2.24.3"
     }
 }
