@@ -92,7 +92,7 @@
           <div class="progress-file-name">{{item.name}}</div>
           <div class="progress">{{item.progressPercent}}%</div>
         </div>
-        <el-progress :percentage="item.progressPercent" :status="item.status"></el-progress>
+        <el-progress :percentage="item.progressPercent" :status="item.status" :show-text="false"></el-progress>
       </div>
     </div>
   </div>
@@ -158,7 +158,7 @@ export default {
                   var newProgressList = JSON.parse(JSON.stringify(this.progressList))
                   newProgressList.map((item)=>{
                     if(item.uid == file.uid){
-                      item.progressPercent = progressPercent,
+                      item.progressPercent = progressPercent.toFixed(1),
                       item.name = file.name
                     }
                   })
@@ -442,7 +442,7 @@ export default {
     }
     .progress {
       font-size: 12px;
-      margin-right: 50px;
+      // margin-right: 50px;
       margin-left: 20px;
     }
   }
