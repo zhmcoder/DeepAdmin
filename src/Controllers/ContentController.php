@@ -5,6 +5,8 @@ namespace Andruby\DeepAdmin\Controllers;
 use Andruby\DeepAdmin\Components\Grid\DeepLink;
 use Andruby\DeepAdmin\Components\Grid\SortEdit;
 use Andruby\DeepAdmin\Components\Grid\SortUpDown;
+use Andruby\DeepAdmin\Controllers\AdminController;
+use Andruby\DeepAdmin\Controllers\HasResourceActions;
 use Andruby\DeepAdmin\Models\ContentTimeStamp;
 use Andruby\DeepAdmin\Services\GridCacheService;
 use Illuminate\Http\Request;
@@ -30,8 +32,6 @@ use Andruby\DeepAdmin\Components\Grid\Avatar;
 use Andruby\DeepAdmin\Components\Grid\Boole;
 use Andruby\DeepAdmin\Components\Grid\Image;
 use Andruby\DeepAdmin\Components\Grid\Tag;
-use Andruby\DeepAdmin\Controllers\AdminController;
-use Andruby\DeepAdmin\Controllers\HasResourceActions;
 use Andruby\DeepAdmin\Facades\Admin;
 use Andruby\DeepAdmin\Form;
 use Andruby\DeepAdmin\Grid;
@@ -640,8 +640,22 @@ class ContentController extends AdminController
                     break;
 
                 case 'uploadFile' : // 文件上传 单个
+                    $formParams = explode("\n", $val['form_params']);
+                    foreach ($formParams as $k => &$v) {
+                        $v = explode('=', $v);
+                        switch ($v[0]) {
+                            case 'disk':
+                                $disk = $v[1];
+                                break;
+                            case 'accept':
+                                $accept = $v[1];
+                                break;
+                        }
+                    }
                     $obj->component(
-                        Upload::make()->file()->path('file')
+                        Upload::make()->file($disk ? $disk : config('deep_admin.upload.disk'))
+                            ->accept($accept ? $accept : config('deep_admin.upload.file'))
+                            ->uniqueName()->path('file')
                     )->inputWidth(12)->required($val['is_required'], 'string');
                     break;
 
@@ -750,7 +764,7 @@ class ContentController extends AdminController
         */
 
         $form->saved(function (Form $form) use ($isEdit) {
-            return $this->saved_event($form);
+            return $this->saved_event($form, $isEdit);
         });
 
         $form->deleted(function (Form $form) {
@@ -812,7 +826,7 @@ class ContentController extends AdminController
     }
 
     // 保存成功回调
-    protected function saved_event(Form $form)
+    protected function saved_event(Form $form, $isEdit)
     {
         return $form;
     }

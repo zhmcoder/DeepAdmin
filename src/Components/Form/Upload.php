@@ -198,11 +198,13 @@ class Upload extends Component
         return $this;
     }
 
-    public function file()
+    public function file($disk = 'public')
     {
         $this->type = "file";
         ##deep admin start
-        $this->action = route(config('deep_admin.upload.file_handle_router', 'admin.handle-upload-file'));
+        $this->action = route(config('deep_admin.upload.file_handle_router', 'admin.handle-upload-file'),
+            ['disk' => $disk]);
+        $this->host = \Storage::disk($disk)->url('/');
         ##deep admin end
         return $this;
     }

@@ -39,7 +39,7 @@ class HandleController extends Controller
             $type = $request->file('type');
             $path = $request->input('path', 'images');
             $uniqueName = $request->input('uniqueName', config('deep_admin.upload.uniqueName', false));
-            $disk = config('deep_admin.upload.disk');
+            $disk = $request->input('disk', config('deep_admin.upload.disk'));
             $name = $file->getClientOriginalName();
             if ($uniqueName == "true" || $uniqueName == true) {
                 $path = $file->store($path, $disk);
