@@ -641,6 +641,8 @@ class ContentController extends AdminController
 
                 case 'uploadFile' : // 文件上传 单个
                     $formParams = explode("\n", $val['form_params']);
+                    $disk = null;
+                    $accept = null;
                     foreach ($formParams as $k => &$v) {
                         $v = explode('=', $v);
                         switch ($v[0]) {
