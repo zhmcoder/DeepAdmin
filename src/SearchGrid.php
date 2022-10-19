@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Andruby\DeepAdmin;
-
 
 class SearchGrid extends Grid
 {
@@ -11,4 +9,17 @@ class SearchGrid extends Grid
      * @var string
      */
     protected $componentName = 'SearchGrid';
+
+    protected $isMultiple = false; // 是否多选（false单选、true多选）
+
+    /**
+     * 单选 || 多选
+     * @param bool $isMultiple
+     * @return $this
+     */
+    public function isMultiple(bool $isMultiple = true): SearchGrid
+    {
+        $this->isMultiple = $isMultiple;
+        return $this;
+    }
 }
