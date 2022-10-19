@@ -13,6 +13,7 @@ Vue.component("TabForm", require("@/components/form/TabForm").default);
 Vue.component("BaseForm", require("@/components/form/BaseForm").default);
 Vue.component("MenuItem", require("@/components/layout/MenuItem").default);
 Vue.component("ChartCard", require("@/components/layout/ChartCard").default);
+Vue.component("SearchGrid", require("@/components/grid/SearchTable").default);
 
 //Form
 Vue.component("Input", require("@/components/widgets/Form/Input").default);
