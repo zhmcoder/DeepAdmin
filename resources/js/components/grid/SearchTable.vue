@@ -47,12 +47,12 @@
         :default-expand-all="attrs.attributes.defaultExpandAll"
         @selection-change="onTableselectionChange"
       >
-        <el-table-column v-if="!isMultiple" align="center" width="55" label="选择">
+        <el-table-column v-if="!attrs.isMultiple" align="center" width="55" label="选择">
           <template slot-scope="scope">
             <el-radio @change.native="handleSelectionChange(scope.row)" v-model="seleted" :label="scope.row.id">&nbsp;</el-radio>
           </template>
         </el-table-column>
-        <el-table-column v-if="isMultiple" align="center" type="selection" width="55">
+        <el-table-column v-if="attrs.isMultiple" align="center" type="selection" width="55">
         </el-table-column>
         <el-table-column
           v-if="attrs.attributes.selection"
@@ -148,9 +148,9 @@ export default {
     ColumnDisplay,
     Actions
   },
-  // props: {
-  //   attrs: Object,
-  // },
+  props: {
+    attrs: Object,
+  },
   data() {
     return {
       loading: false, //是否加载
@@ -293,15 +293,11 @@ export default {
       seleted: null,
       selectList: [],
       selectionRows: [],
-      isMultiple: true, // 是否是多选
     };
   },
   mounted() {
-    // this.filterFormData = this._.cloneDeep(this.attrs.filter.filterFormData);
-    this.filterFormData = {
-      name: null,
-      show_app: null,
-    };
+    console.log("this.attrs", this.attrs);
+    this.filterFormData = this._.cloneDeep(this.attrs.filter.filterFormData);
     this.getData()
   },
   updated() {
@@ -456,7 +452,7 @@ export default {
     // 删除选择项
     colse(item) {
       // 先判断是单选还是多选
-      if (this.isMultiple) {
+      if (this.attrs.isMultiple) {
         var newList = JSON.parse(JSON.stringify(this.selectList))
         // 多选
         var newSelectList = newList.filter(citem => citem.id != item.id)
