@@ -52,7 +52,7 @@
             <el-radio @change.native="handleSelectionChange(scope.row)" v-model="seleted" :label="scope.row.id">&nbsp;</el-radio>
           </template>
         </el-table-column>
-        <el-table-column v-if="attrs.isMultiple" align="center" type="selection" width="55">
+        <el-table-column v-if="attrs.isMultiple" :reserve-selection="true" align="center" type="selection" width="55">
         </el-table-column>
         <el-table-column
           v-if="attrs.attributes.selection"
@@ -117,13 +117,26 @@
           </template>
         </el-table-column>
       </el-table>
+      <div class="table-page padding-xs" v-if="!attrs.hidePage">
+        <el-pagination
+          :layout="attrs.pageLayout"
+          :hide-on-single-page="false"
+          :total="pageData.total"
+          :current-page="pageData.currentPage"
+          :page-size="pageData.pageSize"
+          :page-sizes="attrs.pageSizes"
+          :background="attrs.pageBackground"
+          @size-change="onPageSizeChange"
+          @current-change="onPageCurrentChange"
+        />
+      </div>
 
       <!-- 单选或者多选数据显示 -->
       <el-card
         shadow="never"
         :body-style="{ padding: 0 }"
         class="margin-bottom-sm"
-        v-if="selectList.length > 0 && attr.showActions"
+        v-if="selectList.length > 0 && attrs.showActions"
       >
         <div class="select-wrap">
           <div class="select-info" v-for="item in selectList" :key="item.id">
@@ -149,14 +162,15 @@ export default {
     Actions
   },
   props: {
-    attrs: Object,
+    value: Array,
+    attrs: Object
   },
   data() {
     return {
       loading: false, //是否加载
       tableData: [], //表格数据
       pageData: {
-        pageSize: 20,
+        pageSize: this.attrs.perPage,
         total: 0,
         currentPage: 1,
         lastPage: 1,
@@ -293,7 +307,24 @@ export default {
       seleted: null,
       selectList: [],
       selectionRows: [],
+      timer: null
     };
+  },
+  watch: {
+    async value (newValue, oldValue) {
+      if (newValue !== oldValue) {
+        if ( newValue && newValue.length > 0 && typeof(newValue[0]) == 'number') {
+          if (!this.attrs.isMultiple) {
+            // 单选
+            this.seleted = newValue[0];
+            this.fadeIn('1')
+          } else {
+            // 多选
+            this.fadeIn('2')
+          }
+        } 
+      }
+    }
   },
   mounted() {
     console.log("this.attrs", this.attrs);
@@ -377,6 +408,41 @@ export default {
         .finally(() => {
           this.loading = false;
         });
+    },
+    // 递归获取数据
+    fadeIn(type) {
+      if (this.tableData && this.tableData.length > 0) {
+        clearTimeout(this.timer)
+        if (type == 1) {
+          // 单选
+          this.selectList = this.tableData;
+          this.$emit("change", this.tableData);
+        } else {
+          // 多选
+          this.selectionRows = this.tableData;
+          this.selectList = this.tableData;
+          this.$emit("change", this.tableData);
+          // 勾选数据
+          this.tableData.forEach(row => {
+            this.$refs.multipleTable.toggleRowSelection(row);
+          });
+        }
+      } else {
+        this.timer = setTimeout(()=> {
+          this.fadeIn(type)
+        }, 500)
+      }
+    },
+    //每页大小改变时
+    onPageSizeChange(per_page) {
+      this.page = 1;
+      this.pageData.pageSize = per_page;
+      this.getData();
+    },
+    //页码改变时
+    onPageCurrentChange(page) {
+      this.page = page;
+      this.getData();
     },
     //表单过滤提交
     onFilterSubmit() {
@@ -578,7 +644,7 @@ export default {
 }
 
 .select-info {
-  padding: 4px;
+  padding: 0px 4px;
   background: #e7e4e4;
   margin-right: 10px;
   border-radius: 4px;
