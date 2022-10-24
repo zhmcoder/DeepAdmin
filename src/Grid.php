@@ -5,6 +5,7 @@ namespace Andruby\DeepAdmin;
 
 
 use Andruby\DeepAdmin\Grid\Concerns\HasTabFilter;
+use Andruby\DeepAdmin\Grid\RightFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\Relations;
@@ -140,11 +141,17 @@ class Grid extends Component
         $this->batchActions = new BatchActions();
         $this->filter = new Filter($this->model);
         $this->leftFilter = new LeftFilter($this->model);
+        $this->rightFilter = new RightFilter($this->model);
     }
 
     public function getLeftFilter(): array
     {
         return $this->leftFilter->buildFilter();
+    }
+
+    public function getRightFilter(): array
+    {
+        return $this->rightFilter->buildFilter();
     }
 
     /**
@@ -557,6 +564,7 @@ class Grid extends Component
             //<!--deep admin end-->
             $viewData['filter'] = $this->filter->buildFilter();
             $viewData['leftFilter'] = $this->leftFilter->buildFilter();
+            $viewData['rightFilter'] = $this->rightFilter->buildFilter();
             $viewData['top'] = $this->top;
             $viewData['bottom'] = $this->bottom;
 
