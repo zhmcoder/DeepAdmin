@@ -38,6 +38,7 @@ class RightFilter
     protected $filters = [];
     protected $filterFormData = [];
     protected $width = '100px';
+    protected $dataUrl = '';
 
     protected $name = '';
 
@@ -183,6 +184,11 @@ class RightFilter
         return $this;
     }
 
+    public function dataUrl($dataUrl = '')
+    {
+        $this->dataUrl = $dataUrl;
+        return $this;
+    }
 
     /**
      * @return array
@@ -198,6 +204,7 @@ class RightFilter
             'filters' => $this->filters,
             'filterFormData' => $this->filterFormData,
             'width' => $this->width,
+            'dataUrl' => $this->dataUrl,
         ];
     }
 
