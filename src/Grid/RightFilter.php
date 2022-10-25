@@ -39,6 +39,7 @@ class RightFilter
     protected $filterFormData = [];
     protected $width = '100px';
     protected $dataUrl = '';
+    protected $isShowTree = false;
 
     protected $name = '';
 
@@ -190,6 +191,12 @@ class RightFilter
         return $this;
     }
 
+    public function isShowTree($isShowTree = true)
+    {
+        $this->isShowTree = $isShowTree;
+        return $this;
+    }
+
     /**
      * @return array
      */
@@ -205,6 +212,7 @@ class RightFilter
             'filterFormData' => $this->filterFormData,
             'width' => $this->width,
             'dataUrl' => $this->dataUrl,
+            'isShowTree' => $this->isShowTree,
         ];
     }
 
