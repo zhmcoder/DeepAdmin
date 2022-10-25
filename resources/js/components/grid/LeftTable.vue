@@ -57,11 +57,14 @@
               :is="attrs.top.componentName"
               :attrs="attrs.top"
             />
-
-            <!-- 树状显示 -->
-            <TreeDisplay
-              :data="data"
-            />
+            <div v-if="attrs.rightFilter.isShowTree">
+              <!-- 树状显示 -->
+              <TreeDisplay
+                :data="treeData"
+                :isMultiple="attrs.rightFilter.isMultiple"
+                v-loading="treeLoading"
+              />
+            </div>
 
             <div
               shadow="never"
@@ -111,7 +114,15 @@
           >
             <div class="filter-form">
               <el-form :inline="true" :model="rightFilterFormData" v-if="rightFilterFormData">
-                <template v-for="(item, index) in attrs1.filter.filters">
+                <!-- 操作按钮的位置 -->
+                <el-row :class="['search-top-row', attrs.rightFilter.actionsAligin ]" v-if="attrs.rightFilter.actionsPosition == 'top' && attrs.rightFilter.actions && attrs.rightFilter.actions.length > 0">
+                  <el-form-item>
+                    <el-button v-for="(item, index) in attrs.rightFilter.actions" @click="action(item)" :key="index" :type="item.type">
+                      {{item.name}}
+                    </el-button>
+                  </el-form-item>
+                </el-row>
+                <template v-for="(item, index) in attrs.rightFilter.filters">
                   <!-- 单独展示一行 -->
                   <el-form-item
                     :key="index"
@@ -121,18 +132,23 @@
                     <ItemDiaplsy
                       v-model="rightFilterFormData[item.column]"
                       :form-item="item"
-                      :form-items="attrs1.filters"
+                      :form-items="attrs.filters"
                       :form-data="rightFilterFormData"
                     />
                   </el-form-item>
                 </template>
-                <el-form-item>
-                  <el-button type="primary" @click="add1">保存当前版本</el-button>
-                  <el-button @click="add">新增版本</el-button>
-                </el-form-item>
+                <!-- 操作按钮的位置 -->
+                <el-row :class="['search-bottom-row', attrs.rightFilter.actionsAligin]" v-if="attrs.rightFilter.actionsPosition == 'bottom' && attrs.rightFilter.actions && attrs.rightFilter.actions.length > 0">
+                  <el-form-item v-if="attrs.rightFilter.actions && attrs.rightFilter.actions.length > 0">
+                    <el-button v-for="(item, index) in attrs.rightFilter.actions" @click="action(item)" :key="index" :type="item.type">
+                      {{item.name}}
+                    </el-button>
+                  </el-form-item>
+                </el-row>
               </el-form>
             </div>
           </el-card>
+          
           <el-card shadow="never" :body-style="{ padding: 0 }" v-loading="loading">
             <div class="bottom-border" ref="toolbarsView" v-if="attrs.toolbars.show">
               <div class="grid-top-container">
@@ -406,189 +422,257 @@ export default {
       addOrEdit:'', //点击的action是否是添加或修改
       leftFilterFilters:[],
 
-      data: [{
-        label: "一级 1",
-        id: 1,
-        children: [
-          {
-            label: "二级 1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1",
-            id: 11,
-            children: [
-              {
-                label: "三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1",
-                id: 111
-              },
-            ],
-          },
-        ],
-      },
-      {
-        label: "一级 2",
-        id: 2,
-        children: [
-          {
-            label: "二级 2-1",
-            id: 21,
-            children: [
-              {
-                label: "三级 2-1-1",
-                id: 22,
-              },
-              {
-                label: "三级 2-1-4",
-                id: 25,
-              },
-            ],
-          },
-          {
-            label: "二级 2-2",
-            id: 23,
-            children: [
-              {
-                id: 24,
-                label: "三级 2-2-1",
-              },
-              {
-                label: "三级 2-1-3",
-                id: 26,
-              },
-            ],
-          },
-        ],
-      }],
-      attrs1: {
-        method: "get",
-        dataUrl: "http://deep-admin:8888/admin-api/home/column",
-        filter: {
-          filterFormData: {
-            name: null
-          },
-          filters: [
-            {
-              column: "name",
-              defaultValue: null,
-              exprFormat: "%{value}%",
-              is_filter_null: false,
-              label: "栏目名称",
-              operator: "like",
-              component: {
-                append: null,
-                autocomplete: "off",
-                autofocus: false,
-                autosize: false,
-                className: null,
-                clearable: true,
-                componentName: "Input",
-                componentValue: "",
-                disabled: false,
-                form: null,
-                label: null,
-                max: null,
-                maxlength: null,
-                min: null,
-                minlength: null,
-                placeholder: null,
-                prefixIcon: null,
-                prepend: null,
-                readonly: false,
-                ref: null,
-                refData: null,
-                resize: null,
-                rows: 2,
-                showPassword: false,
-                showWordLimit: false,
-                size: null,
-                step: null,
-                style: "width:120px;margin-left:5px;",
-                suffixIcon: null,
-                tabindex: null,
-                type: "text",
-                validateEvent: true,
-              },
-            },
-          ],
-        },
-        showActions: true,
-        attributes: {
-          actionAlign: "left",
-          actionFixed: "right",
-          actionLabel: "操作",
-          actionWidth: 150,
-          border: false,
-          dataVuex: false,
-          defaultExpandAll: false,
-          draggable: false,
-          draggableUrl: null,
-          emptyText: "暂无数据",
-          fit: true,
-          height: 400,
-          hideActions: false,
-          highlightCurrentRow: true,
-          maxHeight: null,
-          rowKey: "id",
-          selection: false,
-          showHeader: true,
-          showSummary: true,
-          size: "",
-          stripe: true,
-          tooltipEffect: null,
-          topTool: true,
-          treeProps: {
-            children: "children",
-            hasChildren: "hasChildren",
-          },
-        },
-        columnAttributes: [
-          // {
-          //   align: "center",
-          //   className: null,
-          //   columnKey: "id",
-          //   displayComponentAttrs: null,
-          //   filterMultiple: true,
-          //   filterPlacement: null,
-          //   filters: [],
-          //   fixed: null,
-          //   headerAlign: null,
-          //   help: null,
-          //   itemPrefix: "",
-          //   itemSuffix: "",
-          //   label: "序号",
-          //   labelClassName: null,
-          //   minWidth: null,
-          //   prop: "id",
-          //   showOverflowTooltip: null,
-          //   sortable: true,
-          //   type: null,
-          //   width: 120,
-          // },
-          {
-            align: null,
-            className: null,
-            columnKey: "name",
-            displayComponentAttrs: null,
-            filterMultiple: true,
-            filterPlacement: null,
-            filters: [],
-            fixed: null,
-            headerAlign: null,
-            help: null,
-            itemPrefix: "",
-            itemSuffix: "",
-            label: "栏目名称",
-            labelClassName: null,
-            minWidth: "120",
-            prop: "name",
-            showOverflowTooltip: null,
-            sortable: null,
-            type: null,
-            width: null,
-          },
-        ],
-      },
-      rightFilterFormData: {}
+      // data: [{
+      //   label: "一级 1",
+      //   id: 1,
+      //   children: [
+      //     {
+      //       label: "二级 1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1",
+      //       id: 11,
+      //       children: [
+      //         {
+      //           label: "三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1",
+      //           id: 111
+      //         },
+      //       ],
+      //     },
+      //   ],
+      // },
+      // {
+      //   label: "一级 2",
+      //   id: 2,
+      //   children: [
+      //     {
+      //       label: "二级 2-1",
+      //       id: 21,
+      //       children: [
+      //         {
+      //           label: "三级 2-1-1",
+      //           id: 22,
+      //         },
+      //         {
+      //           label: "三级 2-1-4",
+      //           id: 25,
+      //         },
+      //       ],
+      //     },
+      //     {
+      //       label: "二级 2-2",
+      //       id: 23,
+      //       children: [
+      //         {
+      //           id: 24,
+      //           label: "三级 2-2-1",
+      //         },
+      //         {
+      //           label: "三级 2-1-3",
+      //           id: 26,
+      //         },
+      //       ],
+      //     },
+      //   ],
+      // }],
+      treeData: [],
+      // attrs1: {
+      //   method: "get",
+      //   dataUrl: "http://deep-admin:8888/admin-api/home/column",
+      //   filter: {
+      //     filterFormData: {
+      //       name: null
+      //     },
+      //     filters: [
+      //       {
+      //         column: "name",
+      //         defaultValue: null,
+      //         exprFormat: "%{value}%",
+      //         is_filter_null: false,
+      //         label: "栏目名称",
+      //         operator: "like",
+      //         component: {
+      //           append: null,
+      //           autocomplete: "off",
+      //           autofocus: false,
+      //           autosize: false,
+      //           className: null,
+      //           clearable: true,
+      //           componentName: "Input",
+      //           componentValue: "",
+      //           disabled: false,
+      //           form: null,
+      //           label: null,
+      //           max: null,
+      //           maxlength: null,
+      //           min: null,
+      //           minlength: null,
+      //           placeholder: null,
+      //           prefixIcon: null,
+      //           prepend: null,
+      //           readonly: false,
+      //           ref: null,
+      //           refData: null,
+      //           resize: null,
+      //           rows: 2,
+      //           showPassword: false,
+      //           showWordLimit: false,
+      //           size: null,
+      //           step: null,
+      //           style: "width:120px;margin-left:5px;",
+      //           suffixIcon: null,
+      //           tabindex: null,
+      //           type: "text",
+      //           validateEvent: true,
+      //         },
+      //       },
+      //     ],
+      //   },
+      //   showActions: true,
+      //   attributes: {
+      //     actionAlign: "left",
+      //     actionFixed: "right",
+      //     actionLabel: "操作",
+      //     actionWidth: 150,
+      //     border: false,
+      //     dataVuex: false,
+      //     defaultExpandAll: false,
+      //     draggable: false,
+      //     draggableUrl: null,
+      //     emptyText: "暂无数据",
+      //     fit: true,
+      //     height: 400,
+      //     hideActions: false,
+      //     highlightCurrentRow: true,
+      //     maxHeight: null,
+      //     rowKey: "id",
+      //     selection: false,
+      //     showHeader: true,
+      //     showSummary: true,
+      //     size: "",
+      //     stripe: true,
+      //     tooltipEffect: null,
+      //     topTool: true,
+      //     treeProps: {
+      //       children: "children",
+      //       hasChildren: "hasChildren",
+      //     },
+      //   },
+      //   columnAttributes: [
+      //     // {
+      //     //   align: "center",
+      //     //   className: null,
+      //     //   columnKey: "id",
+      //     //   displayComponentAttrs: null,
+      //     //   filterMultiple: true,
+      //     //   filterPlacement: null,
+      //     //   filters: [],
+      //     //   fixed: null,
+      //     //   headerAlign: null,
+      //     //   help: null,
+      //     //   itemPrefix: "",
+      //     //   itemSuffix: "",
+      //     //   label: "序号",
+      //     //   labelClassName: null,
+      //     //   minWidth: null,
+      //     //   prop: "id",
+      //     //   showOverflowTooltip: null,
+      //     //   sortable: true,
+      //     //   type: null,
+      //     //   width: 120,
+      //     // },
+      //     {
+      //       align: null,
+      //       className: null,
+      //       columnKey: "name",
+      //       displayComponentAttrs: null,
+      //       filterMultiple: true,
+      //       filterPlacement: null,
+      //       filters: [],
+      //       fixed: null,
+      //       headerAlign: null,
+      //       help: null,
+      //       itemPrefix: "",
+      //       itemSuffix: "",
+      //       label: "栏目名称",
+      //       labelClassName: null,
+      //       minWidth: "120",
+      //       prop: "name",
+      //       showOverflowTooltip: null,
+      //       sortable: null,
+      //       type: null,
+      //       width: null,
+      //     },
+      //   ],
+      // },
+      treeLoading: false,
+      rightFilterFormData: {},
+      treeQuery: []
     };
   },
   mounted() {
+    // this.attrs.rightFilter.actions = [
+    //   {
+    //     name: '保存当前版本',
+    //     dataUrl: '',
+    //     type: 'primary',
+    //     actionType: 'add'
+    //   },
+    //   {
+    //     name: '新增版本',
+    //     dataUrl: '',
+    //     type: null,
+    //     actionType: 'edit'
+    //   }
+    // ]
+    // this.attrs.rightFilter.actionsPosition = "top"
+    // this.attrs.rightFilter.actionsAligin = "right"
+
+    // this.attrs.rightFilter.isMultiple = false
+    // this.attrs.rightFilter.filterFormData = {
+    //   name: null
+    // },
+    // this.attrs.rightFilter.filters = [
+    //   {
+    //     column: "name",
+    //     defaultValue: null,
+    //     exprFormat: "%{value}%",
+    //     is_filter_null: false,
+    //     label: "栏目名称",
+    //     operator: "like",
+    //     component: {
+    //       append: null,
+    //       autocomplete: "off",
+    //       autofocus: false,
+    //       autosize: false,
+    //       className: null,
+    //       clearable: true,
+    //       componentName: "Input",
+    //       componentValue: "",
+    //       disabled: false,
+    //       form: null,
+    //       label: null,
+    //       max: null,
+    //       maxlength: null,
+    //       min: null,
+    //       minlength: null,
+    //       placeholder: null,
+    //       prefixIcon: null,
+    //       prepend: null,
+    //       readonly: false,
+    //       ref: null,
+    //       refData: null,
+    //       resize: null,
+    //       rows: 2,
+    //       showPassword: false,
+    //       showWordLimit: false,
+    //       size: null,
+    //       step: null,
+    //       style: "width:120px;margin-left:5px;",
+    //       suffixIcon: null,
+    //       tabindex: null,
+    //       type: "text",
+    //       validateEvent: true,
+    //     },
+    //   }
+    // ]
     console.log("attrs", this.attrs)
     //初始化默认设置值
     this.filterFormData = this._.cloneDeep(this.attrs.filter.filterFormData);
@@ -598,9 +682,12 @@ export default {
     this.leftFilterFilters = this._.cloneDeep(this.attrs.leftFilter.filters);
     this.sort = this._.cloneDeep(this.attrs.defaultSort);
 
+    if (this.attrs.rightFilter.isShowTree) {
+      // 获取tree树数据
+      this.getTreeData()
+    }
     // grid右侧上方的form表单 
-    this.rightFilterFormData = this._.cloneDeep(this.attrs1.filter.filterFormData);
-    console.log("this.rightFilterFormData", this.rightFilterFormData)
+    this.rightFilterFormData = this._.cloneDeep(this.attrs.rightFilter.filterFormData);
 
 
     //deep admin start
@@ -655,8 +742,9 @@ export default {
     });
 
     // 监听TreeDisplay事件
-    this.$bus.on("getData", (query) => {
-      console.log("query", query)
+    this.$bus.on("getDataInfo", (query) => {
+      this.treeQuery = query;
+      this.getData()
     })
 
     this.$nextTick(() => {
@@ -683,6 +771,22 @@ export default {
     } catch (e) {}
   },
   methods: {
+    // 获取树状结构数据
+    getTreeData() {
+      this.treeLoading = true;
+      this.$http
+        [this.attrs.method](this.attrs.rightFilter.dataUrl, {
+          params: {
+          },
+        })
+        .then(( data ) => {
+          this.treeData = data
+          this.treeLoading = false;
+        })
+        .finally(() => {
+          this.treeLoading = false;
+        });
+    },
     onTabClick(e) {
       const name = this._.split(e.name, "----");
       this.tabsSelectdata[name[0]] = name[1];
@@ -752,6 +856,7 @@ export default {
             get_data: true,
             page: this.page,
             per_page: this.pageData.pageSize,
+            treeQuery: this.treeQuery,
             ...this.sort,
             ...this.q_search,
             ...this.quick_filter, //deep admin
@@ -1083,6 +1188,22 @@ export default {
   }
   .el-form-item__label{
     padding: 0 10px 0 0 !important;
+  }
+  .search-top-row {
+    margin-bottom: 12px;
+  }
+  .search-bottom-row {
+    margin-top: 12px;
+  }
+  .filter-form .left {
+  }
+  .filter-form .center {
+    display: flex;
+    justify-content: center !important;
+  }
+  .filter-form .right {
+    display: flex;
+    justify-content: flex-end !important;
   }
 }
 </style>
