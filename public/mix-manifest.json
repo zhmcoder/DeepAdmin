@@ -1,11 +1,5 @@
 {
-<<<<<<< HEAD
-    "/app.js": "/app.js?id=733774605e12d20ab8fe",
+    "/app.js": "/app.js?id=705dd8c99d3366951332",
     "/manifest.js": "/manifest.js?id=14b1f311b370916d0f9f",
     "/vendor.js": "/vendor.js?id=301a60564a998b51b454"
-=======
-    "/app.js": "/app.js?id=775096c65f1f2cdf94db",
-    "/manifest.js": "/manifest.js?id=003ecff85b905ca98bca",
-    "/vendor.js": "/vendor.js?id=75c924b6fbca0e93f18d"
->>>>>>> d9ddb5f (fix：多级选择)
 }
