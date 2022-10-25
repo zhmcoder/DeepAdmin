@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var wangeditor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! wangeditor */ "./node_modules/wangeditor/release/wangEditor.js");
+/* harmony import */ var wangeditor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! wangeditor */ "./node_modules/wangeditor/dist/wangEditor.js");
 /* harmony import */ var wangeditor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(wangeditor__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _mixins_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/mixins.js */ "./resources/js/mixins.js");
 //
@@ -38,49 +38,93 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
+    var _this2 = this;
+
     var _this = this;
 
     this.defaultValue = this._.cloneDeep(this.attrs.componentValue);
-    this.editor = new wangeditor__WEBPACK_IMPORTED_MODULE_0___default.a(this.$refs.toolbar, this.$refs.editor);
-    this.editor.customConfig.menus = this.attrs.menus;
-    this.editor.customConfig.zIndex = this.attrs.zIndex;
-    this.editor.customConfig.uploadImgShowBase64 = this.attrs.uploadImgShowBase64;
+    this.editor = new wangeditor__WEBPACK_IMPORTED_MODULE_0___default.a(this.$refs.toolbar, this.$refs.editor); // this.editor.customConfig.menus = this.attrs.menus;
+    // this.editor.customConfig.zIndex = this.attrs.zIndex;
+    // this.editor.customConfig.uploadImgShowBase64 = this.attrs.uploadImgShowBase64;
+    // if (this.attrs.uploadImgServer) {
+    //   this.editor.customConfig.uploadImgServer = this.attrs.uploadImgServer;
+    //   this.editor.customConfig.uploadImgParams = {
+    //     _token: Admin.token
+    //   };
+    // }
+    // //自定义 fileName
+    // if (this.attrs.uploadFileName) {
+    //   this.editor.customConfig.uploadFileName = this.attrs.uploadFileName;
+    // }
+    // //自定义 header
+    // if (this.attrs.uploadImgHeaders) {
+    //   this.editor.customConfig.uploadImgHeaders = this.attrs.uploadImgHeaders;
+    // }
+    // this.editor.customConfig.onchange = html => {
+    //   this.onChange(html);
+    // };
+
+    this.editor.config.menus = this.attrs.menus;
+    console.log('this.attrs.zIndex', this.attrs.zIndex);
+    this.editor.config.zIndex = this.attrs.zIndex;
+    this.editor.config.uploadImgShowBase64 = this.attrs.uploadImgShowBase64;
 
     if (this.attrs.uploadImgServer) {
-      this.editor.customConfig.uploadImgServer = this.attrs.uploadImgServer;
-      this.editor.customConfig.uploadImgParams = {
+      console.log('this.attrs.uploadImgServer', this.attrs.uploadImgServer);
+      this.editor.config.uploadImgServer = this.attrs.uploadImgServer;
+      this.editor.config.uploadImgParams = {
         _token: Admin.token
       };
     } //自定义 fileName
 
 
     if (this.attrs.uploadFileName) {
-      this.editor.customConfig.uploadFileName = this.attrs.uploadFileName;
+      this.editor.config.uploadFileName = this.attrs.uploadFileName;
     } //自定义 header
 
 
     if (this.attrs.uploadImgHeaders) {
-      this.editor.customConfig.uploadImgHeaders = this.attrs.uploadImgHeaders;
+      this.editor.config.uploadImgHeaders = this.attrs.uploadImgHeaders;
     }
 
-    this.editor.customConfig.onchange = function (html) {
-      _this.onChange(html);
+    this.editor.config.onchange = function (html) {
+      _this2.onChange(html);
+    };
+
+    this.editor.config.customUploadImg = function (resultFiles, insertImgFn) {
+      // resultFiles 是 input 中选中的文件列表
+      // insertImgFn 是获取图片 url 后，插入到编辑器的方法
+      // 上传图片，返回结果，将图片插入到编辑器中
+      var formdata = new FormData();
+
+      for (var i in resultFiles) {
+        formdata.append('file' + i, resultFiles[i]);
+      }
+
+      formdata.append('amount', resultFiles.length);
+      formdata.append('_token', Admin.token);
+
+      _this.$http.post(_this.attrs.uploadImgServer, formdata).then(function (data) {
+        for (var _i = 0; _i <= data.data.length - 1; _i++) {
+          insertImgFn(data.data[_i].url);
+        }
+      });
     };
 
     this.$nextTick(function () {
-      _this.editor.create();
+      _this2.editor.create();
 
-      _this.editor.txt.html(_this.defaultValue);
+      _this2.editor.txt.html(_this2.defaultValue);
 
-      console.log('获取value====', _this.value);
+      console.log('获取value====', _this2.value);
 
-      if (_this.value) {
-        _this.editor && _this.editor.txt.html(_this.value);
+      if (_this2.value) {
+        _this2.editor && _this2.editor.txt.html(_this2.value);
       }
     }); //编辑数据加载完毕设置编辑器的值
 
     this.$bus.on("EditDataLoadingCompleted", function () {
-      _this.editor && _this.editor.txt.html(_this.value);
+      _this2.editor && _this2.editor.txt.html(_this2.value);
     });
   },
   watch: {
@@ -94,6 +138,11 @@ __webpack_require__.r(__webpack_exports__);
     try {
       this.$bus.off("EditDataLoadingCompleted");
     } catch (e) {}
+  },
+  methods: {
+    insertImgFn: function insertImgFn() {
+      console.log('插入图片');
+    }
   }
 });
 
@@ -111,7 +160,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, ".wangeditor-main {\n  border: 1px solid #dcdcdc;\n}\n.wangeditor-main .toolbar {\n  background: #f7f7f7;\n}\n.wangeditor-main .w-e-text-container {\n  position: relative;\n}\n.wangeditor-main .w-e-text-container .w-e-text {\n  position: absolute;\n  left: 0px;\n  top: 0px;\n  right: 0px;\n  bottom: 0px;\n}\n.wangeditor-main .w-e-text-container {\n  z-index: 1 !important;\n}\n.wangeditor-main .w-e-toolbar {\n  flex-wrap: wrap;\n}\n.wangeditor-main .w-e-menu {\n  z-index: auto !important;\n}\n.wangeditor-main .w-e-menu .w-e-droplist {\n  z-index: 2 !important;\n}", ""]);
+exports.push([module.i, ".wangeditor-main {\n  border: 1px solid #dcdcdc;\n}\n.wangeditor-main .toolbar {\n  background: #f7f7f7;\n}\n.wangeditor-main .w-e-toolbar {\n  flex-wrap: wrap;\n}\n.wangeditor-main .w-e-menu {\n  z-index: auto !important;\n}\n.wangeditor-main .w-e-menu .w-e-droplist {\n  z-index: 2 !important;\n}", ""]);
 
 // exports
 
@@ -188,6 +237,7 @@ var render = function () {
       ref: "editor",
       class: _vm.attrs.className,
       style: _vm.attrs.style,
+      attrs: { id: "w-e-text-container" },
     }),
   ])
 }

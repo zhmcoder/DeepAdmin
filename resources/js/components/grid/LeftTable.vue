@@ -57,6 +57,12 @@
               :is="attrs.top.componentName"
               :attrs="attrs.top"
             />
+
+            <!-- 树状显示 -->
+            <TreeDisplay
+              :data="data"
+            />
+
             <div
               shadow="never"
               :body-style="{ padding: 0 }"
@@ -97,6 +103,36 @@
           </div>
         </el-aside>
         <el-main>
+          <!-- 右侧顶部form表单 -->
+          <el-card
+            shadow="never"
+            :body-style="{ padding: 0 }"
+            class="margin-bottom-sm"
+          >
+            <div class="filter-form">
+              <el-form :inline="true" :model="rightFilterFormData" v-if="rightFilterFormData">
+                <template v-for="(item, index) in attrs1.filter.filters">
+                  <!-- 单独展示一行 -->
+                  <el-form-item
+                    :key="index"
+                    :label="item.label"
+                    class="form-bottom"
+                  >
+                    <ItemDiaplsy
+                      v-model="rightFilterFormData[item.column]"
+                      :form-item="item"
+                      :form-items="attrs1.filters"
+                      :form-data="rightFilterFormData"
+                    />
+                  </el-form-item>
+                </template>
+                <el-form-item>
+                  <el-button type="primary" @click="add1">保存当前版本</el-button>
+                  <el-button @click="add">新增版本</el-button>
+                </el-form-item>
+              </el-form>
+            </div>
+          </el-card>
           <el-card shadow="never" :body-style="{ padding: 0 }" v-loading="loading">
             <div class="bottom-border" ref="toolbarsView" v-if="attrs.toolbars.show">
               <div class="grid-top-container">
@@ -332,6 +368,7 @@ import Actions from "./Actions/Index";
 import BatchActions from "./BatchActions/Index";
 import ItemDiaplsy from "../form/ItemDiaplsy";
 import DialogForm from "./DialogForm";
+import TreeDisplay from "../form/TreeDisplay.vue";
 export default {
   mixins: [BaseComponent],
   components: {
@@ -340,6 +377,7 @@ export default {
     ItemDiaplsy,
     BatchActions,
     DialogForm,
+    TreeDisplay
   },
   props: {
     attrs: Object,
@@ -366,10 +404,192 @@ export default {
       topViewHeight: 0,
       toolbarsViewHeight: 0,
       addOrEdit:'', //点击的action是否是添加或修改
-      leftFilterFilters:[]
+      leftFilterFilters:[],
+
+      data: [{
+        label: "一级 1",
+        id: 1,
+        children: [
+          {
+            label: "二级 1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1",
+            id: 11,
+            children: [
+              {
+                label: "三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1",
+                id: 111
+              },
+            ],
+          },
+        ],
+      },
+      {
+        label: "一级 2",
+        id: 2,
+        children: [
+          {
+            label: "二级 2-1",
+            id: 21,
+            children: [
+              {
+                label: "三级 2-1-1",
+                id: 22,
+              },
+              {
+                label: "三级 2-1-4",
+                id: 25,
+              },
+            ],
+          },
+          {
+            label: "二级 2-2",
+            id: 23,
+            children: [
+              {
+                id: 24,
+                label: "三级 2-2-1",
+              },
+              {
+                label: "三级 2-1-3",
+                id: 26,
+              },
+            ],
+          },
+        ],
+      }],
+      attrs1: {
+        method: "get",
+        dataUrl: "http://deep-admin:8888/admin-api/home/column",
+        filter: {
+          filterFormData: {
+            name: null
+          },
+          filters: [
+            {
+              column: "name",
+              defaultValue: null,
+              exprFormat: "%{value}%",
+              is_filter_null: false,
+              label: "栏目名称",
+              operator: "like",
+              component: {
+                append: null,
+                autocomplete: "off",
+                autofocus: false,
+                autosize: false,
+                className: null,
+                clearable: true,
+                componentName: "Input",
+                componentValue: "",
+                disabled: false,
+                form: null,
+                label: null,
+                max: null,
+                maxlength: null,
+                min: null,
+                minlength: null,
+                placeholder: null,
+                prefixIcon: null,
+                prepend: null,
+                readonly: false,
+                ref: null,
+                refData: null,
+                resize: null,
+                rows: 2,
+                showPassword: false,
+                showWordLimit: false,
+                size: null,
+                step: null,
+                style: "width:120px;margin-left:5px;",
+                suffixIcon: null,
+                tabindex: null,
+                type: "text",
+                validateEvent: true,
+              },
+            },
+          ],
+        },
+        showActions: true,
+        attributes: {
+          actionAlign: "left",
+          actionFixed: "right",
+          actionLabel: "操作",
+          actionWidth: 150,
+          border: false,
+          dataVuex: false,
+          defaultExpandAll: false,
+          draggable: false,
+          draggableUrl: null,
+          emptyText: "暂无数据",
+          fit: true,
+          height: 400,
+          hideActions: false,
+          highlightCurrentRow: true,
+          maxHeight: null,
+          rowKey: "id",
+          selection: false,
+          showHeader: true,
+          showSummary: true,
+          size: "",
+          stripe: true,
+          tooltipEffect: null,
+          topTool: true,
+          treeProps: {
+            children: "children",
+            hasChildren: "hasChildren",
+          },
+        },
+        columnAttributes: [
+          // {
+          //   align: "center",
+          //   className: null,
+          //   columnKey: "id",
+          //   displayComponentAttrs: null,
+          //   filterMultiple: true,
+          //   filterPlacement: null,
+          //   filters: [],
+          //   fixed: null,
+          //   headerAlign: null,
+          //   help: null,
+          //   itemPrefix: "",
+          //   itemSuffix: "",
+          //   label: "序号",
+          //   labelClassName: null,
+          //   minWidth: null,
+          //   prop: "id",
+          //   showOverflowTooltip: null,
+          //   sortable: true,
+          //   type: null,
+          //   width: 120,
+          // },
+          {
+            align: null,
+            className: null,
+            columnKey: "name",
+            displayComponentAttrs: null,
+            filterMultiple: true,
+            filterPlacement: null,
+            filters: [],
+            fixed: null,
+            headerAlign: null,
+            help: null,
+            itemPrefix: "",
+            itemSuffix: "",
+            label: "栏目名称",
+            labelClassName: null,
+            minWidth: "120",
+            prop: "name",
+            showOverflowTooltip: null,
+            sortable: null,
+            type: null,
+            width: null,
+          },
+        ],
+      },
+      rightFilterFormData: {}
     };
   },
   mounted() {
+    console.log("attrs", this.attrs)
     //初始化默认设置值
     this.filterFormData = this._.cloneDeep(this.attrs.filter.filterFormData);
     //初始化左侧的form表单默认值
@@ -377,6 +597,12 @@ export default {
     // 左侧form表单默认显示字段
     this.leftFilterFilters = this._.cloneDeep(this.attrs.leftFilter.filters);
     this.sort = this._.cloneDeep(this.attrs.defaultSort);
+
+    // grid右侧上方的form表单 
+    this.rightFilterFormData = this._.cloneDeep(this.attrs1.filter.filterFormData);
+    console.log("this.rightFilterFormData", this.rightFilterFormData)
+
+
     //deep admin start
       if(this.attrs.quickFilter){
           this.quickFilter = this._.cloneDeep(
@@ -427,6 +653,11 @@ export default {
       this.$refs["DialogGridFrom"].dialogVisible = isShow;
       this.$refs["DialogGridFrom"].key = key;
     });
+
+    // 监听TreeDisplay事件
+    this.$bus.on("getData", (query) => {
+      console.log("query", query)
+    })
 
     this.$nextTick(() => {
       this.topViewHeight = this.$refs.topView.offsetHeight;
@@ -696,6 +927,14 @@ export default {
         if(actionType) return this.attrs[actionType+'DialogFormTitle'] || this.attrs.dialogTitle;
         return this.attrs.dialogTitle
       }
+    },
+    // 保存当前版本
+    add1() {
+      console.log("保存当前版本", this.rightFilterFormData)
+    },
+    // 新增版本
+    add() {
+      console.log("新增版本", this.rightFilterFormData)
     }
   },
   computed: {

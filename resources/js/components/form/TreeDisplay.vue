@@ -1,13 +1,16 @@
 <template>
-  <div>
-    <el-tree
+  <div class="tree-wrap">
+    <el-tree ref="tree"
+      :check-strictly="!isMultiple"
+      show-checkbox
       :data="data"
       :props="defaultProps"
-      :highlight-current="highlightBd"
-      :show-checkbox="showCheckbox"
+      node-key="id"
       @node-click="handleNodeClick"
-      :class="!showCheckbox ? 'icon-select' : ''"
-    ></el-tree>
+      :class="!isMultiple ? 'icon-select' : ''"
+      @check="handleCurrentChecked"
+      @check-change="checkChange">
+    </el-tree>
   </div>
 </template>
 <script>
@@ -15,89 +18,115 @@ export default {
   components: {},
   props: {
     attrs: Object,
+    data: Array
   },
   data() {
     return {
-      data: [
-        {
-          label: "一级 1",
-          id: 2,
-          children: [
-            {
-              label: "二级 1-1",
-              id: 12,
-              children: [
-                {
-                  label: "三级 1-1-1",
-                  id: 1
-                },
-              ],
-            },
-          ],
-        },
-        {
-          label: "一级 2",
-          children: [
-            {
-              label: "二级 2-1",
-              children: [
-                {
-                  label: "三级 2-1-1",
-                },
-              ],
-            },
-            {
-              label: "二级 2-2",
-              children: [
-                {
-                  label: "三级 2-2-1",
-                },
-              ],
-            },
-          ],
-        },
-        {
-          label: "一级 3",
-          children: [
-            {
-              label: "二级 3-1",
-              children: [
-                {
-                  label: "三级 3-1-1",
-                },
-              ],
-            },
-            {
-              label: "二级 3-2",
-              children: [
-                {
-                  label: "三级 3-2-1",
-                },
-              ],
-            },
-          ],
-        },
-      ],
+      // data: [
+      //   {
+      //     label: "一级 1",
+      //     id: 1,
+      //     children: [
+      //       {
+      //         label: "二级 1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1",
+      //         id: 11,
+      //         children: [
+      //           {
+      //             label: "三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1三级 1-1-1",
+      //             id: 111
+      //           },
+      //         ],
+      //       },
+      //     ],
+      //   },
+      //   {
+      //     label: "一级 2",
+      //     id: 2,
+      //     children: [
+      //       {
+      //         label: "二级 2-1",
+      //         id: 21,
+      //         children: [
+      //           {
+      //             label: "三级 2-1-1",
+      //             id: 22,
+      //           },
+      //           {
+      //             label: "三级 2-1-4",
+      //             id: 25,
+      //           },
+      //         ],
+      //       },
+      //       {
+      //         label: "二级 2-2",
+      //         id: 23,
+      //         children: [
+      //           {
+      //             id: 24,
+      //             label: "三级 2-2-1",
+      //           },
+      //           {
+      //             label: "三级 2-1-3",
+      //             id: 26,
+      //           },
+      //         ],
+      //       },
+      //     ],
+      //   }
+      // ],
       defaultProps: {
         children: "children",
         label: "label",
       },
-      highlightBd: true, // 保持高亮
-      showCheckbox: true, // 是否可选择
+      highlightBd: false, // 保持高亮
+      // showCheckbox: false, // 是否可选择 true表示多选， false表示单选
+      isMultiple: false, // 是否可选择 true表示多选， false表示单选
+      currentNode: []
     };
   },
   created() {},
   mounted() {},
   destroyed() {},
   methods: {
-    handleNodeClick(data) {
-      console.log(data);
-      this.$emit("change", []);
+    handleNodeClick(item,node,self){ //自己定义的editCheckId，防止单选出现混乱
+      if (!this.isMultiple) {
+        this.editCheckId=item.id;
+        this.$refs.tree.setCheckedKeys([item.id])
+      }
+    },
+    checkChange(item,node,self){
+      if (!this.isMultiple) {
+        if (node == true) {
+            this.editCheckId=item.id;
+            this.$refs.tree.setCheckedKeys([item.id])
+            this.$emit("change", [item.id]);
+        }else {
+            if (this.editCheckId == item.id) {
+              this.$refs.tree.setCheckedKeys([item.id])
+              this.$emit("change", [item.id]);
+            }
+        }
+      }
+    },
+    handleCurrentChecked(nodeObj, selectedObj) {
+      console.log(selectedObj.checkedKeys);
+      console.log(selectedObj.checkedNodes); //这是选中的节点数组
+      // 去调用后台的链接
+      var newNode = selectedObj.checkedNodes.filter(item => (!item.children || (item.children && item.children.length==0)))
+      var list = [];
+      newNode.map(item => {
+        list.push(item.id)
+      })
+      console.log('list', list)
+      this.$emit("change", list);
     },
   },
 };
 </script>
 <style lang="scss">
+.tree-wrap {
+  padding-right: 10px;
+}
 .el-tree .el-tree-node__expand-icon.expanded {
   -webkit-transform: rotate(0deg);
   transform: rotate(0deg);
@@ -115,8 +144,8 @@ export default {
   display: block;
   font-size: 14px;
   background-size: 14px;
-  border: 1px solid #ADADAD;
-  background: #F8F8F8;
+  border: 1px solid #adadad;
+  background: #f8f8f8;
 }
 
 /* //有子节点 且已展开 */
@@ -126,8 +155,8 @@ export default {
   display: block;
   font-size: 14px;
   background-size: 14px;
-  border: 1px solid #ADADAD;
-  background: #F8F8F8;
+  border: 1px solid #adadad;
+  background: #f8f8f8;
 }
 
 /* //没有子节点 */
@@ -143,5 +172,34 @@ export default {
 /* //高亮字体颜色 */
 .el-tree--highlight-current .el-tree-node.is-current > .el-tree-node__content {
   color: #409eff !important;
+}
+
+.el-tree .el-tree-node__content:hover {
+  background-color: transparent;
+}
+.icon-select .el-tree-node .is-leaf + .el-checkbox .el-checkbox__inner{
+  display: inline-block;
+}
+// 最后一个节点可选择
+.icon-select .el-tree-node .el-checkbox .el-checkbox__inner{
+  display: none;
+}
+.icon-select .el-tree-node__content>.el-tree-node__expand-icon {
+  padding-top: 6px !important;
+}
+.el-tree .el-tree-node__content {
+  height: auto;
+  // display: flex;
+  // align-items: flex-start;
+}
+.el-tree .el-tree-node__label{
+  word-break: normal;
+  width: auto;
+  display: block;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow: hidden;
+  height: auto;
+  padding: 6px 0;
 }
 </style>
