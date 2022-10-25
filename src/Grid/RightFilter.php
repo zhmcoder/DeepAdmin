@@ -40,6 +40,9 @@ class RightFilter
     protected $width = '100px';
     protected $dataUrl = '';
     protected $isShowTree = false;
+    protected $actions = [];
+    protected $actionsPosition = 'top'; // top、bottom
+    protected $actionsAligin = 'left'; // left、center、right
 
     protected $name = '';
 
@@ -197,6 +200,24 @@ class RightFilter
         return $this;
     }
 
+    public function actions($actions = [])
+    {
+        $this->actions = $actions;
+        return $this;
+    }
+
+    public function actionsPosition($actionsPosition = 'top')
+    {
+        $this->actionsPosition = $actionsPosition;
+        return $this;
+    }
+
+    public function actionsAligin($actionsAligin = 'left')
+    {
+        $this->actionsAligin = $actionsAligin;
+        return $this;
+    }
+
     /**
      * @return array
      */
@@ -213,6 +234,9 @@ class RightFilter
             'width' => $this->width,
             'dataUrl' => $this->dataUrl,
             'isShowTree' => $this->isShowTree,
+            'actions' => $this->actions,
+            'actionsPosition' => $this->actionsPosition,
+            'actionsAligin' => $this->actionsAligin,
         ];
     }
 

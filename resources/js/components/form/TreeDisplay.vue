@@ -18,7 +18,8 @@ export default {
   components: {},
   props: {
     attrs: Object,
-    data: Array
+    data: Array,
+    isMultiple: Boolean
   },
   data() {
     return {
@@ -80,9 +81,17 @@ export default {
       },
       highlightBd: false, // 保持高亮
       // showCheckbox: false, // 是否可选择 true表示多选， false表示单选
-      isMultiple: false, // 是否可选择 true表示多选， false表示单选
-      currentNode: []
+      // isMultiple: false, // 是否可选择 true表示多选， false表示单选
+      currentNode: [],
+      checkedList: []
     };
+  },
+  watch: {
+    checkedList() {
+      if (this.checkedList.length > 0) {
+        this.$bus.emit("getDataInfo", this.checkedList);
+      }
+    }
   },
   created() {},
   mounted() {},
@@ -99,26 +108,27 @@ export default {
         if (node == true) {
             this.editCheckId=item.id;
             this.$refs.tree.setCheckedKeys([item.id])
-            this.$emit("change", [item.id]);
+            if ((!item.children || (item.children && item.children.length == 0)) && this.checkedList != [item.id]) {
+              this.checkedList =  [item.id]
+            }
         }else {
             if (this.editCheckId == item.id) {
               this.$refs.tree.setCheckedKeys([item.id])
-              this.$emit("change", [item.id]);
+              this.checkedList =  [item.id]
             }
         }
       }
     },
     handleCurrentChecked(nodeObj, selectedObj) {
-      console.log(selectedObj.checkedKeys);
-      console.log(selectedObj.checkedNodes); //这是选中的节点数组
-      // 去调用后台的链接
-      var newNode = selectedObj.checkedNodes.filter(item => (!item.children || (item.children && item.children.length==0)))
-      var list = [];
-      newNode.map(item => {
-        list.push(item.id)
-      })
-      console.log('list', list)
-      this.$emit("change", list);
+      if (this.isMultiple) {
+        // 去调用后台的链接
+        var newNode = selectedObj.checkedNodes.filter(item => (!item.children || (item.children && item.children.length==0)))
+        var list = [];
+        newNode.map(item => {
+          list.push(item.id)
+        })
+        this.checkedList =  list
+      }
     },
   },
 };

@@ -327,7 +327,7 @@ export default {
     }
   },
   mounted() {
-    console.log("this.attrs====", this.attrs);
+    console.log("this.attrs====", this.attrs.filters);
     this.filterFormData = this._.cloneDeep(this.attrs.filter.filterFormData);
     this.getData()
   },
