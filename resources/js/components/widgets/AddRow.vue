@@ -83,7 +83,9 @@
 					return (this.attrs.index_prefix != null ? this.attrs.index_prefix : "") + (index + 1) + (this.attrs.index_after != null ? this.attrs.index_after : "");
 				} else if (this.attrs.index_model == 2) {
 					return (this.attrs.index_prefix != null ? this.attrs.index_prefix : "") + this.changeNumToHan(index + 1) + (this.attrs.index_after != null ? this.attrs.index_after : "");
-				} else {
+				} else if (this.attrs.index_model == 3) {
+          return (this.attrs.index_prefix != null ? this.attrs.index_prefix : "") + this.changeLetter(index) + (this.attrs.index_after != null ? this.attrs.index_after : "");
+        }else {
 					return (this.attrs.index_prefix != null ? this.attrs.index_prefix : "") + (index + 1) + (this.attrs.index_after != null ? this.attrs.index_after : "");
 				}
 
@@ -116,6 +118,11 @@
 				//result = result.replace(/零一十/g, '零十');//貌似正规读法是零一十
 				//将【一十】换成【十】
 				result = result.replace(/^一十/g, '十')
+				return result;
+			},
+      changeLetter(num) {
+				var arr = new Array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+        var result = arr[num];
 				return result;
 			},
 			// 增加
