@@ -18,16 +18,18 @@ class QrWrap extends Component
     /**
      * 链接地址
      */
-    public function setHref($href = '')
+    public function setHref($href = ''): QrWrap
     {
         $this->href = $href;
+        return $this;
     }
 
     /**
      * 图片地址
      */
-    public function setSrc($src = '')
+    public function setSrc($src = ''): QrWrap
     {
         $this->src = $src;
+        return $this;
     }
 }
