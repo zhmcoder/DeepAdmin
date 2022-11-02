@@ -134,11 +134,9 @@ Vue.component("Card", require("@/components/widgets/Base/Card").default);
 Vue.component("Steps", require("@/components/widgets/Base/Steps").default);
 Vue.component("Html", require("@/components/widgets/Base/Html").default);
 Vue.component("Alert", require("@/components/widgets/Base/Alert").default);
-Vue.component(
-    "DialogButton",
-    require("@/components/widgets/Base/DialogButton").default
-);
+Vue.component("DialogButton", require("@/components/widgets/Base/DialogButton").default);
 Vue.component("Tooltip", require("@/components/widgets/Base/Tooltip").default);
+Vue.component("QrWrap", require("@/components/widgets/Base/QrWrap").default);
 Vue.component("Markdown", () => import("@/components/widgets/Form/Markdown"));
 //antv
 Vue.component("AntvLine", () => import("@/components/antv/AntvLine"));

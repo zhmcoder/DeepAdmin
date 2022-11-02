@@ -10,7 +10,7 @@ class SearchGrid extends Grid
      */
     protected $componentName = 'SearchGrid';
 
-    protected $isMultiple = false; // 是否多选（false单选、true多选）
+    protected bool $isMultiple = false; // 是否多选（false单选、true多选）
 
     /**
      * 单选 || 多选
