@@ -2,6 +2,13 @@
     <el-form class="demo-table-expand">
         <el-form-item v-for="(item, i) in info_list" :key="i" :label="item.label">
             <span class="text_value" v-if="item.href"><a :href="item.href" target="_blank">{{item.name}}</a></span>
+            <el-image
+              v-else-if="item.img"
+              title="预览图片"
+              :src="item.img"
+              fit="cover"
+              class="upload-show-image"
+            />
             <span class="text_value" v-html="item.name" v-else></span>
         </el-form-item>
     </el-form>
