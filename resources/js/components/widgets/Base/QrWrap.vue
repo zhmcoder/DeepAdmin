@@ -190,8 +190,8 @@ export default {
     display: flex;
   }
   .qr_img {
-    width: 220px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
   }
   .download_btn {
     width: 100px;
