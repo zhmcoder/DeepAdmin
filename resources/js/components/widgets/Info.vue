@@ -7,7 +7,7 @@
               title="预览图片"
               :src="item.img"
               fit="cover"
-              class="upload-show-image"
+              class="show-image"
             />
             <span class="text_value" v-html="item.name" v-else></span>
         </el-form-item>
@@ -60,3 +60,8 @@
         },
     }
 </script>
+<style>
+  .show-image {
+    max-width: 400px;
+  }
+</style>

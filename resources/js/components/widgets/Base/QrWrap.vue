@@ -7,7 +7,7 @@
         <div class="href">{{attrs.href}}</div>
         <div class="copy_btn" @click="copyText(attrs.href)">复制链接</div>
       </div>
-      <div class="open_btn" @click="open_href">打开</div>
+      <a class="open_btn" :href="attrs.href" target="_blank">打开</a>
     </div>
     <div class="title">二维码手机答题</div>
     <div class="qr_bottom">
@@ -139,11 +139,12 @@ export default {
     color: #A3A2A2;
   }
   .qr_top {
-    width: 80%;
+    /* width: 80%; */
     margin-top: 10px;
     margin-bottom: 20px;
   }
   .href_wrap {
+    min-height: 30px;
     display: flex;
     justify-content: space-between;
     border: 1px solid #D2D2D2;
@@ -173,6 +174,7 @@ export default {
     cursor: pointer;
   }
   .open_btn {
+    display: block;
     width: 80px;
     height: 35x;
     line-height: 35px;
