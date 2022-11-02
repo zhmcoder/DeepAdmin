@@ -21,7 +21,7 @@
         />
       </div>
       <!-- <div class="download_btn" @click="download">下载二维码</div> -->
-      <a class="download_btn" :href="attrs.src" target="_blank">下载二维码</a>
+      <a class="download_btn" :href="attrs.down" target="_blank">下载二维码</a>
     </div>
   </div>
 </template>

@@ -58,10 +58,10 @@
               :attrs="attrs.top"
             />
             <!-- Tree树状组件的搜索组件 -->
-            <div v-if="attrs.rightFilter.isShowTreeForm">
-              <el-form :inline="true" :model="treeFilterFormData" v-if="rightFilterFormData">
+            <div v-if="attrs.rightFilter.isShowTreeSelect">
+              <el-form :inline="true" :model="treeFilterFormData" v-if="treeFilterFormData">
                 <!-- 操作按钮的位置 -->
-                <template v-for="(item, index) in attrs.rightFilter.filters">
+                <template v-for="(item, index) in attrs.rightFilter.treeFilters">
                   <!-- 单独展示一行 -->
                   <el-form-item
                     :key="index"
@@ -477,8 +477,8 @@ export default {
     }
     // grid右侧上方的form表单 
     this.rightFilterFormData = this._.cloneDeep(this.attrs.rightFilter.filterFormData);
-    // tree的form表单
-    this.treeFilterFormData = this._.cloneDeep(this.attrs.rightFilter.filterFormData);
+    // 树状组件搜索操作
+    this.treeFilterFormData = this._.cloneDeep(this.attrs.rightFilter.treeFilterFormData);
 
 
     //deep admin start
@@ -576,6 +576,7 @@ export default {
         .then(( data ) => {
           this.treeData = data
           this.treeLoading = false;
+          // 查询树状结构数据后，对树状组件的展开和选中进行处理
           this.$bus.emit("setTreeCurrentKey");
         })
         .finally(() => {
@@ -843,11 +844,10 @@ export default {
     },
     // 保存当前版本
     action(item) {
-      // id: this.treeQuery
       this.$http
-        [this.attrs.method](item.dataUrl, {
+        [item.method](item.dataUrl, {
           params: {
-            id: [1, 2],
+            id: this.treeQuery,
             ...this.rightFilterFormData,
           },
         })
