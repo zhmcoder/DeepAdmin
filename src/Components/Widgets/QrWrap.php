@@ -9,6 +9,7 @@ class QrWrap extends Component
     protected $componentName = 'QrWrap';
     protected $href = '';
     protected $src = '';
+    protected $down = '';
 
     public static function make()
     {
@@ -30,6 +31,15 @@ class QrWrap extends Component
     public function setSrc($src = ''): QrWrap
     {
         $this->src = $src;
+        return $this;
+    }
+
+    /**
+     * 图片下载地址
+     */
+    public function setDown($down = ''): QrWrap
+    {
+        $this->down = $down;
         return $this;
     }
 }
