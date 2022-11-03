@@ -48,6 +48,9 @@ export default {
         this.$store.commit("initPages", this.pathKey);
       }
       this.$nextTick(() => {
+        if(this.pathKey.indexOf('is_reload1') > -1) {
+          this.reload = true
+        }
         this.getContent();
       });
     });
