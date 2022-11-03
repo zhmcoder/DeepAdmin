@@ -76,6 +76,7 @@ class Grid extends Component
     private $toolbars;
     private $top;
     private $bottom;
+    private $isReload = false;
 
     /**
      * 请求方式
@@ -481,6 +482,16 @@ class Grid extends Component
         return $this;
     }
 
+    /**
+     * @param bool $isReload
+     * @return $this
+     */
+    public function isReload(bool $isReload = true)
+    {
+        $this->isReload = $isReload;
+        return $this;
+    }
+
 
     /**
      * 自定义数据
@@ -567,6 +578,7 @@ class Grid extends Component
             $viewData['rightFilter'] = $this->rightFilter->buildFilter();
             $viewData['top'] = $this->top;
             $viewData['bottom'] = $this->bottom;
+            $viewData['isReload'] = $this->isReload;
 
             $viewData['isDialogForm'] = $this->isDialogForm;
             $viewData['isDrawerForm'] = $this->isDrawerForm;

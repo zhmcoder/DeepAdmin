@@ -66,6 +66,8 @@ class MenuController extends AdminController
         $userModel = config('deep_admin.database.menu_model');
         $grid = new Grid(new $userModel());
 
+        $grid->isReload();
+
         $grid->addDialogForm($this->form()->isDialog()->className('p-15'));
         $grid->editDialogForm($this->form(true)->isDialog()->className('p-15'));
 
