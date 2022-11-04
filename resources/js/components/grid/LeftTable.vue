@@ -531,6 +531,12 @@ export default {
       this.$refs["DialogGridFrom"].dialogVisible = isShow;
       this.$refs["DialogGridFrom"].key = key;
     });
+    // 监听刷新页面
+    this.$bus.on("reloadGridFrom", () => {
+      if(this.attrs.isReload) {
+        this.$bus.emit("pageReload");
+      }
+    });
 
     // 监听TreeDisplay事件
     this.$bus.on("getDataInfo", (query) => {

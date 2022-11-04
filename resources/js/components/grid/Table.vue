@@ -429,6 +429,13 @@ export default {
       this.$refs["DialogGridFrom"].key = key;
     });
 
+    // 监听刷新页面
+    this.$bus.on("reloadGridFrom", () => {
+      if(this.attrs.isReload) {
+        this.$bus.emit("pageReload");
+      }
+    });
+
     this.$nextTick(() => {
       this.topViewHeight = this.$refs.topView.offsetHeight;
       this.toolbarsViewHeight = this.$refs.toolbarsView.offsetHeight;

@@ -341,6 +341,7 @@
                                         if (this.attrs.attrs.isDialog) {
                                             this.closeDialog();
                                             this.$bus.emit("tableReload");
+											                      this.$bus.emit("reloadGridFrom");
                                         } else {
                                             this.successRefData();
                                         }
@@ -357,6 +358,7 @@
                                         if (this.attrs.attrs.isDialog) {
                                             this.closeDialog();
                                             this.$bus.emit("tableReload");
+											                      this.$bus.emit("reloadGridFrom"); 
                                         } else {
                                             this.successRefData();
                                         }
