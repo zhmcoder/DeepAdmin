@@ -186,15 +186,23 @@ class Upload extends Component
     /**
      * @return $this;
      */
-    public function image()
+    public function image($disk = 'public')
     {
         $this->type = "image";
+        $this->action = route(config('deep_admin.upload.image_handle_router', 'admin.handle-upload-image'),
+            ['disk' => $disk]);
+        $this->accept = config('deep_admin.upload.image');
+        $this->host = \Storage::disk($disk)->url('/');
         return $this;
     }
 
-    public function avatar()
+    public function avatar($disk = 'public')
     {
         $this->type = "avatar";
+        $this->action = route(config('deep_admin.upload.image_handle_router', 'admin.handle-upload-image'),
+            ['disk' => $disk]);
+        $this->accept = config('deep_admin.upload.avatar');
+        $this->host = \Storage::disk($disk)->url('/');
         return $this;
     }
 
@@ -204,8 +212,19 @@ class Upload extends Component
         ##deep admin start
         $this->action = route(config('deep_admin.upload.file_handle_router', 'admin.handle-upload-file'),
             ['disk' => $disk]);
+        $this->accept = config('deep_admin.upload.file');
         $this->host = \Storage::disk($disk)->url('/');
         ##deep admin end
+        return $this;
+    }
+
+    public function xlsx($disk = 'public')
+    {
+        $this->type = "xlsx";
+        $this->action = route(config('deep_admin.upload.xlsx_handle_router', 'admin.handle-upload-xlsx'),
+            ['disk' => $disk]);
+        $this->accept = config('deep_admin.upload.xlsx');
+        $this->host = \Storage::disk($disk)->url('/');
         return $this;
     }
 

@@ -7,11 +7,29 @@ use Illuminate\Http\Request;
 
 class HandleController extends Controller
 {
+    public function uploadXlsx(Request $request)
+    {
+        try {
+            $mimes = config('deep_admin.upload.xlsx', '.xls,.xlsx');
+            \Admin::validatorData($request->all(), [
+                'file' => 'mimes:' . str_replace('.', '', $mimes)
+            ]);
+            return $this->upload($request);
+        } catch (\Exception $exception) {
+            if (method_exists($this, 'responseError')) {
+                $this->responseError($exception->getMessage());
+            } else {
+                return \Admin::responseError($exception->getMessage());
+            }
+        }
+    }
+
     public function uploadFile(Request $request)
     {
         try {
+            $mimes = config('deep_admin.upload.file', '.doc,.docx,.mp3,.mp4,.apk,.xlsx,.xls');
             \Admin::validatorData($request->all(), [
-                'file' => 'mimes:' . config('deep_admin.upload.file', 'doc,docx,mp3,mp4,apk,xlsx')
+                'file' => 'mimes:' . str_replace('.', '', $mimes)
             ]);
             return $this->upload($request);
         } catch (\Exception $exception) {
@@ -22,8 +40,9 @@ class HandleController extends Controller
     public function uploadImage(Request $request)
     {
         try {
+            $mimes = config('deep_admin.upload.image', '.jpeg,.bmp,.png,.gif,.jpg');
             \Admin::validatorData($request->all(), [
-                'file' => 'mimes:' . config('deep_admin.upload.image', 'jpeg,bmp,png,gif,jpg')
+                'file' => 'mimes:' . str_replace('.', '', $mimes)
             ]);
             return $this->upload($request);
         } catch (\Exception $exception) {
@@ -33,7 +52,6 @@ class HandleController extends Controller
 
     protected function upload(Request $request)
     {
-
         try {
             $file = $request->file('file');
             $type = $request->file('type');

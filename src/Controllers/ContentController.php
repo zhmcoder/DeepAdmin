@@ -626,15 +626,63 @@ class ContentController extends AdminController
                     break;
 
                 case 'upload' : // 图片上传 单图
-                    $obj->component(Upload::make()->image()->uniqueName())->required($val['is_required'], 'string');
+                    $formParams = explode("\n", $val['form_params']);
+                    $disk = null;
+                    $accept = null;
+                    foreach ($formParams as $k => &$v) {
+                        $v = explode('=', $v);
+                        switch ($v[0]) {
+                            case 'disk':
+                                $disk = $v[1];
+                                break;
+                            case 'accept':
+                                $accept = $v[1];
+                                break;
+                        }
+                    }
+                    $obj->component(Upload::make()->image($disk ?: config('deep_admin.upload.disk'))
+                        ->accept($accept ?: config('deep_admin.upload.image'))
+                        ->uniqueName())->required($val['is_required'], 'string');
                     break;
 
                 case 'avatar' : // 头像
-                    $obj->component(Upload::make()->avatar()->path('avatar')->uniqueName())->required($val['is_required'], 'string');
+                    $formParams = explode("\n", $val['form_params']);
+                    $disk = null;
+                    $accept = null;
+                    foreach ($formParams as $k => &$v) {
+                        $v = explode('=', $v);
+                        switch ($v[0]) {
+                            case 'disk':
+                                $disk = $v[1];
+                                break;
+                            case 'accept':
+                                $accept = $v[1];
+                                break;
+                        }
+                    }
+                    $obj->component(Upload::make()->avatar($disk ?: config('deep_admin.upload.disk'))
+                        ->accept($accept ?: config('deep_admin.upload.image'))
+                        ->avatar()->path('avatar')->uniqueName())->required($val['is_required'], 'string');
                     break;
                 case 'uploadMulti' : // 图片上传 多图
+                    $formParams = explode("\n", $val['form_params']);
+                    $disk = null;
+                    $accept = null;
+                    foreach ($formParams as $k => &$v) {
+                        $v = explode('=', $v);
+                        switch ($v[0]) {
+                            case 'disk':
+                                $disk = $v[1];
+                                break;
+                            case 'accept':
+                                $accept = $v[1];
+                                break;
+                        }
+                    }
                     $obj->component(
-                        Upload::make()->image()->multiple()->uniqueName()
+                        Upload::make()->image($disk ?: config('deep_admin.upload.disk'))
+                            ->accept($accept ?: config('deep_admin.upload.image'))
+                            ->multiple()->uniqueName()
                             ->limit((int)$val['form_params'])->drag()
                     )->inputWidth(24)->required($val['is_required'], 'array');
                     break;
@@ -655,8 +703,8 @@ class ContentController extends AdminController
                         }
                     }
                     $obj->component(
-                        Upload::make()->file($disk ? $disk : config('deep_admin.upload.disk'))
-                            ->accept($accept ? $accept : config('deep_admin.upload.file'))
+                        Upload::make()->file($disk ?: config('deep_admin.upload.disk'))
+                            ->accept($accept ?: config('deep_admin.upload.file'))
                             ->uniqueName()->path('file')
                     )->inputWidth(12)->required($val['is_required'], 'string');
                     break;

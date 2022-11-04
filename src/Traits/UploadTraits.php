@@ -10,8 +10,9 @@ trait UploadTraits
     public function uploadXlsx(Request $request)
     {
         try {
+            $mimes = config('deep_admin.upload.xlsx', '.xls,.xlsx');
             \Admin::validatorData($request->all(), [
-                'file' => 'mimes:' . config('deep_admin.upload.xlsx', 'xls,xlsx')
+                'file' => 'mimes:' . str_replace('.', '', $mimes)
             ]);
             return $this->upload($request);
         } catch (\Exception $exception) {
@@ -26,8 +27,9 @@ trait UploadTraits
     public function uploadFile(Request $request)
     {
         try {
+            $mimes = config('deep_admin.upload.file', '.doc,.docx,.mp3,.mp4,.apk,.xlsx,.xls');
             \Admin::validatorData($request->all(), [
-                'file' => 'mimes:' . config('deep_admin.upload.file', 'doc,docx')
+                'file' => 'mimes:' . str_replace('.', '', $mimes)
             ]);
             return $this->upload($request);
         } catch (\Exception $exception) {
@@ -42,12 +44,11 @@ trait UploadTraits
     public function uploadImage(Request $request)
     {
         try {
+            $mimes = config('deep_admin.upload.image', '.jpeg,.bmp,.png,.gif,.jpg');
             \Admin::validatorData($request->all(), [
-                'file' => 'mimes:' . config('deep_admin.upload.image', 'jpg,jpeg,gif')
+                'file' => 'mimes:' . str_replace('.', '', $mimes)
             ]);
-
             return $this->upload($request);
-
         } catch (\Exception $exception) {
             if (method_exists($this, 'responseError')) {
                 $this->responseError($exception->getMessage());
@@ -56,7 +57,6 @@ trait UploadTraits
             }
         }
     }
-
 
     protected function upload(Request $request)
     {

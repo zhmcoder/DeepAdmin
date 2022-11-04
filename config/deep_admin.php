@@ -64,7 +64,7 @@ return [
         ],
     ],
     'upload' => [
-        'disk' => 'public',// Disk in `config/filesystem.php`.
+        'disk' => env('UPLOAD_DISK', 'public'),// Disk in `config/filesystem.php`.
         'uniqueName' => false,
         // Image and file upload path under the disk above.
         'directory' => [
@@ -72,11 +72,13 @@ return [
             'file' => 'files',
         ],
         //文件上传类型
-        'xlsx' => 'xls,xlsx',
-        'file' => 'doc,docx,mp3,mp4,apk',
-        'image' => 'jpeg,bmp,png,gif,jpg',
+        'xlsx' => '.xls,.xlsx',
+        'file' => '.doc,.docx,.mp3,.mp4,.apk',
+        'image' => '.jpeg,.bmp,.png,.gif,.jpg',
+        'avatar' => '.jpeg,.bmp,.png,.gif,.jpg',
         'image_handle_router' => 'upload.image_handle',
         'file_handle_router' => 'upload.file_handler',
+        'xlsx_handle_router' => 'upload.xlsx_handler',
     ],
     'database' => [
         'connection' => '', // Database connection for following tables.
