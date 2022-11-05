@@ -89,11 +89,11 @@ class Admin
         $menuClass = config('deep_admin.database.menu_model');
         /** @var Menu $menuModel */
         $menuModel = new $menuClass();
-        return  $this->menuList = collect($menuModel->allNodes())->map(function ($item){
+        return $this->menuList = collect($menuModel->allNodes())->map(function ($item) {
             return [
-              'uri'=>$item['uri'],
-              'title'=>$item['title'],
-              'route'=>$item['route'],
+                'uri' => $item['uri'],
+                'title' => $item['title'],
+                'route' => $item['route'],
             ];
         })->all();
 
@@ -170,6 +170,13 @@ class Admin
      */
     public function responseRedirect($url, $isVueRoute = true, $message = null, $type = 'success')
     {
+        $urlArr = explode('?', $url);
+        if (!empty($urlArr[1])) {
+            $url .= '&version=' . time();
+        } else {
+            $url .= '?version=' . time();
+        }
+
         return $this->response([
             'url' => $url,
             'isVueRoute' => $isVueRoute,
