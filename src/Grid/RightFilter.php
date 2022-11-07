@@ -44,9 +44,7 @@ class RightFilter
     protected $actionsPosition = 'top'; // top、bottom
     protected $actionsAligin = 'left'; // left、center、right
     protected $isShowTreeSelect = false; // 是否显示左侧树状组件搜索Form
-    protected $treeFilterFormData = []; // 树状组件搜索控件FormData
     protected $isMultiple = false; // 是否多选
-    protected $treeFilters = []; // tree查询条件的Form表单
 
     protected $name = '';
 
@@ -213,21 +211,9 @@ class RightFilter
         return $this;
     }
 
-    public function treeFilterFormData($treeFilterFormData)
-    {
-        $this->treeFilterFormData = $treeFilterFormData;
-        return $this;
-    }
-
     public function isMultiple($isMultiple = true)
     {
         $this->isMultiple = $isMultiple;
-        return $this;
-    }
-
-    public function treeFilters($treeFilters)
-    {
-        $this->treeFilters = $treeFilters;
         return $this;
     }
 
@@ -258,10 +244,6 @@ class RightFilter
             Arr::set($this->filterFormData, $filter->getColumn(), $filter->getDefaultValue());
         }
 
-        foreach ($this->treeFilters as $filter) {
-            Arr::set($this->treeFilterFormData, $filter->getColumn(), $filter->getDefaultValue());
-        }
-
         return [
             'filters' => $this->filters,
             'filterFormData' => $this->filterFormData,
@@ -273,8 +255,6 @@ class RightFilter
             'actionsAligin' => $this->actionsAligin,
             'isMultiple' => $this->isMultiple,
             'isShowTreeSelect' => $this->isShowTreeSelect,
-            'treeFilters' => $this->treeFilters,
-            'treeFilterFormData' => $this->treeFilterFormData,
         ];
     }
 

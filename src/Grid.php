@@ -6,6 +6,7 @@ namespace Andruby\DeepAdmin;
 
 use Andruby\DeepAdmin\Grid\Concerns\HasTabFilter;
 use Andruby\DeepAdmin\Grid\RightFilter;
+use Andruby\DeepAdmin\Grid\TreeFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\Relations;
@@ -143,6 +144,7 @@ class Grid extends Component
         $this->filter = new Filter($this->model);
         $this->leftFilter = new LeftFilter($this->model);
         $this->rightFilter = new RightFilter($this->model);
+        $this->treeFilter = new TreeFilter($this->model);
     }
 
     public function getLeftFilter(): array
@@ -153,6 +155,11 @@ class Grid extends Component
     public function getRightFilter(): array
     {
         return $this->rightFilter->buildFilter();
+    }
+
+    public function getTreeFilter(): array
+    {
+        return $this->treeFilter->buildFilter();
     }
 
     /**
@@ -576,6 +583,7 @@ class Grid extends Component
             $viewData['filter'] = $this->filter->buildFilter();
             $viewData['leftFilter'] = $this->leftFilter->buildFilter();
             $viewData['rightFilter'] = $this->rightFilter->buildFilter();
+            $viewData['treeFilter'] = $this->treeFilter->buildFilter();
             $viewData['top'] = $this->top;
             $viewData['bottom'] = $this->bottom;
             $viewData['isReload'] = $this->isReload;

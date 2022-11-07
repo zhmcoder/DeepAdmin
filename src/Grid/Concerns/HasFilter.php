@@ -4,6 +4,7 @@
 namespace Andruby\DeepAdmin\Grid\Concerns;
 
 
+use Andruby\DeepAdmin\Grid\TreeFilter;
 use Closure;
 use Andruby\DeepAdmin\Grid\Filter;
 use Andruby\DeepAdmin\Grid\LeftFilter;
@@ -15,10 +16,12 @@ trait HasFilter
      * @var Filter
      * @var LeftFilter
      * @var RightFilter
+     * @var TreeFilter
      */
     protected $filter;
     protected $leftFilter;
     protected $rightFilter;
+    protected $treeFilter;
 
 
     public function applyFilter($toArray = true)
@@ -40,5 +43,10 @@ trait HasFilter
     public function rightFilter(Closure $callback)
     {
         call_user_func($callback, $this->rightFilter);
+    }
+
+    public function treeFilter(Closure $callback)
+    {
+        call_user_func($callback, $this->treeFilter);
     }
 }
