@@ -34,6 +34,8 @@ trait ModelTree
      */
     protected $queryCallback;
 
+    protected $where = [];
+
     /**
      * Get children of current node.
      *
@@ -113,6 +115,16 @@ trait ModelTree
     }
 
     /**
+     * Set where.
+     *
+     * @param array $where
+     */
+    public function setWhere(array $where)
+    {
+        $this->where = $where;
+    }
+
+    /**
      * Set query callback to model.
      *
      * @param \Closure|null $query
@@ -183,7 +195,7 @@ trait ModelTree
             $self = call_user_func($this->queryCallback, $self);
         }
 
-        return $self->orderByRaw($byOrder)->get()->toArray();
+        return $self->orderByRaw($byOrder)->where($this->where)->get()->toArray();
     }
 
     /**
