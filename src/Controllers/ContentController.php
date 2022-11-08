@@ -4,9 +4,6 @@ namespace Andruby\DeepAdmin\Controllers;
 
 use Andruby\DeepAdmin\Components\Grid\DeepLink;
 use Andruby\DeepAdmin\Components\Grid\SortEdit;
-use Andruby\DeepAdmin\Components\Grid\SortUpDown;
-use Andruby\DeepAdmin\Controllers\AdminController;
-use Andruby\DeepAdmin\Controllers\HasResourceActions;
 use Andruby\DeepAdmin\Models\ContentTimeStamp;
 use Andruby\DeepAdmin\Services\GridCacheService;
 use Illuminate\Http\Request;
@@ -32,7 +29,6 @@ use Andruby\DeepAdmin\Components\Grid\Avatar;
 use Andruby\DeepAdmin\Components\Grid\Boole;
 use Andruby\DeepAdmin\Components\Grid\Image;
 use Andruby\DeepAdmin\Components\Grid\Tag;
-use Andruby\DeepAdmin\Facades\Admin;
 use Andruby\DeepAdmin\Form;
 use Andruby\DeepAdmin\Grid;
 use Andruby\DeepAdmin\Models\Content;

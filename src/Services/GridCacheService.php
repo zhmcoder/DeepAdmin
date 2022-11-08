@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Cache;
 /**
  * @method static GridCacheService instance()
  *
- * Class ActivityConfigService
+ * Class GridCacheService
  * @package App\Api\Services
  */
 class GridCacheService
