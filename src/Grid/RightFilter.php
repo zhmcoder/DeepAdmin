@@ -39,6 +39,7 @@ class RightFilter
     protected $filterFormData = [];
     protected $width = '100px';
     protected $dataUrl = '';
+    protected $dataInfoUrl = '';
     protected $isShowTree = false;
     protected $actions = [];
     protected $actionsPosition = 'top'; // top、bottom
@@ -197,6 +198,13 @@ class RightFilter
         return $this;
     }
 
+    // 树状接口查询接口
+    public function dataInfoUrl($dataInfoUrl = '')
+    {
+        $this->dataInfoUrl = $dataInfoUrl;
+        return $this;
+    }
+
     // 是否显示左侧树状组件
     public function isShowTree($isShowTree = true)
     {
@@ -249,6 +257,7 @@ class RightFilter
             'filterFormData' => $this->filterFormData,
             'width' => $this->width,
             'dataUrl' => $this->dataUrl,
+            'dataInfoUrl' => $this->dataInfoUrl,
             'isShowTree' => $this->isShowTree,
             'actions' => $this->actions,
             'actionsPosition' => $this->actionsPosition,
