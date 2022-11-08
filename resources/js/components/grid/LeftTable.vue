@@ -2,7 +2,7 @@
   <div class="grid-container">
     <el-container>
       <!-- 顶部form表单 -->
-      <el-header>
+      <el-header class="header-wrap">
         <div ref="topView">
           <component
             v-if="attrs.top"
@@ -143,7 +143,7 @@
             shadow="never"
             :body-style="{ padding: 0 }"
             class="margin-bottom-sm"
-            v-if="treeQuery.length > 0"
+            v-if="checkedTreeList.length > 0"
           >
             <div class="filter-form">
               <el-form :inline="true" :model="rightFilterFormData" v-if="rightFilterFormData">
@@ -459,7 +459,8 @@ export default {
       treeLoading: false,
       rightFilterFormData: {},
       treeFilterFormData: {},
-      treeQuery: [],
+      checkedTreeList: [],
+      treeQuery: {},
       datas: {
         id: '2',
         label: "一级 1",
@@ -484,7 +485,7 @@ export default {
       this.getTreeData()
     }
     // grid右侧上方的form表单 
-    this.rightFilterFormData = this._.cloneDeep(this.attrs.rightFilter.filterFormData);
+    // this.rightFilterFormData = this._.cloneDeep(this.attrs.rightFilter.filterFormData);
     // 树状组件搜索操作
     // this.treeFilterFormData = this._.cloneDeep(this.attrs.rightFilter.treeFilterFormData);
     this.treeFilterFormData = this._.cloneDeep(this.attrs.treeFilter.filterFormData);
@@ -549,10 +550,16 @@ export default {
 
     // 监听TreeDisplay事件
     this.$bus.on("getDataInfo", (query) => {
+      this.rightFilterFormData = {}
       this.treeQuery = query;
       // 树状组件点击后，查询右侧列表及右侧Form表单
       this.getRightTreeForm();
+      // 获取右侧的表格列表
       this.getData()
+    })
+    // 监听getTreeArr事件，获取选中的数组
+    this.$bus.on("getTreeArr", (query) => {
+      this.checkedTreeList = query;
     })
 
     this.$nextTick(() => {
@@ -601,7 +608,12 @@ export default {
     },
     // 获取右侧TreeForm
     getRightTreeForm() {
-      console.log("query", this.treeQuery)
+      this.$http.get(this.attrs.rightFilter.dataInfoUrl, {
+        params: this.treeQuery
+      })
+      .then(res => {
+        this.rightFilterFormData = res.data
+      })
     },
     onTabClick(e) {
       const name = this._.split(e.name, "----");
@@ -679,7 +691,7 @@ export default {
             get_data: true,
             page: this.page,
             per_page: this.pageData.pageSize,
-            treeQuery: this.treeQuery,
+            ...this.treeQuery,
             ...this.sort,
             ...this.q_search,
             ...this.quick_filter, //deep admin
@@ -859,7 +871,7 @@ export default {
     // 保存当前版本
     action(item) {
       this.$http
-        .post(item.dataUrl, {id: this.treeQuery, ...this.rightFilterFormData})
+        .post(item.dataUrl, {...this.treeQuery, ...this.rightFilterFormData})
         .then(({data, code, message}) => {
             if (code == 200) {
               this.getTreeData()
@@ -945,6 +957,9 @@ export default {
 
 <style lang="scss">
 .grid-container {
+  .header-wrap {
+    height: auto !important;
+  }
   .el-header{
     padding: 0px;
   }

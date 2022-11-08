@@ -35,12 +35,14 @@ export default {
       checkedList: [],
       expandedList: [], // 默认展开的数据
       currentNodeKey: '', // 当前被选中的状态
+      key: null
     };
   },
   watch: {
     checkedList() {
       if (this.checkedList.length > 0) {
-        this.$bus.emit("getDataInfo", this.checkedList);
+        this.$bus.emit("getTreeArr", this.checkedList)
+        this.$bus.emit("getDataInfo", { [this.key]: this.checkedList});
       }
     }
   },
@@ -62,6 +64,7 @@ export default {
   methods: {
     handleNodeClick(data) {
       this.checkedList = [data.id]
+      this.key = data.search_key
       // 选中的字段
       this.currentNodeKey = data.id
     },
