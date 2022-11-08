@@ -58,37 +58,44 @@
               :attrs="attrs.top"
             />
             <!-- Tree树状组件的搜索组件 -->
-            <div v-if="attrs.rightFilter.isShowTreeSelect">
-              <el-form :inline="true" :model="treeFilterFormData" v-if="treeFilterFormData">
-                <!-- 操作按钮的位置 -->
-                <template v-for="(item, index) in attrs.rightFilter.treeFilters">
-                  <!-- 单独展示一行 -->
-                  <el-form-item
-                    :key="index"
-                    :label="item.label"
-                    class="form-bottom"
-                  >
-                    <ItemDiaplsy
-                      v-model="treeFilterFormData[item.column]"
-                      :form-item="item"
-                      :form-items="attrs.filters"
-                      :form-data="treeFilterFormData"
-                    />
+            <div
+              shadow="never"
+              :body-style="{ padding: 0 }"
+              class="margin-bottom-sm" 
+            >
+              <div class="filter-form" :class="{'filter-form-style-center':attrs.filterFormCenter}" v-if="attrs.rightFilter.isShowTreeSelect">
+                <el-form :inline="true" :model="treeFilterFormData" v-if="treeFilterFormData">
+                  <!-- 操作按钮的位置 -->
+                  <template v-for="(item, index) in attrs.treeFilter.filters">
+                    <!-- 单独展示一行 -->
+                    <el-form-item
+                      :key="index"
+                      :label="item.label"
+                      class="form-bottom"
+                    >
+                      <ItemDiaplsy
+                        v-model="treeFilterFormData[item.column]"
+                        :form-item="item"
+                        :form-items="attrs.filters"
+                        :form-data="treeFilterFormData"
+                      />
+                    </el-form-item>
+                  </template>
+                  <!-- class="tree-select-btn" -->
+                  <el-form-item>
+                    <el-button type="primary" @click="onFilterSubmitTree">搜索</el-button>
+                    <el-button @click="onFilterResetTree">重置</el-button>
                   </el-form-item>
-                </template>
-                <el-form-item class="tree-select-btn">
-                  <el-button type="primary" @click="onFilterSubmitTree">搜索</el-button>
-                  <el-button @click="onFilterResetTree">重置</el-button>
-                </el-form-item>
-              </el-form>
-            </div>
-            <div v-if="attrs.rightFilter.isShowTree">
-              <!-- 树状显示 -->
-              <TreeDisplay
-                :data="treeData"
-                :isMultiple="attrs.rightFilter.isMultiple"
-                v-loading="treeLoading"
-              />
+                </el-form>
+              </div>
+              <div class="filter-form" v-if="attrs.rightFilter.isShowTree">
+                <!-- 树状显示 -->
+                <TreeDisplay
+                  :data="treeData"
+                  :isMultiple="attrs.rightFilter.isMultiple"
+                  v-loading="treeLoading"
+                />
+              </div>
             </div>
 
             <div
@@ -461,6 +468,7 @@ export default {
     };
   },
   mounted() {
+    console.log("this.attrs", this.attrs)
     //初始化默认设置值
     this.filterFormData = this._.cloneDeep(this.attrs.filter.filterFormData);
     //初始化左侧的form表单默认值
@@ -478,7 +486,8 @@ export default {
     // grid右侧上方的form表单 
     this.rightFilterFormData = this._.cloneDeep(this.attrs.rightFilter.filterFormData);
     // 树状组件搜索操作
-    this.treeFilterFormData = this._.cloneDeep(this.attrs.rightFilter.treeFilterFormData);
+    // this.treeFilterFormData = this._.cloneDeep(this.attrs.rightFilter.treeFilterFormData);
+    this.treeFilterFormData = this._.cloneDeep(this.attrs.treeFilter.filterFormData);
 
 
     //deep admin start
@@ -586,6 +595,7 @@ export default {
           this.$bus.emit("setTreeCurrentKey");
         })
         .finally(() => {
+          console.log()
           this.treeLoading = false;
         });
     },
@@ -653,8 +663,6 @@ export default {
           },
         })
         .then(({ filterFormData , filters }) => {
-          console.log('123',filters);
-          console.log('234',filterFormData)
           this.leftFilterFilters = filters;
           this.leftFilterFormData = filterFormData;
         })
@@ -851,18 +859,14 @@ export default {
     // 保存当前版本
     action(item) {
       this.$http
-        [item.method](item.dataUrl, {
-          params: {
-            id: this.treeQuery,
-            ...this.rightFilterFormData,
-          },
-        })
-        .then(({ data }) => {
-          this.$message.success(`${item.name}成功`);
-          this.getTreeData()
+        .post(item.dataUrl, {id: this.treeQuery, ...this.rightFilterFormData})
+        .then(({data, code, message}) => {
+            if (code == 200) {
+              this.getTreeData()
+            }
         })
         .finally(() => {
-          this.$message.error(`${item.name}失败`);
+            this.loading = false;
         });
     }
   },
