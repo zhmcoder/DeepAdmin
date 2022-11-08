@@ -1,6 +1,6 @@
 <?php
 
-namespace Andruby\DeepAdmin\Components\Gantt;
+namespace Andruby\DeepAdmin\Components\Gantt\Chart;
 
 class Item
 {
