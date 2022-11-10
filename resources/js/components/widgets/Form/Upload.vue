@@ -34,6 +34,7 @@
         v-if="(attrs.limit && list.length < attrs.limit) || !attrs.limit"
       >
         <el-upload
+          ref="upload"
           :style="attrs.style"
           :class="attrs.className"
           :multiple="attrs.multiple"
@@ -60,6 +61,7 @@
         </el-upload>
 
         <el-upload
+          ref="upload"
           :style="attrs.style"
           :class="attrs.className"
           :action="attrs.action"
@@ -208,6 +210,9 @@ export default {
           })
           this.progressList = newProgressList;
           this.$message.error('上传失败');
+          let uid = data.file.uid // 关键作用代码，去除文件列表失败文件
+          let idx = this.$refs.upload.uploadFiles.findIndex(item => item.uid === uid) // 关键作用代码，去除文件列表失败文件（uploadFiles为el-upload中的ref值）
+          this.$refs.upload.uploadFiles.splice(idx, 1) // 关键作用代码，去除文件列表失败文件
         })
     },
 
