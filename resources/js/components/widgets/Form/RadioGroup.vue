@@ -15,7 +15,18 @@
       :disabled="radio.disabled"
       :border="radio.border"
       :size="radio.size"
-    >{{ radio.title }}</el-radio>
+    >
+      <div v-if="radio.img" :key="radio.label">
+        <el-image
+          key="2"
+          title="预览图片"
+          :src="radio.img"
+          fit="cover"
+          class="upload-show-image"
+        />
+      </div>
+      <span v-else>{{ radio.title }}</span>
+    </el-radio>
   </el-radio-group>
 </template>
 <script>

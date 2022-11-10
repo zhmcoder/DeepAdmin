@@ -325,7 +325,16 @@
             // 后台获取联动数据后，处理数据
             this.attrs['formItems'].forEach(item => {
               if(item['component'] && item['component']['componentName']=='RowMulti'){
-                this.getNewFormData(item['component'],data[item.prop],item.prop)
+                if(item.prop.indexOf('.') > -1) {
+                  var propArr = item.prop.split('.');
+                  var propsItem = data;
+                  propArr.map(item => {
+                    propsItem = propsItem[item]
+                  })
+                  this.getNewFormData(item['component'], propsItem, item.prop)
+                } else {
+                  this.getNewFormData(item['component'],data[item.prop],item.prop)
+                }
               }
             })
 
