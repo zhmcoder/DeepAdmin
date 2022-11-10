@@ -4,7 +4,6 @@ namespace Andruby\DeepAdmin\Components\Form;
 
 use Andruby\DeepAdmin\Components\Component;
 
-//<!--deep admin start-->
 class RadioButton extends Component
 {
     protected $componentName = "RadioButton";
@@ -15,17 +14,10 @@ class RadioButton extends Component
     protected $label;
     protected $disabled = false;
     protected $border = false;
-    /**
-     * @var string
-     */
     protected $size;
-    /**
-     * 原生 name 属性
-     * @var string
-     */
     protected $name;
-
     protected $title;
+    protected $img;
 
     static public function make($value, $title)
     {
@@ -87,11 +79,25 @@ class RadioButton extends Component
         return $this;
     }
 
+    /**
+     * title 标题
+     * @param string $title
+     * @return $this
+     */
     public function title(string $title)
     {
         $this->title = $title;
         return $this;
     }
 
+    /**
+     * img 图片
+     * @param string $img
+     * @return $this
+     */
+    public function img($img = '')
+    {
+        $this->img = $img;
+        return $this;
+    }
 }
-//<!--deep admin end-->
