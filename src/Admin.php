@@ -2,6 +2,7 @@
 
 namespace Andruby\DeepAdmin;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Andruby\DeepAdmin\Auth\Database\Administrator;
 use Andruby\DeepAdmin\Auth\Database\Menu;
@@ -164,17 +165,20 @@ class Admin
     /**
      * @param $url
      * @param bool $isVueRoute
-     * @param string $message
+     * @param null $message
      * @param string $type info/success/warning/error
-     * @return \Illuminate\Http\JsonResponse
+     * @param bool $version
+     * @return JsonResponse
      */
-    public function responseRedirect($url, $isVueRoute = true, $message = null, $type = 'success')
+    public function responseRedirect($url, $isVueRoute = true, $message = null, $type = 'success', $version = true)
     {
-        $urlArr = explode('?', $url);
-        if (!empty($urlArr[1])) {
-            $url .= '&version=' . time();
-        } else {
-            $url .= '?version=' . time();
+        if ($version) {
+            $urlArr = explode('?', $url);
+            if (!empty($urlArr[1])) {
+                $url .= '&version=' . time();
+            } else {
+                $url .= '?version=' . time();
+            }
         }
 
         return $this->response([
