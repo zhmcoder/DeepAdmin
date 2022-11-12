@@ -4,7 +4,6 @@ namespace Andruby\DeepAdmin\Controllers;
 
 use Andruby\DeepAdmin\Models\Content;
 use Andruby\DeepAdmin\Components\Attrs\SelectOption;
-use Andruby\DeepAdmin\Controllers\AdminController;
 
 class RemoteSearchController extends AdminController
 {
@@ -22,6 +21,7 @@ class RemoteSearchController extends AdminController
         $options = [];
         if (!empty($formParams) && count($formParams) == 3) {
             $model = new Content($formParams[0]);
+            $model = $model->select([$formParams[1], $formParams[2]])->distinct();
 
             if (!empty($tableWhere)) {
                 $model = $model->where("$tableWhere[0]", "$tableWhere[1]", "$tableWhere[2]")->where(function ($q) use ($formParams, $query) {
@@ -37,7 +37,7 @@ class RemoteSearchController extends AdminController
 
             if (!empty($list)) {
                 foreach ($list as $key => $val) {
-                    $options[] = SelectOption::make((int)$val[$formParams[1]], $val[$formParams[2]])->desc($val[$formParams[1]]);
+                    $options[] = SelectOption::make($val[$formParams[1]], $val[$formParams[2]])->desc($val[$formParams[1]]);
                 }
             }
         }
