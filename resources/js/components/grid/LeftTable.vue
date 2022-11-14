@@ -426,6 +426,7 @@ import Actions from "./Actions/Index";
 import BatchActions from "./BatchActions/Index";
 import ItemDiaplsy from "../form/ItemDiaplsy";
 import DialogForm from "./DialogForm";
+import DrawerForm from "./DrawerForm";
 import TreeDisplay from "../form/TreeDisplay.vue";
 export default {
   mixins: [BaseComponent],
@@ -435,6 +436,7 @@ export default {
     ItemDiaplsy,
     BatchActions,
     DialogForm,
+    DrawerForm,
     TreeDisplay
   },
   props: {
