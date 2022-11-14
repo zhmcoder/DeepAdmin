@@ -37,6 +37,9 @@ axios.interceptors.response.use(
                     console.error("请返回 Admin::responseRedirect()");
                 }
                 break;
+            case 419:
+                window.location.href = data.data.logout;
+                break;
             case 200:
                 data.message &&
                     Message.success({

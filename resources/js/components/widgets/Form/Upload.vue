@@ -142,6 +142,20 @@ export default {
         var params = this.data;
 
         var file = data.file;
+
+        // 处理重复数据的上传
+        var progressListInfo = JSON.parse(JSON.stringify(this.progressList))
+        // 处理进度条，当只能上传一条信息的时候
+        if(this.attrs.limit && this.attrs.limit == 1) {
+          this.progressList = []
+        } else {
+          progressListInfo.map((item, index) => {
+            if(item.name == file.name && item.size == file.size && item.progressPercent < 100) {
+              this.progressList.splice(index, 1)
+            }
+          })
+        }
+
         file.progressPercent = 0;
         this.progressList.push(file);
 
@@ -161,7 +175,8 @@ export default {
                   newProgressList.map((item)=>{
                     if(item.uid == file.uid){
                       item.progressPercent = progressPercent.toFixed(1),
-                      item.name = file.name
+                      item.name = file.name,
+                      item.size = file.size
                     }
                   })
                   this.progressList = newProgressList;
@@ -176,6 +191,7 @@ export default {
               if(item.uid == file.uid){
                 item.progressPercent = 100
                 item.name = file.name
+                item.size = file.size
                 item.status = 'success'
               }
             })
@@ -206,6 +222,7 @@ export default {
             if(item.uid == file.uid){
               item.status = 'exception';
               item.name = file.name;
+              item.size = file.size
             }
           })
           this.progressList = newProgressList;
