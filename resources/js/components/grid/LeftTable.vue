@@ -404,6 +404,14 @@
             :dialogTitle="getDialogFormData(3)"
             :dialogTitleCenter="attrs.dialogTitleCenter"
           />
+          <DrawerForm
+            ref="DialogGridFrom"
+            v-if="attrs.isDrawerForm"
+            :dialogFormWidth="getDialogFormData(1)"
+            :dialogForm="getDialogFormData(2)"
+            :dialogTitle="getDialogFormData(3)"
+            :dialogTitleCenter="attrs.dialogTitleCenter"
+          />
         </el-main>
       </el-container>
     </el-container>
@@ -583,6 +591,8 @@ export default {
       this.$bus.off("tableReload");
       this.$bus.off("tableSetLoading");
       this.$bus.off("showDialogGridFrom");
+      this.$bus.off("getDataInfo");
+      this.$bus.off("getTreeArr");
     } catch (e) {}
   },
   methods: {
@@ -597,12 +607,12 @@ export default {
         })
         .then(( data ) => {
           this.treeData = data
+          console.log('treeData', data)
           this.treeLoading = false;
           // 查询树状结构数据后，对树状组件的展开和选中进行处理
           this.$bus.emit("setTreeCurrentKey");
         })
         .finally(() => {
-          console.log()
           this.treeLoading = false;
         });
     },

@@ -53,10 +53,11 @@ export default {
     }) 
   },
   mounted() {
+    var tree = this.$refs.tree;
     // 设置默认选中的数据
     this.$bus.on("setTreeCurrentKey", (query) => {
       this.$nextTick(()=>{
-        this.$refs.tree.setCurrentKey(this.currentNodeKey); //进来就默认选中006
+        tree.setCurrentKey(this.currentNodeKey); //进来就默认选中006
       }) 
     })
   },
