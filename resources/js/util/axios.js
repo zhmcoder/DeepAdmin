@@ -37,9 +37,6 @@ axios.interceptors.response.use(
                     console.error("请返回 Admin::responseRedirect()");
                 }
                 break;
-            case 419:
-                window.location.href = data.data.logout;
-                break;
             case 200:
                 data.message &&
                     Message.success({
@@ -60,6 +57,13 @@ axios.interceptors.response.use(
                 });
                 router.replace('/404')
                 break;
+            case 419:
+                Message.info({
+                    message: "当前页面停留时间过长，自动刷新"
+                });
+                setTimeout(()=>{
+                  window.location.reload()
+                }, 1000)
             default:
                 Notification.error({
                     title: "请求错误",
