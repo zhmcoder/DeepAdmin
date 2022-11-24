@@ -58,10 +58,10 @@ class InputNumber extends Component
 
     /**
      * 设置计数器允许的最小值
-     * @param int $min
+     * @param $min
      * @return $this
      */
-    public function min(int $min)
+    public function min($min)
     {
         $this->min = $min;
         return $this;
@@ -69,10 +69,10 @@ class InputNumber extends Component
 
     /**
      * 设置计数器允许的最大值
-     * @param int $max
+     * @param $max
      * @return $this
      */
-    public function max(int $max)
+    public function max($max)
     {
         $this->max = $max;
         return $this;
