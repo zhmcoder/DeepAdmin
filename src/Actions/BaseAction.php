@@ -45,6 +45,7 @@ class BaseAction extends Component implements JsonSerializable
     }
 
     //deep admin start
+
     /**
      * 配置参数
      * @param mixed $params
@@ -96,7 +97,7 @@ class BaseAction extends Component implements JsonSerializable
      * @param mixed $data
      * @return $this
      */
-    public function beforeEmit(string $beforeEmit, $data=null)
+    public function beforeEmit(string $beforeEmit, $data = null)
     {
         $this->beforeEmit = collect($this->beforeEmit)->add(["eventName" => $beforeEmit, "eventData" => $data]);
         return $this;
@@ -108,7 +109,7 @@ class BaseAction extends Component implements JsonSerializable
      * @param mixed $data
      * @return $this
      */
-    public function successEmit(string $successEmit, $data=null)
+    public function successEmit(string $successEmit, $data = null)
     {
         $this->successEmit = collect($this->successEmit)->add(["eventName" => $successEmit, "eventData" => $data]);
         return $this;
@@ -120,7 +121,7 @@ class BaseAction extends Component implements JsonSerializable
      * @param mixed $data
      * @return $this
      */
-    public function afterEmit(string $afterEmit, $data=null)
+    public function afterEmit(string $afterEmit, $data = null)
     {
         $this->afterEmit = collect($this->afterEmit)->add(["eventName" => $afterEmit, "eventData" => $data]);
         return $this;
@@ -134,9 +135,11 @@ class BaseAction extends Component implements JsonSerializable
         return $this->resource;
     }
 
-
-
-
+    public function resource($resource)
+    {
+        $this->resource = admin_api_url($resource);
+        return $this;
+    }
 
 
     public function jsonSerialize()

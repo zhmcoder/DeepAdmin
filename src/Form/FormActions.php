@@ -24,6 +24,7 @@ class FormActions
 
     protected $fixed = false;
     protected $buttonCenter = true;
+    protected $actionList = [];
 
     public function __construct(Form $form)
     {
@@ -61,6 +62,21 @@ class FormActions
             $this->addRightActions = collect($this->addRightActions)->push(call_user_func($action))->all();
         } else {
             $this->addRightActions = collect($this->addRightActions)->push($action)->all();
+        }
+        return $this;
+    }
+
+    /**
+     * 添加自定义Action
+     * @param $action
+     * @return $this
+     */
+    public function addAction($action)
+    {
+        if ($action instanceof \Closure) {
+            $this->actionList = collect($this->actionList)->push(call_user_func($action))->all();
+        } else {
+            $this->actionList = collect($this->actionList)->push($action)->all();
         }
         return $this;
     }
@@ -161,6 +177,7 @@ class FormActions
             'addRightActions' => $addRightActions,
             'cancelButton' => $cancelButton,
             'submitButton' => $submitButton,
+            'actionList' => $this->actionList,
             'fixed' => $this->fixed,
             'buttonCenter' => $this->buttonCenter,
         ];
