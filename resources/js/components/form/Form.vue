@@ -132,6 +132,26 @@
                   :attrs="component"
               />
               <el-button
+                v-for="(item, index) in attrs.actions.actionList" :key="index"
+                :style="item.style"
+                :class="item.className"
+                :type="item.type"
+                :size="item.size"
+                :plain="item.plain"
+                :round="item.round"
+                :circle="item.circle"
+                :disabled="item.disabled"
+                :icon="item.icon"
+                :autofocus="item.autofocus"
+                :loading="loading"
+                @click="submitFormActionlist((attrs.ref || 'form'), item)"
+              >
+                <template v-if="item.content">
+                  {{ item.content }}
+                </template>
+              </el-button>
+
+              <el-button
                   v-if="attrs.actions.cancelButton"
                   :style="attrs.actions.cancelButton.style"
                   :class="attrs.actions.cancelButton.className"
@@ -447,6 +467,52 @@
 						} else {
 							this.$http
 								.post(this.actionUrl, formatData)
+								.then(({data, code, message}) => {
+									if (code == 200) {
+										if (this.attrs.attrs.isDialog) {
+											this.closeDialog();
+											this.$bus.emit("tableReload");
+											this.$bus.emit("reloadGridFrom");
+										} else {
+											this.successRefData();
+										}
+									}
+								})
+								.finally(() => {
+									this.loading = false;
+								});
+						}
+					} else {
+						return false;
+					}
+				});
+			},
+      submitFormActionlist(formName, action) {
+				this.$refs[formName].validate((valid) => {
+					if (valid) {
+						this.loading = true;
+						const formatData = this._.pick(this.formData, this.ignoreKey);
+						if (this.isEdit) {
+							this.$http
+								.put(action.resource, formatData)
+								.then(({data, code, message}) => {
+									if (code == 200) {
+										if (this.attrs.attrs.isDialog) {
+											this.closeDialog();
+											this.$bus.emit("tableReload");
+											this.$bus.emit("reloadGridFrom");
+										} else {
+											this.successRefData();
+										}
+									}
+								})
+								.finally(() => {
+									this.loading = false;
+								});
+						} else {
+              console.log("action.reource", action.resource)
+							this.$http
+								.post(action.resource, formatData)
 								.then(({data, code, message}) => {
 									if (code == 200) {
 										if (this.attrs.attrs.isDialog) {
