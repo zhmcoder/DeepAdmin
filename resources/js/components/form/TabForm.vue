@@ -358,7 +358,7 @@
                                         if (this.attrs.attrs.isDialog) {
                                             this.closeDialog();
                                             this.$bus.emit("tableReload");
-											                      this.$bus.emit("reloadGridFrom"); 
+											                      this.$bus.emit("reloadGridFrom");
                                         } else {
                                             this.successRefData();
                                         }
@@ -399,7 +399,7 @@
 <style lang="scss">
     .form-page {
         .form-card {
-            min-height: 200px;
+            min-height: 100px;
         }
 
         .form-bottom-actions {

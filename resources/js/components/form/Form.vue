@@ -341,7 +341,7 @@
 					})
 					.then(({data}) => {
 						let temp_data = JSON.parse(JSON.stringify(data));
-            
+
             // 后台获取联动数据后，处理数据
             this.attrs['formItems'].forEach(item => {
               if(item['component'] && item['component']['componentName']=='RowMulti'){
@@ -574,7 +574,7 @@
 <style lang="scss">
   .form-page {
     .form-card {
-      min-height: 200px;
+      min-height: 100px;
     }
 
     .form-bottom-actions {
