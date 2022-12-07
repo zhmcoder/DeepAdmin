@@ -497,13 +497,17 @@
 								.put(action.resource, formatData)
 								.then(({data, code, message}) => {
 									if (code == 200) {
-										if (this.attrs.attrs.isDialog) {
-											this.closeDialog();
-											this.$bus.emit("tableReload");
-											this.$bus.emit("reloadGridFrom");
-										} else {
-											this.successRefData();
-										}
+                    if(data.action && data.action.emit == 'window') {
+                      window.location.href = data.action.target_url
+                    } else {
+                      if (this.attrs.attrs.isDialog) {
+                        this.closeDialog();
+                        this.$bus.emit("tableReload");
+                        this.$bus.emit("reloadGridFrom");
+                      } else {
+                        this.successRefData();
+                      }
+                    }
 									}
 								})
 								.finally(() => {
@@ -515,13 +519,17 @@
 								.post(action.resource, formatData)
 								.then(({data, code, message}) => {
 									if (code == 200) {
-										if (this.attrs.attrs.isDialog) {
-											this.closeDialog();
-											this.$bus.emit("tableReload");
-											this.$bus.emit("reloadGridFrom");
-										} else {
-											this.successRefData();
-										}
+                    if(data.action && data.action.emit == 'window') {
+                      window.location.href = data.action.target_url
+                    } else {
+                      if (this.attrs.attrs.isDialog) {
+                        this.closeDialog();
+                        this.$bus.emit("tableReload");
+                        this.$bus.emit("reloadGridFrom");
+                      } else {
+                        this.successRefData();
+                      }
+                    }
 									}
 								})
 								.finally(() => {
