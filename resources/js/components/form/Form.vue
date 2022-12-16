@@ -499,7 +499,9 @@
 									if (code == 200) {
                     if(data.action && data.action.emit == 'window') {
                       window.location.href = data.action.target_url;
-                      this.closeDialog();
+                      if(this.attrs.attrs.isDialog){
+                        this.closeDialog();
+                      }
                     } else {
                       if (this.attrs.attrs.isDialog) {
                         this.closeDialog();
