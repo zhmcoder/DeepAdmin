@@ -541,11 +541,13 @@ class ContentController extends AdminController
                 $defaultValue = (string)$defaultValue;
             }
 
+            $input_width = array_key_exists('input_width', $val) ? $val['input_width'] : 200;
             switch ($val['form_type']) {
                 case 'input' :
-                    $obj->component(Input::make()->placeholder($val['form_comment'])->maxlength($val['field_length'])->showWordLimit())
+                    $obj->component(Input::make()->placeholder($val['form_comment'])
+                        ->style('width:' . $input_width . 'px')->maxlength($val['field_length'])->showWordLimit())
                         ->inputWidth(100)
-                        ->help('')
+                        ->help($val['form_comment'])
                         ->required($val['is_required'], 'string')
                         ->unique($isUnique, $this->entity->table_name, $val['name'], $val['comment'])
                         ->max($val['field_length'])->defaultValue($defaultValue);
@@ -618,7 +620,8 @@ class ContentController extends AdminController
                     break;
 
                 case 'textArea' : // 长文本
-                    $obj->component(Input::make()->textarea(4)->showWordLimit())->inputWidth(15)->required($val['is_required'], 'string');
+                    $obj->component(Input::make()->textarea(4)->style('width:' . $input_width . 'px')->showWordLimit())
+                        ->inputWidth(15)->required($val['is_required'], 'string');
                     break;
 
                 case 'upload' : // 图片上传 单图
