@@ -8,8 +8,10 @@ class QrWrap extends Component
 {
     protected $componentName = 'QrWrap';
     protected $href = '';
-    protected $src = '';
-    protected $down = '';
+    protected $src = null;
+    protected $down = null;
+    protected $title = null;
+    protected $help = null;
 
     public static function make()
     {
@@ -28,7 +30,7 @@ class QrWrap extends Component
     /**
      * 图片地址
      */
-    public function setSrc($src = ''): QrWrap
+    public function setSrc($src = null): QrWrap
     {
         $this->src = $src;
         return $this;
@@ -37,9 +39,21 @@ class QrWrap extends Component
     /**
      * 图片下载地址
      */
-    public function setDown($down = ''): QrWrap
+    public function setDown($down = null): QrWrap
     {
         $this->down = $down;
+        return $this;
+    }
+
+    public function setTitle($title = ''): QrWrap
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+    public function setHelp($help = ''): QrWrap
+    {
+        $this->help = $help;
         return $this;
     }
 }

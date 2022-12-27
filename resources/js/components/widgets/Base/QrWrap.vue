@@ -1,7 +1,7 @@
 <template>
   <div class="qr_wrap">
-    <div class="title">答卷地址</div>
-    <div class="desc">复制下面的问卷链接到微信工具中打开</div>
+    <div class="title">{{attrs.title||'答卷地址'}}</div>
+    <div class="desc">{{attrs.help||'复制下面的问卷链接到微信工具中打开'}}</div>
     <div class="qr_top">
       <div class="href_wrap">
         <div class="href">{{attrs.href}}</div>
@@ -9,8 +9,8 @@
       </div>
       <a class="open_btn" :href="attrs.href" target="_blank">打开</a>
     </div>
-    <div class="title">二维码手机答题</div>
-    <div class="qr_bottom">
+    <div class="title" v-if="attrs.src">{{attrs.down_title||'二维码手机答题'}}</div>
+    <div class="qr_bottom" v-if="attrs.src">
       <div class="qr_img">
         <el-image
           title="预览图片"
@@ -21,7 +21,7 @@
         />
       </div>
       <!-- <div class="download_btn" @click="download">下载二维码</div> -->
-      <a class="download_btn" :href="attrs.down" target="_blank">下载二维码</a>
+      <a class="download_btn" v-if="attrs.down" :href="attrs.down" target="_blank">下载二维码</a>
     </div>
   </div>
 </template>
