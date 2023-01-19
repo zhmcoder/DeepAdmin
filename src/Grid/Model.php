@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Andruby\DeepAdmin\Grid;
 
@@ -267,7 +268,9 @@ class Model
                 $method = 'orderByRaw';
                 $arguments = [$column];
             } else {
-                $column = $this->sort['column'];
+                $columnArr = explode('_gbk', $this->sort['column']);
+                $column = isset($columnArr[1]) ? DB::raw('convert(`' . $columnArr[0] . '` using gbk)') : $this->sort['column'];
+                // $column = $this->sort['column'];
                 $method = 'orderBy';
                 $arguments = [$column, $this->sort['type']];
             }
