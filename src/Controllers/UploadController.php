@@ -2,10 +2,13 @@
 
 namespace Andruby\DeepAdmin\Controllers;
 
+use Andruby\DeepAdmin\Traits\UploadTraits;
 use Illuminate\Http\Request;
 
 class UploadController extends AdminController
 {
+    use UploadTraits;
+
     public function images(Request $request)
     {
         $file = $request->file('file');

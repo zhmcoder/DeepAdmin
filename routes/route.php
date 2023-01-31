@@ -22,9 +22,9 @@ Route::group([
     $router->post('upload/images', 'UploadController@images')->name('upload.images');
     $router->post('upload/images_v4', 'UploadController@images_v4')->name('upload.images_v4');
 
-    $router->post('_deep_admin_upload_image_', 'HandleController@uploadImage')->name('upload.image_handle');
-    $router->post('_deep_admin_upload_file_', 'HandleController@uploadFile')->name('upload.file_handler');
-    $router->post('_deep_admin_upload_xlsx_', 'HandleController@uploadXlsx')->name('upload.xlsx_handler');
+    $router->post('_deep_admin_upload_image_', 'UploadController@uploadImage')->name('upload.image_handle');
+    $router->post('_deep_admin_upload_file_', 'UploadController@uploadFile')->name('upload.file_handler');
+    $router->post('_deep_admin_upload_xlsx_', 'UploadController@uploadXlsx')->name('upload.xlsx_handler');
 });
 
 Route::group([
