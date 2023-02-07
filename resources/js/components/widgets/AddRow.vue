@@ -168,6 +168,6 @@
 </script>
 <style lang="scss" scoped>
   .property-list {
-    width: 80%;
+    width: 100%;
   }
 </style>
