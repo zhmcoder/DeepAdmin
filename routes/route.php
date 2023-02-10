@@ -25,6 +25,8 @@ Route::group([
     $router->post('_deep_admin_upload_image_', 'UploadController@uploadImage')->name('upload.image_handle');
     $router->post('_deep_admin_upload_file_', 'UploadController@uploadFile')->name('upload.file_handler');
     $router->post('_deep_admin_upload_xlsx_', 'UploadController@uploadXlsx')->name('upload.xlsx_handler');
+
+    $router->get('auth/resetPwd', 'AuthController@resetPwd')->name('auth.resetPwd');
 });
 
 Route::group([

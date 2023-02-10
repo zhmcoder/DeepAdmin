@@ -12,7 +12,7 @@ class RootController extends Controller
     public function index()
     {
         $data = [
-            'isLocal'=>config('app.env')=="local",
+            'isLocal' => config('app.env') == "local",
             'menu' => Admin::menu(),
             'menuList' => Admin::menuList(),
             'logoShow' => config('deep_admin.logo_show'),
@@ -23,15 +23,14 @@ class RootController extends Controller
             'name' => config('deep_admin.name'),
             'copyright' => config('deep_admin.copyright'),
             'footerLinks' => config('deep_admin.footerLinks'),
-            'uniqueOpened' => config('deep_admin.unique_opened',false),
+            'uniqueOpened' => config('deep_admin.unique_opened', false),
             'user' => $this->getUserData(),
-            'url' => $this->getUrls()
+            'url' => $this->getUrls(),
+            'resetPwdUrl' => route('auth.resetPwd'),
         ];
 
         return view('deep-admin::root', ['data' => $data]);
     }
-
-
 
 
     protected function getUserData()

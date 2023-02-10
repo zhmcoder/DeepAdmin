@@ -2,6 +2,7 @@
 
 namespace Andruby\DeepAdmin\Controllers;
 
+use Andruby\DeepAdmin\Validates\AdminUserValidate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Redirect;
@@ -220,6 +221,26 @@ class AuthController extends AdminController
     protected function guard()
     {
         return Admin::guard();
+    }
+
+    public function resetPwd(Request $request, AdminUserValidate $validate)
+    {
+        $validate_result = $validate->resetPwd($request->only(['password', 'password_confirm']));
+        if ($validate_result) {
+
+            $userId = \Admin::user()->id;
+            $password = $request->input('password');
+
+            $class = config('deep_admin.database.users_model');
+            $result = $class::query()->where(['id' => $userId])->update(['password' => bcrypt($password)]);
+            if ($result) {
+                return \Admin::responseMessage("保存成功");
+            } else {
+                return \Admin::responseError('修改失败');
+            }
+        } else {
+            return \Admin::responseError($validate->message);
+        }
     }
 }
 
