@@ -476,7 +476,6 @@ export default {
     },
     // 修改密码
     updatePsd() {
-      console.log("点击修改密码");
       this.dialogUpdatePsdVisible = true;
     },
     //添加用户
@@ -489,6 +488,8 @@ export default {
             .then((res) => {
               if (res.code == 200) {
                 this.btnLodgin = false;
+                this.dialogUpdatePsdVisible = false;
+                window.location.href = this.pageData.url.logout;
               }
             })
             .finally(() => {
