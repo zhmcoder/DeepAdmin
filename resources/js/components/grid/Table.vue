@@ -246,12 +246,18 @@
           <template v-for="column in attrs.columnAttributes">
             <template>
               <el-table-column
+                type="index"
                 :key="column.prop + 1"
                 v-if="column.type == 'index'"
+                :column-key="column.columnKey"
+                :prop="column.prop"
                 :label="column.label"
-                type="index"
-                align="center"
-                :index="indexAdd"
+                :width="column.width"
+                :sortable="column.sortable"
+                :help="column.help"
+                :align="column.align"
+                :fixed="column.fixed"
+                :header-align="column.headerAlign"
               >
               </el-table-column>
               <el-table-column
