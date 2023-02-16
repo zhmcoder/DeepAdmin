@@ -47,12 +47,28 @@
         :default-expand-all="attrs.attributes.defaultExpandAll"
         @selection-change="onTableselectionChange"
       >
-        <el-table-column v-if="!attrs.isMultiple" align="center" width="55" label="选择">
+        <el-table-column
+          v-if="!attrs.isMultiple"
+          align="center"
+          width="55"
+          label="选择"
+        >
           <template slot-scope="scope">
-            <el-radio @change.native="handleSelectionChange(scope.row)" v-model="seleted" :label="scope.row.id">&nbsp;</el-radio>
+            <el-radio
+              @change.native="handleSelectionChange(scope.row)"
+              v-model="seleted"
+              :label="scope.row.id"
+              >&nbsp;</el-radio
+            >
           </template>
         </el-table-column>
-        <el-table-column v-if="attrs.isMultiple" :reserve-selection="true" align="center" type="selection" width="55">
+        <el-table-column
+          v-if="attrs.isMultiple"
+          :reserve-selection="true"
+          align="center"
+          type="selection"
+          width="55"
+        >
         </el-table-column>
         <el-table-column
           v-if="attrs.attributes.selection"
@@ -65,38 +81,56 @@
           width="80"
         ></el-table-column>
         <template v-for="column in attrs.columnAttributes">
-          <el-table-column
-            :type="column.type"
-            :key="column.prop"
-            :column-key="column.columnKey"
-            :prop="column.prop"
-            :label="column.label"
-            :width="column.width"
-            :sortable="column.sortable"
-            :help="column.help"
-            :align="column.align"
-            :fixed="column.fixed"
-            :header-align="column.headerAlign"
-          >
-            <template slot="header" slot-scope="scope">
-              <span>{{ scope.column.label }}</span>
-              <el-tooltip
-                placement="top"
-                v-if="column.help"
-                :content="column.help"
-              >
-                <i class="el-icon-question hover"></i>
-              </el-tooltip>
-            </template>
-            <template slot-scope="scope">
-              <ColumnDisplay
-                :scope="scope"
-                :columns="attrs.columnAttributes"
-                @downMove="downMove"
-                @upMove="upMove"
-              />
-            </template>
-          </el-table-column>
+          <template>
+            <el-table-column
+              type="index"
+              :key="column.prop + 1"
+              v-if="column.type == 'index'"
+              :column-key="column.columnKey"
+              :prop="column.prop"
+              :label="column.label"
+              :width="column.width"
+              :sortable="column.sortable"
+              :help="column.help"
+              :align="column.align"
+              :fixed="column.fixed"
+              :header-align="column.headerAlign"
+            >
+            </el-table-column>
+            <el-table-column
+              v-else
+              :type="column.type"
+              :key="column.prop"
+              :column-key="column.columnKey"
+              :prop="column.prop"
+              :label="column.label"
+              :width="column.width"
+              :sortable="column.sortable"
+              :help="column.help"
+              :align="column.align"
+              :fixed="column.fixed"
+              :header-align="column.headerAlign"
+            >
+              <template slot="header" slot-scope="scope">
+                <span>{{ scope.column.label }}</span>
+                <el-tooltip
+                  placement="top"
+                  v-if="column.help"
+                  :content="column.help"
+                >
+                  <i class="el-icon-question hover"></i>
+                </el-tooltip>
+              </template>
+              <template slot-scope="scope">
+                <ColumnDisplay
+                  :scope="scope"
+                  :columns="attrs.columnAttributes"
+                  @downMove="downMove"
+                  @upMove="upMove"
+                />
+              </template>
+            </el-table-column>
+          </template>
         </template>
         <el-table-column
           v-if="!attrs.attributes.hideActions"
@@ -140,8 +174,11 @@
       >
         <div class="select-wrap">
           <div class="select-info" v-for="item in selectList" :key="item.id">
-            <span>{{item.name}}</span>
-            <i class="el-icon-circle-close el-delete-icon" @click="colse(item)"></i>
+            <span>{{ item.name }}</span>
+            <i
+              class="el-icon-circle-close el-delete-icon"
+              @click="colse(item)"
+            ></i>
           </div>
         </div>
       </el-card>
@@ -159,11 +196,11 @@ export default {
   components: {
     ItemDiaplsy,
     ColumnDisplay,
-    Actions
+    Actions,
   },
   props: {
     value: Array,
-    attrs: Object
+    attrs: Object,
   },
   data() {
     return {
@@ -307,29 +344,29 @@ export default {
       seleted: null,
       selectList: [],
       selectionRows: [],
-      timer: null
+      timer: null,
     };
   },
   watch: {
-    async value (newValue, oldValue) {
+    async value(newValue, oldValue) {
       if (newValue !== oldValue) {
-        if ( newValue && newValue.length > 0 && typeof(newValue[0]) == 'number') {
+        if (newValue && newValue.length > 0 && typeof newValue[0] == "number") {
           if (!this.attrs.isMultiple) {
             // 单选
             this.seleted = newValue[0];
-            this.fadeIn('1')
+            this.fadeIn("1");
           } else {
             // 多选
-            this.fadeIn('2')
+            this.fadeIn("2");
           }
-        } 
+        }
       }
-    }
+    },
   },
   mounted() {
     console.log("this.attrs====", this.attrs.filters);
     this.filterFormData = this._.cloneDeep(this.attrs.filter.filterFormData);
-    this.getData()
+    this.getData();
   },
   updated() {
     this.$nextTick(() => {});
@@ -412,7 +449,7 @@ export default {
     // 递归获取数据
     fadeIn(type) {
       if (this.tableData && this.tableData.length > 0) {
-        clearTimeout(this.timer)
+        clearTimeout(this.timer);
         if (type == 1) {
           // 单选
           this.selectList = this.tableData;
@@ -423,14 +460,14 @@ export default {
           this.selectList = this.tableData;
           this.$emit("change", this.tableData);
           // 勾选数据
-          this.tableData.forEach(row => {
+          this.tableData.forEach((row) => {
             this.$refs.multipleTable.toggleRowSelection(row);
           });
         }
       } else {
-        this.timer = setTimeout(()=> {
-          this.fadeIn(type)
-        }, 500)
+        this.timer = setTimeout(() => {
+          this.fadeIn(type);
+        }, 500);
       }
     },
     //每页大小改变时
@@ -458,58 +495,86 @@ export default {
       this.$emit("change", selection);
     },
     downMove(sort) {
-      this.tableData = this.tableData.sort(this.compare('sort',false));
+      this.tableData = this.tableData.sort(this.compare("sort", false));
       // 当前操作项index
-      let index = this.tableData.findIndex(function(item) {
-          return item.sort == sort;
+      let index = this.tableData.findIndex(function (item) {
+        return item.sort == sort;
       });
       // sort属性index
-      let cIndex = this.attrs.columnAttributes.findIndex(function(item) {
-          return item.columnKey === 'sort';
+      let cIndex = this.attrs.columnAttributes.findIndex(function (item) {
+        return item.columnKey === "sort";
       });
       let downItem = this.tableData[index + 1];
-      let curItem = this.tableData[index]
+      let curItem = this.tableData[index];
       // 当前页最后一项下移重新加载列表
       if (index + 1 === this.tableData.length) {
-        this.setSort(this.attrs.columnAttributes[cIndex].displayComponentAttrs.setSortAction, 'down', curItem.id, '', true)
+        this.setSort(
+          this.attrs.columnAttributes[cIndex].displayComponentAttrs
+            .setSortAction,
+          "down",
+          curItem.id,
+          "",
+          true
+        );
       } else {
-        this.tableData[index].sort = this.tableData[index+1].sort
-        this.tableData[index+1].sort = sort
+        this.tableData[index].sort = this.tableData[index + 1].sort;
+        this.tableData[index + 1].sort = sort;
         this.tableData[index + 1] = this.tableData[index];
         this.tableData[index] = downItem;
-        this.$set(this.tableData, index+1, curItem);
+        this.$set(this.tableData, index + 1, curItem);
         this.$set(this.tableData, index, downItem);
-        this.setSort(this.attrs.columnAttributes[cIndex].displayComponentAttrs.setSortAction, 'down', curItem.id, downItem.id, false)
+        this.setSort(
+          this.attrs.columnAttributes[cIndex].displayComponentAttrs
+            .setSortAction,
+          "down",
+          curItem.id,
+          downItem.id,
+          false
+        );
       }
     },
     upMove(sort) {
-      this.tableData = this.tableData.sort(this.compare('sort',false));
+      this.tableData = this.tableData.sort(this.compare("sort", false));
       // 当前操作项index
-      let index = this.tableData.findIndex(function(item) {
-          return item.sort == sort;
+      let index = this.tableData.findIndex(function (item) {
+        return item.sort == sort;
       });
       // sort属性index
-      let cIndex = this.attrs.columnAttributes.findIndex(function(item) {
-          return item.columnKey === 'sort';
+      let cIndex = this.attrs.columnAttributes.findIndex(function (item) {
+        return item.columnKey === "sort";
       });
       let downItem = this.tableData[index - 1];
-      let curItem = this.tableData[index]
+      let curItem = this.tableData[index];
       // 当前页第一项上移重新加载列表
       if (index === 0) {
-        this.setSort(this.attrs.columnAttributes[cIndex].displayComponentAttrs.setSortAction, 'up', curItem.id, '', true)
+        this.setSort(
+          this.attrs.columnAttributes[cIndex].displayComponentAttrs
+            .setSortAction,
+          "up",
+          curItem.id,
+          "",
+          true
+        );
       } else {
-        this.tableData[index].sort = this.tableData[index-1].sort
-        this.tableData[index-1].sort = sort
+        this.tableData[index].sort = this.tableData[index - 1].sort;
+        this.tableData[index - 1].sort = sort;
         this.tableData[index - 1] = this.tableData[index];
         this.tableData[index] = downItem;
-        this.$set(this.tableData, index-1, curItem);
+        this.$set(this.tableData, index - 1, curItem);
         this.$set(this.tableData, index, downItem);
-        this.setSort(this.attrs.columnAttributes[cIndex].displayComponentAttrs.setSortAction, 'up', curItem.id, downItem.id, false)
+        this.setSort(
+          this.attrs.columnAttributes[cIndex].displayComponentAttrs
+            .setSortAction,
+          "up",
+          curItem.id,
+          downItem.id,
+          false
+        );
       }
     },
     // 单选
-    handleSelectionChange(val){
-      if(val){
+    handleSelectionChange(val) {
+      if (val) {
         this.seleted = val.id;
         this.selectList = [val];
         this.$emit("change", [val]);
@@ -519,13 +584,13 @@ export default {
     colse(item) {
       // 先判断是单选还是多选
       if (this.attrs.isMultiple) {
-        var newList = JSON.parse(JSON.stringify(this.selectList))
+        var newList = JSON.parse(JSON.stringify(this.selectList));
         // 多选
-        var newSelectList = newList.filter(citem => citem.id != item.id)
-        this.selectList = newSelectList
+        var newSelectList = newList.filter((citem) => citem.id != item.id);
+        this.selectList = newSelectList;
 
         // 清空数据
-        var index = this.tableData.findIndex(citem => citem.id == item.id)
+        var index = this.tableData.findIndex((citem) => citem.id == item.id);
         this.$refs.multipleTable.toggleRowSelection(this.tableData[index]);
 
         this.$emit("change", newSelectList);
@@ -535,7 +600,7 @@ export default {
         this.selectList = [];
         this.$emit("change", []);
       }
-    }
+    },
   },
   computed: {},
 };

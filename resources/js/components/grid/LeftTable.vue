@@ -15,8 +15,15 @@
             class="margin-bottom-sm"
             v-if="attrs.filter.filters.length > 0"
           >
-            <div class="filter-form" :class="{'filter-form-style-center':attrs.filterFormCenter}">
-              <el-form :inline="true" :model="filterFormData" v-if="filterFormData">
+            <div
+              class="filter-form"
+              :class="{ 'filter-form-style-center': attrs.filterFormCenter }"
+            >
+              <el-form
+                :inline="true"
+                :model="filterFormData"
+                v-if="filterFormData"
+              >
                 <el-form-item v-if="attrs.quickSearch">
                   <el-input
                     v-model="quickSearch"
@@ -40,7 +47,9 @@
                   />
                 </el-form-item>
                 <el-form-item>
-                  <el-button type="primary" @click="onFilterSubmitHeader">搜索</el-button>
+                  <el-button type="primary" @click="onFilterSubmitHeader"
+                    >搜索</el-button
+                  >
                   <el-button @click="onFilterResetHeader">重置</el-button>
                 </el-form-item>
               </el-form>
@@ -61,10 +70,18 @@
             <div
               shadow="never"
               :body-style="{ padding: 0 }"
-              class="margin-bottom-sm" 
+              class="margin-bottom-sm"
             >
-              <div class="filter-form" :class="{'filter-form-style-center':attrs.filterFormCenter}" v-if="attrs.rightFilter.isShowTreeSelect">
-                <el-form :inline="true" :model="treeFilterFormData" v-if="treeFilterFormData">
+              <div
+                class="filter-form"
+                :class="{ 'filter-form-style-center': attrs.filterFormCenter }"
+                v-if="attrs.rightFilter.isShowTreeSelect"
+              >
+                <el-form
+                  :inline="true"
+                  :model="treeFilterFormData"
+                  v-if="treeFilterFormData"
+                >
                   <!-- 操作按钮的位置 -->
                   <template v-for="(item, index) in attrs.treeFilter.filters">
                     <!-- 单独展示一行 -->
@@ -83,7 +100,9 @@
                   </template>
                   <!-- class="tree-select-btn" -->
                   <el-form-item>
-                    <el-button type="primary" @click="onFilterSubmitTree">搜索</el-button>
+                    <el-button type="primary" @click="onFilterSubmitTree"
+                      >搜索</el-button
+                    >
                     <el-button @click="onFilterResetTree">重置</el-button>
                   </el-form-item>
                 </el-form>
@@ -104,8 +123,15 @@
               class="margin-bottom-sm"
               v-if="leftFilterFilters.length > 0"
             >
-              <div class="filter-form" :class="{'filter-form-style-center':attrs.filterFormCenter}">
-                <el-form :inline="true" :model="leftFilterFormData" v-if="leftFilterFormData">
+              <div
+                class="filter-form"
+                :class="{ 'filter-form-style-center': attrs.filterFormCenter }"
+              >
+                <el-form
+                  :inline="true"
+                  :model="leftFilterFormData"
+                  v-if="leftFilterFormData"
+                >
                   <el-form-item v-if="attrs.quickSearch">
                     <el-input
                       v-model="quickSearch"
@@ -129,7 +155,9 @@
                     />
                   </el-form-item>
                   <el-form-item>
-                    <el-button type="primary" @click="onFilterSubmit">搜索</el-button>
+                    <el-button type="primary" @click="onFilterSubmit"
+                      >搜索</el-button
+                    >
                     <el-button @click="onFilterReset">重置</el-button>
                   </el-form-item>
                 </el-form>
@@ -146,12 +174,28 @@
             v-if="checkedTreeList.length > 0"
           >
             <div class="filter-form">
-              <el-form :inline="true" :model="rightFilterFormData" v-if="rightFilterFormData">
+              <el-form
+                :inline="true"
+                :model="rightFilterFormData"
+                v-if="rightFilterFormData"
+              >
                 <!-- 操作按钮的位置 -->
-                <el-row :class="['search-top-row', attrs.rightFilter.actionsAligin ]" v-if="attrs.rightFilter.actionsPosition == 'top' && attrs.rightFilter.actions && attrs.rightFilter.actions.length > 0">
+                <el-row
+                  :class="['search-top-row', attrs.rightFilter.actionsAligin]"
+                  v-if="
+                    attrs.rightFilter.actionsPosition == 'top' &&
+                    attrs.rightFilter.actions &&
+                    attrs.rightFilter.actions.length > 0
+                  "
+                >
                   <el-form-item>
-                    <el-button v-for="(item, index) in attrs.rightFilter.actions" @click="action(item)" :key="index" :type="item.type">
-                      {{item.name}}
+                    <el-button
+                      v-for="(item, index) in attrs.rightFilter.actions"
+                      @click="action(item)"
+                      :key="index"
+                      :type="item.type"
+                    >
+                      {{ item.name }}
                     </el-button>
                   </el-form-item>
                 </el-row>
@@ -171,10 +215,30 @@
                   </el-form-item>
                 </template>
                 <!-- 操作按钮的位置 -->
-                <el-row :class="['search-bottom-row', attrs.rightFilter.actionsAligin]" v-if="attrs.rightFilter.actionsPosition == 'bottom' && attrs.rightFilter.actions && attrs.rightFilter.actions.length > 0">
-                  <el-form-item v-if="attrs.rightFilter.actions && attrs.rightFilter.actions.length > 0">
-                    <el-button v-for="(item, index) in attrs.rightFilter.actions" @click="action(item)" :key="index" :type="item.type">
-                      {{item.name}}
+                <el-row
+                  :class="[
+                    'search-bottom-row',
+                    attrs.rightFilter.actionsAligin,
+                  ]"
+                  v-if="
+                    attrs.rightFilter.actionsPosition == 'bottom' &&
+                    attrs.rightFilter.actions &&
+                    attrs.rightFilter.actions.length > 0
+                  "
+                >
+                  <el-form-item
+                    v-if="
+                      attrs.rightFilter.actions &&
+                      attrs.rightFilter.actions.length > 0
+                    "
+                  >
+                    <el-button
+                      v-for="(item, index) in attrs.rightFilter.actions"
+                      @click="action(item)"
+                      :key="index"
+                      :type="item.type"
+                    >
+                      {{ item.name }}
                     </el-button>
                   </el-form-item>
                 </el-row>
@@ -182,9 +246,16 @@
             </div>
           </el-card>
 
-          
-          <el-card shadow="never" :body-style="{ padding: 0 }" v-loading="loading">
-            <div class="bottom-border" ref="toolbarsView" v-if="attrs.toolbars.show">
+          <el-card
+            shadow="never"
+            :body-style="{ padding: 0 }"
+            v-loading="loading"
+          >
+            <div
+              class="bottom-border"
+              ref="toolbarsView"
+              v-if="attrs.toolbars.show"
+            >
               <div class="grid-top-container">
                 <div class="grid-top-container-left">
                   <BatchActions
@@ -205,7 +276,10 @@
                       @clear="getData"
                       @keyup.enter.native="getData"
                     >
-                      <el-button @click="getData" :loading="loading" slot="append"
+                      <el-button
+                        @click="getData"
+                        :loading="loading"
+                        slot="append"
                         >搜索</el-button
                       >
                     </el-input>
@@ -218,27 +292,27 @@
                       :attrs="component"
                     />
 
-                      <el-radio-group
-                          v-if="attrs.quickFilter"
-                          v-model="quickFilter"
-                          :style="attrs.quickFilter.style"
-                          :class="attrs.quickFilter.className"
-                          :disabled="attrs.quickFilter.disabled"
-                          @change="getData"
+                    <el-radio-group
+                      v-if="attrs.quickFilter"
+                      v-model="quickFilter"
+                      :style="attrs.quickFilter.style"
+                      :class="attrs.quickFilter.className"
+                      :disabled="attrs.quickFilter.disabled"
+                      @change="getData"
+                    >
+                      <el-radio-button
+                        v-if="attrs.quickFilter"
+                        v-for="(radio, index) in attrs.quickFilter.options"
+                        :style="radio.style"
+                        :class="radio.className"
+                        :key="index"
+                        :label="radio.label"
+                        :disabled="radio.disabled"
+                        :border="radio.border"
+                        :size="radio.size"
+                        >{{ radio.title }}</el-radio-button
                       >
-                          <el-radio-button
-                              v-if="attrs.quickFilter"
-                              v-for="(radio, index) in attrs.quickFilter.options"
-                              :style="radio.style"
-                              :class="radio.className"
-                              :key="index"
-                              :label="radio.label"
-                              :disabled="radio.disabled"
-                              :border="radio.border"
-                              :size="radio.size"
-                          >{{ radio.title }}</el-radio-button>
-                      </el-radio-group>
-
+                    </el-radio-group>
                   </div>
                 </div>
                 <div class="grid-top-container-right">
@@ -249,7 +323,7 @@
                     :attrs="component"
                     :filterData="filterFormData"
                   />
-                    <!-- deep-admin filterData -->
+                  <!-- deep-admin filterData -->
                   <el-divider
                     direction="vertical"
                     v-if="!attrs.attributes.hideCreateButton"
@@ -324,38 +398,56 @@
                   width="50"
                 ></el-table-column>
                 <template v-for="column in attrs.columnAttributes">
-                  <el-table-column
-                    :type="column.type"
-                    :key="column.prop"
-                    :column-key="column.columnKey"
-                    :prop="column.prop"
-                    :label="column.label"
-                    :width="column.width"
-                    :sortable="column.sortable"
-                    :help="column.help"
-                    :align="column.align"
-                    :fixed="column.fixed"
-                    :header-align="column.headerAlign"
-                  >
-                    <template slot="header" slot-scope="scope">
-                      <span>{{ scope.column.label }}</span>
-                      <el-tooltip
-                        placement="top"
-                        v-if="column.help"
-                        :content="column.help"
-                      >
-                        <i class="el-icon-question hover"></i>
-                      </el-tooltip>
-                    </template>
-                    <template slot-scope="scope">
-                      <ColumnDisplay
-                        :scope="scope"
-                        :columns="attrs.columnAttributes"
-                        @downMove="downMove"
-                        @upMove="upMove"
-                      />
-                    </template>
-                  </el-table-column>
+                  <template>
+                    <el-table-column
+                      type="index"
+                      :key="column.prop + 1"
+                      v-if="column.type == 'index'"
+                      :column-key="column.columnKey"
+                      :prop="column.prop"
+                      :label="column.label"
+                      :width="column.width"
+                      :sortable="column.sortable"
+                      :help="column.help"
+                      :align="column.align"
+                      :fixed="column.fixed"
+                      :header-align="column.headerAlign"
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      v-else
+                      :type="column.type"
+                      :key="column.prop"
+                      :column-key="column.columnKey"
+                      :prop="column.prop"
+                      :label="column.label"
+                      :width="column.width"
+                      :sortable="column.sortable"
+                      :help="column.help"
+                      :align="column.align"
+                      :fixed="column.fixed"
+                      :header-align="column.headerAlign"
+                    >
+                      <template slot="header" slot-scope="scope">
+                        <span>{{ scope.column.label }}</span>
+                        <el-tooltip
+                          placement="top"
+                          v-if="column.help"
+                          :content="column.help"
+                        >
+                          <i class="el-icon-question hover"></i>
+                        </el-tooltip>
+                      </template>
+                      <template slot-scope="scope">
+                        <ColumnDisplay
+                          :scope="scope"
+                          :columns="attrs.columnAttributes"
+                          @downMove="downMove"
+                          @upMove="upMove"
+                        />
+                      </template>
+                    </el-table-column>
+                  </template>
                 </template>
                 <el-table-column
                   v-if="!attrs.attributes.hideActions"
@@ -368,7 +460,9 @@
                   <template slot="header"></template>
                   <template slot-scope="scope">
                     <Actions
-                      v-if="scope.row.grid_actions && !scope.row.grid_actions.hide"
+                      v-if="
+                        scope.row.grid_actions && !scope.row.grid_actions.hide
+                      "
                       :action_list="scope.row.grid_actions.data"
                       :scope="scope"
                       :key_name="attrs.keyName"
@@ -437,7 +531,7 @@ export default {
     BatchActions,
     DialogForm,
     DrawerForm,
-    TreeDisplay
+    TreeDisplay,
   },
   props: {
     attrs: Object,
@@ -455,16 +549,16 @@ export default {
       },
       page: 1, //当前页
       quickSearch: null, //快捷搜索内容
-      quickFilter: '', //快捷筛选内容 <!--deep admin-->
+      quickFilter: "", //快捷筛选内容 <!--deep admin-->
       selectionRows: [], //已选择的row
       filterFormData: null, //表单搜索数据
-      leftFilterFormData:null, //表单左侧数据
+      leftFilterFormData: null, //表单左侧数据
       tabsSelectdata: {},
       tabsActiveName: "all",
       topViewHeight: 0,
       toolbarsViewHeight: 0,
-      addOrEdit:'', //点击的action是否是添加或修改
-      leftFilterFilters:[],
+      addOrEdit: "", //点击的action是否是添加或修改
+      leftFilterFilters: [],
       treeData: [],
       treeLoading: false,
       rightFilterFormData: {},
@@ -472,42 +566,42 @@ export default {
       checkedTreeList: [],
       treeQuery: {},
       datas: {
-        id: '2',
+        id: "2",
         label: "一级 1",
-        search_key: "tab_id"
-      }
+        search_key: "tab_id",
+      },
     };
   },
   mounted() {
-    console.log("this.attrs", this.attrs)
+    console.log("this.attrs", this.attrs);
     //初始化默认设置值
     this.filterFormData = this._.cloneDeep(this.attrs.filter.filterFormData);
     //初始化左侧的form表单默认值
-    this.leftFilterFormData = this._.cloneDeep(this.attrs.leftFilter.filterFormData);
+    this.leftFilterFormData = this._.cloneDeep(
+      this.attrs.leftFilter.filterFormData
+    );
     // 左侧form表单默认显示字段
     this.leftFilterFilters = this._.cloneDeep(this.attrs.leftFilter.filters);
     this.sort = this._.cloneDeep(this.attrs.defaultSort);
 
-
     // 对左侧的tree接口
     if (this.attrs.rightFilter.isShowTree) {
       // 获取tree树数据
-      this.getTreeData()
+      this.getTreeData();
     }
-    // grid右侧上方的form表单 
+    // grid右侧上方的form表单
     // this.rightFilterFormData = this._.cloneDeep(this.attrs.rightFilter.filterFormData);
     // 树状组件搜索操作
     // this.treeFilterFormData = this._.cloneDeep(this.attrs.rightFilter.treeFilterFormData);
-    this.treeFilterFormData = this._.cloneDeep(this.attrs.treeFilter.filterFormData);
-
+    this.treeFilterFormData = this._.cloneDeep(
+      this.attrs.treeFilter.filterFormData
+    );
 
     //deep admin start
-      if(this.attrs.quickFilter){
-          this.quickFilter = this._.cloneDeep(
-              this.attrs.quickFilter.defaultValue
-          );
-      }
-      //deep admin end
+    if (this.attrs.quickFilter) {
+      this.quickFilter = this._.cloneDeep(this.attrs.quickFilter.defaultValue);
+    }
+    //deep admin end
     //初始化vuex状态值
     if (this.$store.getters.thisPage.grids.page) {
       this.page = this._.cloneDeep(this.$store.getters.thisPage.grids.page);
@@ -546,31 +640,31 @@ export default {
       this.loading = status;
     });
 
-    this.$bus.on("showDialogGridFrom", ({ isShow, key , addOrEdit }) => {
-      this.addOrEdit = addOrEdit || this.addOrEdit ;
+    this.$bus.on("showDialogGridFrom", ({ isShow, key, addOrEdit }) => {
+      this.addOrEdit = addOrEdit || this.addOrEdit;
       this.$refs["DialogGridFrom"].dialogVisible = isShow;
       this.$refs["DialogGridFrom"].key = key;
     });
     // 监听刷新页面
     this.$bus.on("reloadGridFrom", () => {
-      if(this.attrs.isReload) {
+      if (this.attrs.isReload) {
         this.$bus.emit("pageReload");
       }
     });
 
     // 监听TreeDisplay事件
     this.$bus.on("getDataInfo", (query) => {
-      this.rightFilterFormData = {}
+      this.rightFilterFormData = {};
       this.treeQuery = query;
       // 树状组件点击后，查询右侧列表及右侧Form表单
       this.getRightTreeForm();
       // 获取右侧的表格列表
-      this.getData()
-    })
+      this.getData();
+    });
     // 监听getTreeArr事件，获取选中的数组
     this.$bus.on("getTreeArr", (query) => {
       this.checkedTreeList = query;
-    })
+    });
 
     this.$nextTick(() => {
       this.topViewHeight = this.$refs.topView.offsetHeight;
@@ -579,10 +673,10 @@ export default {
   },
   updated() {
     this.$nextTick(() => {
-      this.$refs.table.doLayout()
-    })
-    this.$bus.on("showDialogGridFrom", ({ isShow, key , addOrEdit }) => {
-      this.addOrEdit = addOrEdit || this.addOrEdit ;
+      this.$refs.table.doLayout();
+    });
+    this.$bus.on("showDialogGridFrom", ({ isShow, key, addOrEdit }) => {
+      this.addOrEdit = addOrEdit || this.addOrEdit;
       this.$refs["DialogGridFrom"].dialogVisible = isShow;
       this.$refs["DialogGridFrom"].key = key;
     });
@@ -601,15 +695,14 @@ export default {
     // 获取Tree树状结构数据
     getTreeData() {
       this.treeLoading = true;
-      this.$http
-        [this.attrs.method](this.attrs.rightFilter.dataUrl, {
-          params: {
-            ...this.treeFilterFormData
-          },
-        })
-        .then(( data ) => {
-          this.treeData = data
-          console.log('treeData', data)
+      this.$http[this.attrs.method](this.attrs.rightFilter.dataUrl, {
+        params: {
+          ...this.treeFilterFormData,
+        },
+      })
+        .then((data) => {
+          this.treeData = data;
+          console.log("treeData", data);
           this.treeLoading = false;
           // 查询树状结构数据后，对树状组件的展开和选中进行处理
           this.$bus.emit("setTreeCurrentKey");
@@ -620,12 +713,13 @@ export default {
     },
     // 获取右侧TreeForm
     getRightTreeForm() {
-      this.$http.get(this.attrs.rightFilter.dataInfoUrl, {
-        params: this.treeQuery
-      })
-      .then(res => {
-        this.rightFilterFormData = res.data
-      })
+      this.$http
+        .get(this.attrs.rightFilter.dataInfoUrl, {
+          params: this.treeQuery,
+        })
+        .then((res) => {
+          this.rightFilterFormData = res.data;
+        });
     },
     onTabClick(e) {
       const name = this._.split(e.name, "----");
@@ -634,21 +728,21 @@ export default {
       this.getData();
     },
     // 顶部表单过滤筛选
-    onFilterSubmitHeader(){
-      if(this.attrs.filter.reload=='left_filter'){
+    onFilterSubmitHeader() {
+      if (this.attrs.filter.reload == "left_filter") {
         this.getLeftForm();
-      }else{
+      } else {
         this.onFilterSubmit();
       }
     },
     // 顶部表达还原
-    onFilterResetHeader(){
+    onFilterResetHeader() {
       this.filterFormData = this._.cloneDeep(this.attrs.filter.filterFormData);
       this.quickSearch = null;
-      if(this.attrs.filter.reload=='left_filter'){
+      if (this.attrs.filter.reload == "left_filter") {
         this.leftFilterFilters = [];
         this.leftFilterFormData = [];
-      }else{
+      } else {
         this.onFilterSubmit();
       }
     },
@@ -671,7 +765,7 @@ export default {
     },
     // Tree组件表单过滤
     onFilterSubmitTree() {
-      this.getTreeData()
+      this.getTreeData();
     },
     // Tree组件表单还原
     onFilterResetTree() {
@@ -680,13 +774,12 @@ export default {
     },
     // 获取左侧form表单数据
     getLeftForm() {
-      this.$http
-        [this.attrs.method](this.attrs.filter.leftAction, {
-          params: {
-            ...this.filterFormData,
-          },
-        })
-        .then(({ filterFormData , filters }) => {
+      this.$http[this.attrs.method](this.attrs.filter.leftAction, {
+        params: {
+          ...this.filterFormData,
+        },
+      })
+        .then(({ filterFormData, filters }) => {
           this.leftFilterFilters = filters;
           this.leftFilterFormData = filterFormData;
         })
@@ -697,22 +790,21 @@ export default {
     //获取数据
     getData() {
       this.loading = true;
-      this.$http
-        [this.attrs.method](this.attrs.dataUrl, {
-          params: {
-            get_data: true,
-            page: this.page,
-            per_page: this.pageData.pageSize,
-            ...this.treeQuery,
-            ...this.sort,
-            ...this.q_search,
-            ...this.quick_filter, //deep admin
-            ...this.leftFilterFormData,
-            ...this.filterFormData,
-            ...this.tabsSelectdata,
-            ...this.$route.query,
-          },
-        })
+      this.$http[this.attrs.method](this.attrs.dataUrl, {
+        params: {
+          get_data: true,
+          page: this.page,
+          per_page: this.pageData.pageSize,
+          ...this.treeQuery,
+          ...this.sort,
+          ...this.q_search,
+          ...this.quick_filter, //deep admin
+          ...this.leftFilterFormData,
+          ...this.filterFormData,
+          ...this.tabsSelectdata,
+          ...this.$route.query,
+        },
+      })
         .then(({ data }) => {
           if (!this.attrs.hidePage) {
             this.tableData = data.data;
@@ -743,12 +835,12 @@ export default {
             key: "quickSearch",
             data: this.quickSearch,
           });
-            //deep admin start
-            this.$store.commit("setGridData", {
-                key: "quickFilter",
-                data: this.quickFilter,
-            });
-            //deep admin end
+          //deep admin start
+          this.$store.commit("setGridData", {
+            key: "quickFilter",
+            data: this.quickFilter,
+          });
+          //deep admin end
           this.$store.commit("setGridData", {
             key: "filterFormData",
             data: this.filterFormData,
@@ -791,61 +883,89 @@ export default {
     },
     downMove(sort) {
       // 当前操作项index
-      let index = this.tableData.findIndex(function(item) {
-          return item.sort == sort;
+      let index = this.tableData.findIndex(function (item) {
+        return item.sort == sort;
       });
       // sort属性index
-      let cIndex = this.attrs.columnAttributes.findIndex(function(item) {
-          return item.columnKey === 'sort';
+      let cIndex = this.attrs.columnAttributes.findIndex(function (item) {
+        return item.columnKey === "sort";
       });
       let downItem = this.tableData[index + 1];
-      let curItem = this.tableData[index]
+      let curItem = this.tableData[index];
       // 当前页最后一项下移重新加载列表
       if (index + 1 === this.tableData.length) {
-        this.setSort(this.attrs.columnAttributes[cIndex].displayComponentAttrs.setSortAction, 'down', curItem.id, '', true)
+        this.setSort(
+          this.attrs.columnAttributes[cIndex].displayComponentAttrs
+            .setSortAction,
+          "down",
+          curItem.id,
+          "",
+          true
+        );
       } else {
-        this.tableData[index].sort = this.tableData[index+1].sort
-        this.tableData[index+1].sort = sort
+        this.tableData[index].sort = this.tableData[index + 1].sort;
+        this.tableData[index + 1].sort = sort;
         this.tableData[index + 1] = this.tableData[index];
         this.tableData[index] = downItem;
-        this.$set(this.tableData, index+1, curItem);
+        this.$set(this.tableData, index + 1, curItem);
         this.$set(this.tableData, index, downItem);
-        this.setSort(this.attrs.columnAttributes[cIndex].displayComponentAttrs.setSortAction, 'down', curItem.id, downItem.id, false)
+        this.setSort(
+          this.attrs.columnAttributes[cIndex].displayComponentAttrs
+            .setSortAction,
+          "down",
+          curItem.id,
+          downItem.id,
+          false
+        );
       }
     },
     upMove(sort) {
       // 当前操作项index
-      let index = this.tableData.findIndex(function(item) {
-          return item.sort == sort;
+      let index = this.tableData.findIndex(function (item) {
+        return item.sort == sort;
       });
       // sort属性index
-      let cIndex = this.attrs.columnAttributes.findIndex(function(item) {
-          return item.columnKey === 'sort';
+      let cIndex = this.attrs.columnAttributes.findIndex(function (item) {
+        return item.columnKey === "sort";
       });
       let downItem = this.tableData[index - 1];
-      let curItem = this.tableData[index]
+      let curItem = this.tableData[index];
       // 当前页第一项上移重新加载列表
       if (index === 0) {
-        this.setSort(this.attrs.columnAttributes[cIndex].displayComponentAttrs.setSortAction, 'up', curItem.id, '', true)
+        this.setSort(
+          this.attrs.columnAttributes[cIndex].displayComponentAttrs
+            .setSortAction,
+          "up",
+          curItem.id,
+          "",
+          true
+        );
       } else {
-        this.tableData[index].sort = this.tableData[index-1].sort
-        this.tableData[index-1].sort = sort
+        this.tableData[index].sort = this.tableData[index - 1].sort;
+        this.tableData[index - 1].sort = sort;
         this.tableData[index - 1] = this.tableData[index];
         this.tableData[index] = downItem;
-        this.$set(this.tableData, index-1, curItem);
+        this.$set(this.tableData, index - 1, curItem);
         this.$set(this.tableData, index, downItem);
-        this.setSort(this.attrs.columnAttributes[cIndex].displayComponentAttrs.setSortAction, 'up', curItem.id, downItem.id, false)
+        this.setSort(
+          this.attrs.columnAttributes[cIndex].displayComponentAttrs
+            .setSortAction,
+          "up",
+          curItem.id,
+          downItem.id,
+          false
+        );
       }
     },
     setSort(url, type, curId, changeId, refreshTable) {
       let param = {
         sort_type: type,
-        current_id: curId
-      }
+        current_id: curId,
+      };
       if (changeId) {
-        Object.assign(param, { change_id: changeId })
+        Object.assign(param, { change_id: changeId });
       }
-      this.onRequest(url, param, refreshTable)
+      this.onRequest(url, param, refreshTable);
     },
     /**
      * uri 接口路径
@@ -853,46 +973,53 @@ export default {
      * refreshTable 是否重新请求table数据
      */
     onRequest(uri, params, refreshTable) {
-      this.$http.post(uri, params)
-        .then((res) => {
-          if (res.code == 200) {
-            if (refreshTable) {
-              this.tableData = []
-              this.getData()
-            }
+      this.$http.post(uri, params).then((res) => {
+        if (res.code == 200) {
+          if (refreshTable) {
+            this.tableData = [];
+            this.getData();
           }
-        })
+        }
+      });
     },
     /**
      * 获取DialogForm的展示数据
      * type 获取的类型数据--1:dialogFormWidth 2:dialogForm 3:dialogTitle
      */
-    getDialogFormData(type){
+    getDialogFormData(type) {
       let actionType = this.addOrEdit;
-      if(type==1){
-        if(actionType) return this.attrs[actionType+'DialogFormWidth'] || this.attrs.dialogFormWidth;
-        return this.attrs.dialogFormWidth
-      }else if(type==2){
-        if(actionType) return this.attrs[actionType+'DialogForm'] || this.attrs.dialogForm;
-        return this.attrs.dialogForm
-      }else if(type==3){
-        if(actionType) return this.attrs[actionType+'DialogFormTitle'] || this.attrs.dialogTitle;
-        return this.attrs.dialogTitle
+      if (type == 1) {
+        if (actionType)
+          return (
+            this.attrs[actionType + "DialogFormWidth"] ||
+            this.attrs.dialogFormWidth
+          );
+        return this.attrs.dialogFormWidth;
+      } else if (type == 2) {
+        if (actionType)
+          return this.attrs[actionType + "DialogForm"] || this.attrs.dialogForm;
+        return this.attrs.dialogForm;
+      } else if (type == 3) {
+        if (actionType)
+          return (
+            this.attrs[actionType + "DialogFormTitle"] || this.attrs.dialogTitle
+          );
+        return this.attrs.dialogTitle;
       }
     },
     // 保存当前版本
     action(item) {
       this.$http
-        .post(item.dataUrl, {...this.treeQuery, ...this.rightFilterFormData})
-        .then(({data, code, message}) => {
-            if (code == 200) {
-              this.getTreeData()
-            }
+        .post(item.dataUrl, { ...this.treeQuery, ...this.rightFilterFormData })
+        .then(({ data, code, message }) => {
+          if (code == 200) {
+            this.getTreeData();
+          }
         })
         .finally(() => {
-            this.loading = false;
+          this.loading = false;
         });
-    }
+    },
   },
   computed: {
     keys() {
@@ -914,20 +1041,23 @@ export default {
     },
     //默认排序
     default_sort_get() {
-      let defaultSort = {}
+      let defaultSort = {};
       // 有sort按sort排序
-      if (this.attrs.columnAttributes.map(a => a.prop).indexOf('sort') > -1) {
+      if (this.attrs.columnAttributes.map((a) => a.prop).indexOf("sort") > -1) {
         defaultSort = {
-          prop: 'sort',
-          order: this.sort && this.sort.sort_order == "asc" ? "ascending" : "descending",
-        }
-      } else if(this.sort) {
+          prop: "sort",
+          order:
+            this.sort && this.sort.sort_order == "asc"
+              ? "ascending"
+              : "descending",
+        };
+      } else if (this.sort) {
         defaultSort = {
           prop: this.sort.sort_prop,
           order: this.sort.sort_order == "asc" ? "ascending" : "descending",
-        }
+        };
       }
-      return defaultSort
+      return defaultSort;
       // return this.sort
       //   ? {
       //       prop: this.sort.sort_prop,
@@ -943,13 +1073,13 @@ export default {
       return q_search;
     },
     //deep admin start
-      quick_filter() {
-          const quick_filter = new Object();
-          this.attrs.quickFilter &&
-          (quick_filter[this.attrs.quickFilter.filterKey] = this.quickFilter);
-          return quick_filter;
-      },
-     //deep admin end
+    quick_filter() {
+      const quick_filter = new Object();
+      this.attrs.quickFilter &&
+        (quick_filter[this.attrs.quickFilter.filterKey] = this.quickFilter);
+      return quick_filter;
+    },
+    //deep admin end
     gridHeight() {
       if (this.attrs.attributes.height == "auto") {
         return (
@@ -972,7 +1102,7 @@ export default {
   .header-wrap {
     height: auto !important;
   }
-  .el-header{
+  .el-header {
     padding: 0px;
   }
   .bottom-border {
@@ -1027,21 +1157,21 @@ export default {
       }
     }
   }
-  .filter-form-style-center{
+  .filter-form-style-center {
     .el-form {
       display: flex;
       justify-content: center;
     }
   }
-  .left-style{
+  .left-style {
     // background: white;
-    background: #EEF1F6;
+    background: #eef1f6;
     margin-right: 5px;
-    .el-form-item{
-      margin-top:5px;
+    .el-form-item {
+      margin-top: 5px;
     }
   }
-  .el-form-item__label{
+  .el-form-item__label {
     padding: 0 10px 0 0 !important;
   }
   .search-top-row {
