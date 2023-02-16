@@ -12,7 +12,10 @@
         class="margin-bottom-sm"
         v-if="attrs.filter.filters.length > 0"
       >
-        <div class="filter-form" :class="{'filter-form-style-center':attrs.filterFormCenter}">
+        <div
+          class="filter-form"
+          :class="{ 'filter-form-style-center': attrs.filterFormCenter }"
+        >
           <el-form :inline="true" :model="filterFormData" v-if="filterFormData">
             <el-form-item v-if="attrs.quickSearch">
               <el-input
@@ -32,12 +35,12 @@
                     :key="index"
                     :label="item.label"
                   >
-                      <ItemDiaplsy
-                        v-model="filterFormData[item.column]"
-                        :form-item="item"
-                        :form-items="attrs.filters"
-                        :form-data="filterFormData"
-                      />
+                    <ItemDiaplsy
+                      v-model="filterFormData[item.column]"
+                      :form-item="item"
+                      :form-items="attrs.filters"
+                      :form-data="filterFormData"
+                    />
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -81,7 +84,12 @@
         <div class="grid-top-container-wrap">
           <div class="grid-top-container-tabs" v-if="attrs.tabFilter">
             <el-tabs v-model="tabFilter" @tab-click="handleClick">
-              <el-tab-pane v-for="(item,index) in attrs.tabFilter.options" :key="index" :label="item.title" :name="setName(item.label)">
+              <el-tab-pane
+                v-for="(item, index) in attrs.tabFilter.options"
+                :key="index"
+                :label="item.title"
+                :name="setName(item.label)"
+              >
               </el-tab-pane>
             </el-tabs>
           </div>
@@ -110,7 +118,14 @@
                   >
                 </el-input>
               </div>
-              <div class="flex-c flex-all" :class="attrs.quickFilter && attrs.quickFilter.position=='right'?'right':''">
+              <div
+                class="flex-c flex-all"
+                :class="
+                  attrs.quickFilter && attrs.quickFilter.position == 'right'
+                    ? 'right'
+                    : ''
+                "
+              >
                 <div class="flex-c">
                   <component
                     v-for="(component, index) in attrs.toolbars.left"
@@ -120,27 +135,27 @@
                   />
                 </div>
 
-                  <el-radio-group
-                      v-if="attrs.quickFilter"
-                      v-model="quickFilter"
-                      :style="attrs.quickFilter.style"
-                      :class="attrs.quickFilter.className"
-                      :disabled="attrs.quickFilter.disabled"
-                      @change="getData"
+                <el-radio-group
+                  v-if="attrs.quickFilter"
+                  v-model="quickFilter"
+                  :style="attrs.quickFilter.style"
+                  :class="attrs.quickFilter.className"
+                  :disabled="attrs.quickFilter.disabled"
+                  @change="getData"
+                >
+                  <el-radio-button
+                    v-if="attrs.quickFilter"
+                    v-for="(radio, index) in attrs.quickFilter.options"
+                    :style="radio.style"
+                    :class="radio.className"
+                    :key="index"
+                    :label="radio.label"
+                    :disabled="radio.disabled"
+                    :border="radio.border"
+                    :size="radio.size"
+                    >{{ radio.title }}</el-radio-button
                   >
-                      <el-radio-button
-                          v-if="attrs.quickFilter"
-                          v-for="(radio, index) in attrs.quickFilter.options"
-                          :style="radio.style"
-                          :class="radio.className"
-                          :key="index"
-                          :label="radio.label"
-                          :disabled="radio.disabled"
-                          :border="radio.border"
-                          :size="radio.size"
-                      >{{ radio.title }}</el-radio-button>
-                  </el-radio-group>
-
+                </el-radio-group>
               </div>
             </div>
             <div class="grid-top-container-right">
@@ -151,7 +166,7 @@
                 :attrs="component"
                 :filterData="filterFormData"
               />
-                <!-- deep-admin filterData -->
+              <!-- deep-admin filterData -->
               <template v-if="attrs.attributes.topTool">
                 <el-divider
                   direction="vertical"
@@ -194,7 +209,7 @@
                 </div>
               </template>
             </div>
-        </div>
+          </div>
         </div>
       </div>
       <div>
@@ -218,6 +233,13 @@
           @sort-change="onTableSortChange"
           @selection-change="onTableselectionChange"
         >
+          <el-table-column
+            label="序号"
+            type="index"
+            align="center"
+            :index="indexAdd"
+          >
+          </el-table-column>
           <el-table-column
             v-if="attrs.attributes.selection"
             align="center"
@@ -339,7 +361,7 @@ export default {
     BatchActions,
     DialogForm,
     DrawerForm,
-    SelectMenu
+    SelectMenu,
   },
   props: {
     attrs: Object,
@@ -357,15 +379,15 @@ export default {
       },
       page: 1, //当前页
       quickSearch: null, //快捷搜索内容
-      quickFilter: '', //快捷筛选内容 <!--deep admin-->
-      tabFilter:'',
+      quickFilter: "", //快捷筛选内容 <!--deep admin-->
+      tabFilter: "",
       selectionRows: [], //已选择的row
       filterFormData: null, //表单搜索数据
       tabsSelectdata: {},
       tabsActiveName: "all",
       topViewHeight: 0,
       toolbarsViewHeight: 0,
-      addOrEdit:'', //点击的action是否是添加或修改
+      addOrEdit: "", //点击的action是否是添加或修改
     };
   },
   mounted() {
@@ -373,18 +395,16 @@ export default {
     this.filterFormData = this._.cloneDeep(this.attrs.filter.filterFormData);
     this.sort = this._.cloneDeep(this.attrs.defaultSort);
     //deep admin start
-      if(this.attrs.quickFilter){
-          this.quickFilter = this._.cloneDeep(
-              this.attrs.quickFilter.defaultValue
-          );
-      }
-    //tab搜索的默认值
-    if(this.attrs.tabFilter){
-      this.tabFilter = String(this._.cloneDeep(
-          this.attrs.tabFilter.defaultValue
-      ));
+    if (this.attrs.quickFilter) {
+      this.quickFilter = this._.cloneDeep(this.attrs.quickFilter.defaultValue);
     }
-      //deep admin end
+    //tab搜索的默认值
+    if (this.attrs.tabFilter) {
+      this.tabFilter = String(
+        this._.cloneDeep(this.attrs.tabFilter.defaultValue)
+      );
+    }
+    //deep admin end
     //初始化vuex状态值
     if (this.$store.getters.thisPage.grids.page) {
       this.page = this._.cloneDeep(this.$store.getters.thisPage.grids.page);
@@ -423,15 +443,15 @@ export default {
       this.loading = status;
     });
 
-    this.$bus.on("showDialogGridFrom", ({ isShow, key , addOrEdit }) => {
-      this.addOrEdit = addOrEdit || this.addOrEdit ;
+    this.$bus.on("showDialogGridFrom", ({ isShow, key, addOrEdit }) => {
+      this.addOrEdit = addOrEdit || this.addOrEdit;
       this.$refs["DialogGridFrom"].dialogVisible = isShow;
       this.$refs["DialogGridFrom"].key = key;
     });
 
     // 监听刷新页面
     this.$bus.on("reloadGridFrom", () => {
-      if(this.attrs.isReload) {
+      if (this.attrs.isReload) {
         this.$bus.emit("pageReload");
       }
     });
@@ -440,14 +460,13 @@ export default {
       this.topViewHeight = this.$refs.topView.offsetHeight;
       this.toolbarsViewHeight = this.$refs.toolbarsView.offsetHeight;
     });
-
   },
   updated() {
     this.$nextTick(() => {
-      this.$refs.table.doLayout()
-    })
-    this.$bus.on("showDialogGridFrom", ({ isShow, key , addOrEdit }) => {
-      this.addOrEdit = addOrEdit || this.addOrEdit ;
+      this.$refs.table.doLayout();
+    });
+    this.$bus.on("showDialogGridFrom", ({ isShow, key, addOrEdit }) => {
+      this.addOrEdit = addOrEdit || this.addOrEdit;
       this.$refs["DialogGridFrom"].dialogVisible = isShow;
       this.$refs["DialogGridFrom"].key = key;
     });
@@ -461,13 +480,19 @@ export default {
     } catch (e) {}
   },
   methods: {
+    // 自增id
+    indexAdd(index) {
+      return (
+        index + 1 + (this.pageData.currentPage - 1) * this.pageData.pageSize
+      );
+    },
     // 更改为String类型
     setName(value) {
-      return String(value)
+      return String(value);
     },
     // 切换tab状态
     handleClick(tab, event) {
-      console.log(tab,event)
+      console.log(tab, event);
       this.getData();
     },
     onTabClick(e) {
@@ -495,21 +520,20 @@ export default {
     //获取数据
     getData() {
       this.loading = true;
-      this.$http
-        [this.attrs.method](this.attrs.dataUrl, {
-          params: {
-            get_data: true,
-            page: this.page,
-            per_page: this.pageData.pageSize,
-            ...this.sort,
-            ...this.q_search,
-            ...this.quick_filter, //deep admin
-            ...this.tab_filter,
-            ...this.filterFormData,
-            ...this.tabsSelectdata,
-            ...this.$route.query,
-          },
-        })
+      this.$http[this.attrs.method](this.attrs.dataUrl, {
+        params: {
+          get_data: true,
+          page: this.page,
+          per_page: this.pageData.pageSize,
+          ...this.sort,
+          ...this.q_search,
+          ...this.quick_filter, //deep admin
+          ...this.tab_filter,
+          ...this.filterFormData,
+          ...this.tabsSelectdata,
+          ...this.$route.query,
+        },
+      })
         .then(({ data }) => {
           if (!this.attrs.hidePage) {
             this.tableData = data.data;
@@ -540,12 +564,12 @@ export default {
             key: "quickSearch",
             data: this.quickSearch,
           });
-            //deep admin start
-            this.$store.commit("setGridData", {
-                key: "quickFilter",
-                data: this.quickFilter,
-            });
-            //deep admin end
+          //deep admin start
+          this.$store.commit("setGridData", {
+            key: "quickFilter",
+            data: this.quickFilter,
+          });
+          //deep admin end
           this.$store.commit("setGridData", {
             key: "filterFormData",
             data: this.filterFormData,
@@ -587,83 +611,111 @@ export default {
       this.getData();
     },
     downMove(sort) {
-      this.tableData = this.tableData.sort(this.compare('sort',false));
+      this.tableData = this.tableData.sort(this.compare("sort", false));
       // 当前操作项index
-      let index = this.tableData.findIndex(function(item) {
-          return item.sort == sort;
+      let index = this.tableData.findIndex(function (item) {
+        return item.sort == sort;
       });
       // sort属性index
-      let cIndex = this.attrs.columnAttributes.findIndex(function(item) {
-          return item.columnKey === 'sort';
+      let cIndex = this.attrs.columnAttributes.findIndex(function (item) {
+        return item.columnKey === "sort";
       });
       let downItem = this.tableData[index + 1];
-      let curItem = this.tableData[index]
+      let curItem = this.tableData[index];
       // 当前页最后一项下移重新加载列表
       if (index + 1 === this.tableData.length) {
-        this.setSort(this.attrs.columnAttributes[cIndex].displayComponentAttrs.setSortAction, 'down', curItem.id, '', true)
+        this.setSort(
+          this.attrs.columnAttributes[cIndex].displayComponentAttrs
+            .setSortAction,
+          "down",
+          curItem.id,
+          "",
+          true
+        );
       } else {
-        this.tableData[index].sort = this.tableData[index+1].sort
-        this.tableData[index+1].sort = sort
+        this.tableData[index].sort = this.tableData[index + 1].sort;
+        this.tableData[index + 1].sort = sort;
         this.tableData[index + 1] = this.tableData[index];
         this.tableData[index] = downItem;
-        this.$set(this.tableData, index+1, curItem);
+        this.$set(this.tableData, index + 1, curItem);
         this.$set(this.tableData, index, downItem);
-        this.setSort(this.attrs.columnAttributes[cIndex].displayComponentAttrs.setSortAction, 'down', curItem.id, downItem.id, false)
+        this.setSort(
+          this.attrs.columnAttributes[cIndex].displayComponentAttrs
+            .setSortAction,
+          "down",
+          curItem.id,
+          downItem.id,
+          false
+        );
       }
     },
     upMove(sort) {
-      this.tableData = this.tableData.sort(this.compare('sort',false));
+      this.tableData = this.tableData.sort(this.compare("sort", false));
       // 当前操作项index
-      let index = this.tableData.findIndex(function(item) {
-          return item.sort == sort;
+      let index = this.tableData.findIndex(function (item) {
+        return item.sort == sort;
       });
       // sort属性index
-      let cIndex = this.attrs.columnAttributes.findIndex(function(item) {
-          return item.columnKey === 'sort';
+      let cIndex = this.attrs.columnAttributes.findIndex(function (item) {
+        return item.columnKey === "sort";
       });
       let downItem = this.tableData[index - 1];
-      let curItem = this.tableData[index]
+      let curItem = this.tableData[index];
       // 当前页第一项上移重新加载列表
       if (index === 0) {
-        this.setSort(this.attrs.columnAttributes[cIndex].displayComponentAttrs.setSortAction, 'up', curItem.id, '', true)
+        this.setSort(
+          this.attrs.columnAttributes[cIndex].displayComponentAttrs
+            .setSortAction,
+          "up",
+          curItem.id,
+          "",
+          true
+        );
       } else {
-        this.tableData[index].sort = this.tableData[index-1].sort
-        this.tableData[index-1].sort = sort
+        this.tableData[index].sort = this.tableData[index - 1].sort;
+        this.tableData[index - 1].sort = sort;
         this.tableData[index - 1] = this.tableData[index];
         this.tableData[index] = downItem;
-        this.$set(this.tableData, index-1, curItem);
+        this.$set(this.tableData, index - 1, curItem);
         this.$set(this.tableData, index, downItem);
-        this.setSort(this.attrs.columnAttributes[cIndex].displayComponentAttrs.setSortAction, 'up', curItem.id, downItem.id, false)
+        this.setSort(
+          this.attrs.columnAttributes[cIndex].displayComponentAttrs
+            .setSortAction,
+          "up",
+          curItem.id,
+          downItem.id,
+          false
+        );
       }
     },
-    compare(attr,rev){
-        //第二个参数没有传递 默认升序排列
-        if(rev ==  undefined){
-            rev = 1;
-        }else{
-            rev = (rev) ? 1 : -1;
+    compare(attr, rev) {
+      //第二个参数没有传递 默认升序排列
+      if (rev == undefined) {
+        rev = 1;
+      } else {
+        rev = rev ? 1 : -1;
+      }
+      return function (a, b) {
+        a = a[attr];
+        b = b[attr];
+        if (a < b) {
+          return rev * -1;
         }
-        return function(a,b){
-            a = a[attr];
-            b = b[attr];
-            if(a < b){
-                return rev * -1;
-            }
-            if(a > b){
-                return rev * 1;
-            }
-            return 0;
+        if (a > b) {
+          return rev * 1;
         }
+        return 0;
+      };
     },
     setSort(url, type, curId, changeId, refreshTable) {
       let param = {
         sort_type: type,
-        current_id: curId
-      }
+        current_id: curId,
+      };
       if (changeId) {
-        Object.assign(param, { change_id: changeId })
+        Object.assign(param, { change_id: changeId });
       }
-      this.onRequest(url, param, refreshTable)
+      this.onRequest(url, param, refreshTable);
     },
     /**
      * uri 接口路径
@@ -671,33 +723,40 @@ export default {
      * refreshTable 是否重新请求table数据
      */
     onRequest(uri, params, refreshTable) {
-      this.$http.post(uri, params)
-        .then((res) => {
-          if (res.code == 200) {
-            if (refreshTable) {
-              this.tableData = []
-              this.getData()
-            }
+      this.$http.post(uri, params).then((res) => {
+        if (res.code == 200) {
+          if (refreshTable) {
+            this.tableData = [];
+            this.getData();
           }
-        })
+        }
+      });
     },
     /**
      * 获取DialogForm的展示数据
      * type 获取的类型数据--1:dialogFormWidth 2:dialogForm 3:dialogTitle
      */
-    getDialogFormData(type){
+    getDialogFormData(type) {
       let actionType = this.addOrEdit;
-      if(type==1){
-        if(actionType) return this.attrs[actionType+'DialogFormWidth'] || this.attrs.dialogFormWidth;
-        return this.attrs.dialogFormWidth
-      }else if(type==2){
-        if(actionType) return this.attrs[actionType+'DialogForm'] || this.attrs.dialogForm;
-        return this.attrs.dialogForm
-      }else if(type==3){
-        if(actionType) return this.attrs[actionType+'DialogFormTitle'] || this.attrs.dialogTitle;
-        return this.attrs.dialogTitle
+      if (type == 1) {
+        if (actionType)
+          return (
+            this.attrs[actionType + "DialogFormWidth"] ||
+            this.attrs.dialogFormWidth
+          );
+        return this.attrs.dialogFormWidth;
+      } else if (type == 2) {
+        if (actionType)
+          return this.attrs[actionType + "DialogForm"] || this.attrs.dialogForm;
+        return this.attrs.dialogForm;
+      } else if (type == 3) {
+        if (actionType)
+          return (
+            this.attrs[actionType + "DialogFormTitle"] || this.attrs.dialogTitle
+          );
+        return this.attrs.dialogTitle;
       }
-    }
+    },
   },
   computed: {
     keys() {
@@ -719,20 +778,23 @@ export default {
     },
     //默认排序
     default_sort_get() {
-      let defaultSort = {}
+      let defaultSort = {};
       // 有sort按sort排序
-      if (this.attrs.columnAttributes.map(a => a.prop).indexOf('sort') > -1) {
+      if (this.attrs.columnAttributes.map((a) => a.prop).indexOf("sort") > -1) {
         defaultSort = {
-          prop: 'sort',
-          order: this.sort && this.sort.sort_order == "asc" ? "ascending" : "descending",
-        }
-      } else if(this.sort) {
+          prop: "sort",
+          order:
+            this.sort && this.sort.sort_order == "asc"
+              ? "ascending"
+              : "descending",
+        };
+      } else if (this.sort) {
         defaultSort = {
           prop: this.sort.sort_prop,
           order: this.sort.sort_order == "asc" ? "ascending" : "descending",
-        }
+        };
       }
-      return defaultSort
+      return defaultSort;
       // return this.sort
       //   ? {
       //       prop: this.sort.sort_prop,
@@ -751,17 +813,17 @@ export default {
     tab_filter() {
       const tab_filter = new Object();
       this.attrs.tabFilter &&
-      (tab_filter[this.attrs.tabFilter.filterKey] = this.tabFilter);
+        (tab_filter[this.attrs.tabFilter.filterKey] = this.tabFilter);
       return tab_filter;
     },
     //deep admin start
-      quick_filter() {
-          const quick_filter = new Object();
-          this.attrs.quickFilter &&
-          (quick_filter[this.attrs.quickFilter.filterKey] = this.quickFilter);
-          return quick_filter;
-      },
-     //deep admin end
+    quick_filter() {
+      const quick_filter = new Object();
+      this.attrs.quickFilter &&
+        (quick_filter[this.attrs.quickFilter.filterKey] = this.quickFilter);
+      return quick_filter;
+    },
+    //deep admin end
     gridHeight() {
       if (this.attrs.attributes.height == "auto") {
         return (
@@ -845,17 +907,17 @@ export default {
       }
     }
   }
-  .filter-form-style-center{
+  .filter-form-style-center {
     .el-form {
       display: flex;
       justify-content: center;
     }
   }
-  .left-tyle{
+  .left-tyle {
     background: white;
     margin-right: 5px;
-    .el-form-item{
-      margin-top:5px;
+    .el-form-item {
+      margin-top: 5px;
     }
   }
 }
