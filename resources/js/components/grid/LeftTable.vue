@@ -402,6 +402,7 @@
                     <el-table-column
                       type="index"
                       :key="column.prop + 1"
+                      :index="indexAdd"
                       v-if="column.type == 'index'"
                       :column-key="column.columnKey"
                       :prop="column.prop"
@@ -692,6 +693,12 @@ export default {
     } catch (e) {}
   },
   methods: {
+    // 自增id
+    indexAdd(index) {
+      return (
+        index + 1 + (this.pageData.currentPage - 1) * this.pageData.pageSize
+      );
+    },
     // 获取Tree树状结构数据
     getTreeData() {
       this.treeLoading = true;

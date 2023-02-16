@@ -248,6 +248,7 @@
               <el-table-column
                 type="index"
                 :key="column.prop + 1"
+                :index="indexAdd"
                 v-if="column.type == 'index'"
                 :column-key="column.columnKey"
                 :prop="column.prop"

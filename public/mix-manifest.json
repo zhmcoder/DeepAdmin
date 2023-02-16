@@ -1,5 +1,11 @@
 {
+<<<<<<< HEAD
     "/app.js": "/app.js?id=f2176233305aafee8bb8",
     "/manifest.js": "/manifest.js?id=14b1f311b370916d0f9f",
     "/vendor.js": "/vendor.js?id=ce8d3fd974e26b647e1e"
+=======
+    "/app.js": "/app.js?id=c849f6d583d58fcb4f6c",
+    "/manifest.js": "/manifest.js?id=003ecff85b905ca98bca",
+    "/vendor.js": "/vendor.js?id=75c924b6fbca0e93f18d"
+>>>>>>> a0371fb (fix)
 }
