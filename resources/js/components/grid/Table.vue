@@ -234,13 +234,6 @@
           @selection-change="onTableselectionChange"
         >
           <el-table-column
-            label="序号"
-            type="index"
-            align="center"
-            :index="indexAdd"
-          >
-          </el-table-column>
-          <el-table-column
             v-if="attrs.attributes.selection"
             align="center"
             type="selection"
@@ -251,38 +244,50 @@
             width="80"
           ></el-table-column>
           <template v-for="column in attrs.columnAttributes">
-            <el-table-column
-              :type="column.type"
-              :key="column.prop"
-              :column-key="column.columnKey"
-              :prop="column.prop"
-              :label="column.label"
-              :width="column.width"
-              :sortable="column.sortable"
-              :help="column.help"
-              :align="column.align"
-              :fixed="column.fixed"
-              :header-align="column.headerAlign"
-            >
-              <template slot="header" slot-scope="scope">
-                <span>{{ scope.column.label }}</span>
-                <el-tooltip
-                  placement="top"
-                  v-if="column.help"
-                  :content="column.help"
-                >
-                  <i class="el-icon-question hover"></i>
-                </el-tooltip>
-              </template>
-              <template slot-scope="scope">
-                <ColumnDisplay
-                  :scope="scope"
-                  :columns="attrs.columnAttributes"
-                  @downMove="downMove"
-                  @upMove="upMove"
-                />
-              </template>
-            </el-table-column>
+            <template>
+              <el-table-column
+                :key="column.prop + 1"
+                v-if="column.type == 'index'"
+                :label="column.label"
+                type="index"
+                align="center"
+                :index="indexAdd"
+              >
+              </el-table-column>
+              <el-table-column
+                v-else
+                :type="column.type"
+                :key="column.prop"
+                :column-key="column.columnKey"
+                :prop="column.prop"
+                :label="column.label"
+                :width="column.width"
+                :sortable="column.sortable"
+                :help="column.help"
+                :align="column.align"
+                :fixed="column.fixed"
+                :header-align="column.headerAlign"
+              >
+                <template slot="header" slot-scope="scope">
+                  <span>{{ scope.column.label }}</span>
+                  <el-tooltip
+                    placement="top"
+                    v-if="column.help"
+                    :content="column.help"
+                  >
+                    <i class="el-icon-question hover"></i>
+                  </el-tooltip>
+                </template>
+                <template slot-scope="scope">
+                  <ColumnDisplay
+                    :scope="scope"
+                    :columns="attrs.columnAttributes"
+                    @downMove="downMove"
+                    @upMove="upMove"
+                  />
+                </template>
+              </el-table-column>
+            </template>
           </template>
           <el-table-column
             v-if="!attrs.attributes.hideActions"
