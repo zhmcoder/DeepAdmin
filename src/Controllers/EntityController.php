@@ -52,7 +52,7 @@ class EntityController extends BaseController
                 ->handler('route')
                 ->uri('/entities/entity-field?entity_id={id}')
             );
-            $actions->setDeleteAction(new Grid\Actions\DeleteDialogAction());
+            $actions->deleteAction()->popWidth();
         })->actionWidth(120);
 
         return $grid;

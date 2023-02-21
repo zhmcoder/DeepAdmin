@@ -14,6 +14,7 @@ trait Button
     protected $icon;
     protected $autofocus = false;
     protected $isDialog = false;
+    protected $popWidth = 200;
 
     /**
      * @param mixed $content
@@ -112,5 +113,10 @@ trait Button
         return $this;
     }
 
+    public function popWidth($popWidth = 200)
+    {
+        $this->popWidth = $popWidth;
+        return $this;
+    }
 
 }
