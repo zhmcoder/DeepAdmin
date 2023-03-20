@@ -5,7 +5,13 @@
   >
     <div class="page-account-container">
       <div class="page-account-top">
-        <div class="page-account-top-logo">
+        <div
+          :class="
+            page_data.columnStyle
+              ? 'column page-account-top-logo'
+              : 'page-account-top-logo'
+          "
+        >
           <template v-if="page_data.logoShow">
             <img :src="page_data.logo" v-if="page_data.logo" alt="logo" />
             <img src="../assets/logo.svg" v-else alt="logo" />
@@ -54,7 +60,7 @@
               :loading="loading"
               @click="handleSubmit('formValidate')"
               type="primary"
-              style="width: 100%;"
+              style="width: 100%"
               long
               >登录
             </el-button>
@@ -172,5 +178,11 @@ export default {
   text-align: center;
   color: rgba(0, 0, 0, 0.45);
   font-size: 14px;
+}
+#row {
+  flex-direction: row !important;
+}
+#column {
+  flex-direction: column !important;
 }
 </style>
