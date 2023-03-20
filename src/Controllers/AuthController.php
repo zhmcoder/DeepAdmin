@@ -41,6 +41,7 @@ class AuthController extends AdminController
         $data['name'] = config('deep_admin.name');
         $data['desc'] = config('deep_admin.loginDesc');
         $data['auto_user'] = config('deep_admin.auto_user');
+        $data['columnStyle'] = config('deep_admin.columnStyle');
 
         $data['url']['postLogin'] = route('admin.post.login');
 

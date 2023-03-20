@@ -6,6 +6,7 @@ return [
     'loginDesc' => env('LOGIN_DESC', 'DeepAdmin 是开箱即用的 Laravel 后台扩展'), // 登录界面描述
     'logo_show' => false,
     'logo' => null, // logo 地址 null为内置默认 分为黑暗和明亮两种
+    'columnStyle' => true,
     'logo_mini' => null,
     'logo_light' => null,
     'logo_mini_light' => null,
