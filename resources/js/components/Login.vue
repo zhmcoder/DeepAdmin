@@ -179,10 +179,7 @@ export default {
   color: rgba(0, 0, 0, 0.45);
   font-size: 14px;
 }
-#row {
-  flex-direction: row !important;
-}
-#column {
+.column {
   flex-direction: column !important;
 }
 </style>
