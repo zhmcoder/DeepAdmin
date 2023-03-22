@@ -5,7 +5,6 @@
   >
     <div class="page-account-container">
       <div class="page-account-top">
-        page_data.columnStyle {{ page_data.columnStyle }}
         <div
           :class="
             page_data.columnStyle
