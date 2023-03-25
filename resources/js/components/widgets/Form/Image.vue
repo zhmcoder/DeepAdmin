@@ -2,7 +2,7 @@
 <template>
   <div>
     <el-image
-      v-for="(item, index) in srcList"
+      v-for="(item, index) in attrs.srcList"
       :key="index"
       style="width: 100px; height: 100px"
       :src="item"
