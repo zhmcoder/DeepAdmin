@@ -7,16 +7,16 @@ use Andruby\DeepAdmin\Components\Component;
 class Image extends Component
 {
     protected $componentName = "Image";
-    protected $image_list;
+    protected $srcList;
 
     public static function make()
     {
         return new Image();
     }
 
-    public function image_list($image_list)
+    public function srcList($srcList)
     {
-        $this->image_list = $image_list;
+        $this->srcList = $srcList;
         return $this;
     }
 
