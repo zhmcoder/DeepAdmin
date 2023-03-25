@@ -4,14 +4,14 @@ namespace Andruby\DeepAdmin\Components\Widgets;
 
 use Andruby\DeepAdmin\Components\Component;
 
-class Image extends Component
+class ImageList extends Component
 {
-    protected $componentName = "Image";
+    protected $componentName = "ImageList";
     protected $srcList;
 
     public static function make()
     {
-        return new Image();
+        return new ImageList();
     }
 
     public function srcList($srcList)
