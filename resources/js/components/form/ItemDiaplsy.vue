@@ -55,7 +55,7 @@ import SelectMenu from "../widgets/Form/SelectMenu.vue";
 export default {
   mixins: [BaseComponent],
   components: {
-    SelectMenu
+    SelectMenu,
   },
   props: {
     value: {
@@ -67,9 +67,9 @@ export default {
     //当前表单数据
     formData: Object,
     //更改select后的默认初始值
-    defaultPropValues:{
-      default:null
-    }
+    defaultPropValues: {
+      default: null,
+    },
   },
   data() {
     return {};
@@ -84,69 +84,72 @@ export default {
     },
   },
   methods: {
-      //deep admin start
-      onChangeRelation(attrs,resValue){
-          console.log('onChangeRelation ');
-          console.log(attrs);
-          if(attrs['isRelatedSelect'] == true){
-              let form_item = null;
-              this.formItems.forEach(item=>{
-                  if(item.prop==attrs['relatedSelectRef']){
-                      form_item = item;
-                      return;
-                  }
-              })
-              this.$http
-                  .get(form_item['component']['remoteUrl'], {
-                      params: {
-                          [attrs.ref]:resValue
-                      }
-                  })
-                  .then(res => {
-                      const data = res.data.data || res.data;
-                      // if (data && data.length) {
-                          let length = form_item['component']['options'].length;
-                          for(let i=0;i<length;i++){
-                              form_item['component']['options'].splice(0,1);
-                          }
-                          console.log(form_item.prop);
-                          this.formData[form_item.prop] = '';
-                          if(form_item['component']['relatedComponents']!=null&&
-                              form_item['component']['relatedComponents'].length>0 ){
-                              form_item['component']['relatedComponents'].forEach(item=>{
-                                  this.formData[item]='';
-                              })
-                          }
-                          if(data && data.length){
-                            form_item['component']['options'].push(...data);
-                          }
-                          form_item['component'].paginate=0;
-                      // }
-                  });
+    //deep admin start
+    onChangeRelation(attrs, resValue) {
+      console.log("onChangeRelation ");
+      console.log(attrs);
+      if (attrs["isRelatedSelect"] == true) {
+        let form_item = null;
+        this.formItems.forEach((item) => {
+          if (item.prop == attrs["relatedSelectRef"]) {
+            form_item = item;
+            return;
           }
-      },
-      //deep admin end
-      onChangeMoreRelation(attrs,component,resValue){
-          var newAttrs = JSON.parse(JSON.stringify(attrs));
-          newAttrs.component.map(citem=>{
-						if(citem.prop == component.relatedSelectRef){
-							this.$http.get(citem.component.remoteUrl, {
-								params: {
-									[component.ref]: resValue
-								}
-							})
-							.then(res => {
-								citem.component.options = res.data.data;
-                this.formItem['component'] = newAttrs
-							})
-						}
-					})
-      },
+        });
+        this.$http
+          .get(form_item["component"]["remoteUrl"], {
+            params: {
+              [attrs.ref]: resValue,
+            },
+          })
+          .then((res) => {
+            const data = res.data.data || res.data;
+            // if (data && data.length) {
+            let length = form_item["component"]["options"].length;
+            for (let i = 0; i < length; i++) {
+              form_item["component"]["options"].splice(0, 1);
+            }
+            console.log(form_item.prop);
+            this.formData[form_item.prop] = "";
+            if (
+              form_item["component"]["relatedComponents"] != null &&
+              form_item["component"]["relatedComponents"].length > 0
+            ) {
+              form_item["component"]["relatedComponents"].forEach((item) => {
+                this.formData[item] = "";
+              });
+            }
+            if (data && data.length) {
+              form_item["component"]["options"].push(...data);
+            }
+            form_item["component"].paginate = 0;
+            // }
+          });
+      }
+    },
+    //deep admin end
+    onChangeMoreRelation(attrs, component, resValue) {
+      var newAttrs = JSON.parse(JSON.stringify(attrs));
+      newAttrs.component.map((citem) => {
+        if (citem.prop == component.relatedSelectRef) {
+          this.$http
+            .get(citem.component.remoteUrl, {
+              params: {
+                [component.ref]: resValue,
+              },
+            })
+            .then((res) => {
+              citem.component.options = res.data.data;
+              this.formItem["component"] = newAttrs;
+            });
+        }
+      });
+    },
     onChange(value) {
       this.$emit("change", value);
-      
-      if(this.attrs.componentName=='RowMulti'){
-        if(this.attrs.multiData){
+
+      if (this.attrs.componentName == "RowMulti") {
+        if (this.attrs.multiData) {
           this.attrs.multiData = value;
         }
       }
