@@ -1,15 +1,15 @@
 <template>
   <div>
     <el-image
-      v-for="(item, index) in "
+      v-for="(item, index) in srcList"
       :key="index"
       :style="attrs.style"
       :class="attrs.className"
       :fit="attrs.fit"
       :lazy="attrs.lazy"
-      :src="src"
+      :src="item"
       :scroll-container="attrs.scrollContainer"
-      :preview-src-list="previewSrcList"
+      :preview-src-list="value"
     />
   </div>
 </template>
@@ -32,9 +32,9 @@ export default {
     };
   },
   mounted() {
-    console.log("attrs", this.attrs);
     if (this.attrs.max) {
-      this.srcList = this.value.splice(0, this.attrs.max);
+      var newValue = JSON.parse(JSON.stringify(this.value));
+      this.srcList = newValue.splice(0, this.attrs.max);
     } else {
     }
   },
