@@ -436,7 +436,6 @@ export default {
     });
 
     this.$bus.on("msgDialogShow", ({ isMsgDialogShow, msgDialog }) => {
-      console.log("on isMsgDialogShow=" + isMsgDialogShow);
       if (msgDialog) {
         this.dialog_attrs.title = msgDialog.title;
         this.dialog_attrs.content = msgDialog.content;

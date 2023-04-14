@@ -97,7 +97,6 @@ export default {
   mounted() {
     this.form.username = this.page_data.auto_user.username;
     this.form.password = this.page_data.auto_user.password;
-    console.log("page_data", this.page_data);
     this.$nextTick(() => {});
   },
   methods: {
