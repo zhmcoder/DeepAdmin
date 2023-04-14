@@ -23,6 +23,12 @@ trait TraitFormAttrs
         return $this;
     }
 
+    public function formKey($formKey)
+    {
+        $this->attrs->formKey = $formKey;
+        return $this;
+    }
+
     /**
      * 表单验证规则
      * @param array $rules

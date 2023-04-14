@@ -1,12 +1,26 @@
 <template>
   <div class="display-column">
     <template v-if="_.isArray(value)">
-      <template v-for="(item, key) in value">
-        <Value :value="item" :column-attr="columnAttr" :key="key" :row="row" :column-value="value" @onMoveDown="onMoveDown" @onMoveUp="onMoveUp"/>
-      </template>
+      <!-- <template v-for="(item, key) in value"> -->
+      <Value
+        :value="value"
+        :column-attr="columnAttr"
+        :row="row"
+        :column-value="value"
+        @onMoveDown="onMoveDown"
+        @onMoveUp="onMoveUp"
+      />
+      <!-- </template> -->
     </template>
     <template v-else>
-      <Value :value="value" :column-attr="columnAttr" :row="row" :column-value="value" @onMoveDown="onMoveDown" @onMoveUp="onMoveUp"/>
+      <Value
+        :value="value"
+        :column-attr="columnAttr"
+        :row="row"
+        :column-value="value"
+        @onMoveDown="onMoveDown"
+        @onMoveUp="onMoveUp"
+      />
     </template>
   </div>
 </template>
@@ -16,24 +30,22 @@ import Value from "./Column";
 export default {
   props: {
     scope: Object,
-    columns: Array
+    columns: Array,
   },
   components: {
-    Value
+    Value,
   },
   data() {
     return {};
   },
-  mounted() {
-
-  },
+  mounted() {},
   computed: {
     value() {
-      return this._.get(this.row,this.columnKey,"");
+      return this._.get(this.row, this.columnKey, "");
     },
     columnAttr() {
       try {
-        return this.columns.filter(item => {
+        return this.columns.filter((item) => {
           return item.prop == this.columnKey;
         })[0];
       } catch (e) {
@@ -51,16 +63,16 @@ export default {
     },
     columnKeyPath() {
       return this._.split(this.columnKey, ".");
-    }
+    },
   },
   filters: {},
   methods: {
     onMoveDown(sort) {
-      this.$emit('downMove', sort)
+      this.$emit("downMove", sort);
     },
     onMoveUp(sort) {
-      this.$emit('upMove', sort)
-    }
+      this.$emit("upMove", sort);
+    },
   },
 };
 </script>

@@ -112,6 +112,17 @@ class Image extends GridComponent
     }
 
     /**
+     * 展示几账图片
+     * @param $max
+     * @return $this
+     */
+    public function max($max = '')
+    {
+        $this->max = $max;
+        return $this;
+    }
+
+    /**
      * @param string $host
      * @return $this
      */
