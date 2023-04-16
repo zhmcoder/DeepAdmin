@@ -293,8 +293,6 @@ class ContentController extends AdminController
                             }
                         }
                         return $return;
-                    })->component(function () {
-                        return Tag::make()->type('success');
                     });
                     break;
 
