@@ -283,16 +283,18 @@ class ContentController extends AdminController
                     $obj->customValue(function ($row, $value) use ($formParams, $val) {
                         $value = (!empty($val['prop'])) ? $row[$val['prop']] : $value; // 使用字段
 
-                        $return = [];
+                        $return = '';
                         if (!empty($formParams[0]) && !empty($formParams[1]) && !empty($formParams[2])) {
                             $model = new Content($formParams[0]);
                             if (!empty($value)) {
-                                $return[] = GridCacheService::instance()
+                                $return = GridCacheService::instance()
                                     ->get_cache_value($model, $formParams[0] . '_' . $formParams[1] . '_' . $value,
                                         $value, $formParams[1], $formParams[2]);;
                             }
                         }
                         return $return;
+                    })->component(function () {
+                        return Tag::make()->type('success');
                     });
                     break;
 
