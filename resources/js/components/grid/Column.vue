@@ -15,13 +15,13 @@
 export default {
   props: {
     value: {
-      default: null
+      default: null,
     },
     columnAttr: Object,
     row: Object,
     columnValue: {
-      default: null
-    }
+      default: null,
+    },
   },
   computed: {
     attrs() {
@@ -45,15 +45,15 @@ export default {
       } catch (error) {
         return "default";
       }
-    }
+    },
   },
   methods: {
     moveDown(sort) {
-      this.$emit('onMoveDown', sort)
+      this.$emit("onMoveDown", sort);
     },
     moveUp(sort) {
-      this.$emit('onMoveUp', sort)
-    }
+      this.$emit("onMoveUp", sort);
+    },
   },
 };
 </script>

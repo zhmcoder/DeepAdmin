@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="srcList.length">
     <el-image
       v-for="(item, index) in srcList"
       :key="index"
@@ -12,6 +12,16 @@
       :preview-src-list="value"
     />
   </div>
+  <el-image
+    v-else
+    :style="attrs.style"
+    :class="attrs.className"
+    :fit="attrs.fit"
+    :lazy="attrs.lazy"
+    :src="src"
+    :scroll-container="attrs.scrollContainer"
+    :preview-src-list="previewSrcList"
+  />
 </template>
 <script>
 import { getFileUrl } from "@/utils";
