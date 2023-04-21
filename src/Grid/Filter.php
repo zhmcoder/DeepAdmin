@@ -45,6 +45,7 @@ class Filter
     protected $name = '';
 
     public $expand = false;
+    public $exportUri = null;
 
     /**
      * @var Collection
@@ -138,6 +139,18 @@ class Filter
         return $this;
     }
 
+    /**
+     * 搜索导出按钮，空不展示
+     * @param $exportUri
+     * @return $this
+     */
+    public function exportUri($exportUri)
+    {
+        $this->exportUri = $exportUri;
+
+        return $this;
+    }
+
     public function leftAction($leftAction = '')
     {
         $this->leftAction = $leftAction;
@@ -208,6 +221,7 @@ class Filter
             'filterFormData' => $this->filterFormData,
             'leftAction' => $this->leftAction,
             'reload' => $this->reload,
+            'exportUri' => $this->exportUri,
         ];
     }
 
