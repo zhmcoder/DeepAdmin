@@ -73,6 +73,18 @@
             <el-form-item>
               <el-button type="primary" @click="onFilterSubmit">搜索</el-button>
               <el-button @click="onFilterReset">重置</el-button>
+              <el-button
+                v-if="attrs.filter.exportUri"
+                @click="() => onFilterExport(1)"
+              >
+                {{ attrs.filter.exportUriText }}
+              </el-button>
+              <el-button
+                v-if="attrs.filter.exportPdf"
+                @click="() => onFilterExport(2)"
+              >
+                {{ attrs.filter.exportPdfText }}
+              </el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -494,6 +506,7 @@ export default {
   },
   methods: {
     selectEnable(row, rowIndex) {
+      console.log("this.attrs.attributes", this.attrs.attributes);
       var attrs = this.attrs.attributes;
       // 不存在则保持原来的数据
       if (!attrs.selectionFiled) {
@@ -601,6 +614,35 @@ export default {
             data: this.filterFormData,
           });
           /** */
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    // 表单导出
+    async onFilterExport(type) {
+      this.$http
+        .post(
+          type == 1 ? this.attrs.filter.exportUri : this.attrs.filter.exportPdf,
+          {
+            params: {
+              get_data: true,
+              page: this.page,
+              per_page: this.pageData.pageSize,
+              ...this.sort,
+              ...this.q_search,
+              ...this.quick_filter, //deep admin
+              ...this.tab_filter,
+              ...this.filterFormData,
+              ...this.tabsSelectdata,
+              ...this.$route.query,
+            },
+          }
+        )
+        .then(({ code, data }) => {
+          if (code == 200) {
+            window.location.href = data.action.down_url;
+          }
         })
         .finally(() => {
           this.loading = false;
