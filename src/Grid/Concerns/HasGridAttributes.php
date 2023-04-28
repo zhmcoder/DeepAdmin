@@ -192,6 +192,29 @@ trait HasGridAttributes
     }
 
     /**
+     * 是否选中判断字段
+     * @param $selectionFiled
+     * @return $this
+     */
+    public function selectionFiled($selectionFiled)
+    {
+        $this->attributes->selectionFiled = $selectionFiled;
+        return $this;
+    }
+
+    /**
+     * 是否选中判断字段 值
+     * @param $selectionValue
+     * @return $this
+     */
+    public function selectionValue($selectionValue)
+    {
+        $this->attributes->selectionValue = $selectionValue;
+        return $this;
+    }
+
+
+    /**
      * 操作栏宽度
      * @param $actionWidth
      * @return $this

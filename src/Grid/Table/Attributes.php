@@ -68,6 +68,8 @@ class Attributes
     public $actionAlign = "left";
 
     public $selection = false;
+    public $selectionFiled = null;
+    public $selectionValue = [];//数组
 
     public $dataVuex = false;
 
