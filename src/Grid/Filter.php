@@ -44,8 +44,11 @@ class Filter
 
     protected $name = '';
 
-    public $expand = false;
-    public $exportUri = null;
+    protected $expand = false;
+    protected $exportUri = null;
+    protected $exportUriText = null;
+    protected $exportPdf = null;
+    protected $exportPdfText = null;
 
     /**
      * @var Collection
@@ -151,6 +154,27 @@ class Filter
         return $this;
     }
 
+    public function exportUriText($exportUriText)
+    {
+        $this->exportUriText = $exportUriText;
+
+        return $this;
+    }
+
+    public function exportPdf($exportPdf)
+    {
+        $this->exportPdf = $exportPdf;
+
+        return $this;
+    }
+
+    public function exportPdfText($exportPdfText)
+    {
+        $this->exportPdfText = $exportPdfText;
+
+        return $this;
+    }
+
     public function leftAction($leftAction = '')
     {
         $this->leftAction = $leftAction;
@@ -222,6 +246,9 @@ class Filter
             'leftAction' => $this->leftAction,
             'reload' => $this->reload,
             'exportUri' => $this->exportUri,
+            'exportUriText' => $this->exportUriText,
+            'exportPdf' => $this->exportPdf,
+            'exportPdfText' => $this->exportPdfText,
         ];
     }
 
