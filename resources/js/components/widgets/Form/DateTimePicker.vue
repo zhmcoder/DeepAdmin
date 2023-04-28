@@ -19,6 +19,7 @@
     :value-format="attrs.valueFormat"
     :prefix-icon="attrs.prefixIcon"
     :clear-icon="attrs.clearIcon"
+    :default-time="attrs.defaultTime"
     @change="onChange"
   ></el-date-picker>
 </template>
@@ -29,7 +30,7 @@ export default {
   data() {
     return {
       vm: this._.cloneDeep(this.value),
-      init: false
+      init: false,
     };
   },
   mounted() {},
@@ -39,7 +40,7 @@ export default {
         this.vm = value;
         this.init = true;
       }
-    }
-  }
+    },
+  },
 };
 </script>

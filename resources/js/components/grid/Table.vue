@@ -235,6 +235,7 @@
         >
           <el-table-column
             v-if="attrs.attributes.selection"
+            :selectable="selectEnable"
             align="center"
             type="selection"
           ></el-table-column>
@@ -492,6 +493,19 @@ export default {
     } catch (e) {}
   },
   methods: {
+    selectEnable(row, rowIndex) {
+      var attrs = this.attrs.attributes;
+      // 不存在则保持原来的数据
+      if (!attrs.selectionFiled) {
+        return true;
+      } else {
+        if (attrs.selectionValue.indexOf(row[attrs.selectionFiled]) > -1) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    },
     // 自增id
     indexAdd(index) {
       return (
