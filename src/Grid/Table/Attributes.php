@@ -4,6 +4,8 @@ namespace Andruby\DeepAdmin\Grid\Table;
 
 class Attributes
 {
+    public $gridId;
+
     public function __construct()
     {
         $this->border = env('TABLE_BORDER', false);

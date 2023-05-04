@@ -308,4 +308,15 @@ trait HasGridAttributes
         return $this;
     }
 
+    /**
+     * 弹窗key标识
+     * @param $dialogFormKey
+     * @return $this
+     */
+    public function gridId($gridId)
+    {
+        $this->attributes->gridId = $gridId;
+        return $this;
+    }
+
 }
