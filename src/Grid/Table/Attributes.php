@@ -4,7 +4,7 @@ namespace Andruby\DeepAdmin\Grid\Table;
 
 class Attributes
 {
-    public $gridId;
+    public $gridId = null;
 
     public function __construct()
     {
