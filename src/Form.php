@@ -728,33 +728,35 @@ class Form extends Component
                 case $relation instanceof Relations\HasMany:
                 case $relation instanceof Relations\MorphMany:
 
-                    foreach ($prepared[$name] as $related) {
-                        /** @var Relations\Relation $relation */
-                        $relation = $this->model()->$name();
+                    if (!empty($prepared[$name])) {
+                        foreach ($prepared[$name] as $related) {
+                            /** @var Relations\Relation $relation */
+                            $relation = $this->model()->$name();
 
-                        $keyName = $relation->getRelated()->getKeyName();
+                            $keyName = $relation->getRelated()->getKeyName();
 
-                        $instance = $relation->findOrNew(Arr::get($related, $keyName));
+                            $instance = $relation->findOrNew(Arr::get($related, $keyName));
 
-                        //处理已删除的关联
-                        try {
-                            if ($related[static::REMOVE_FLAG_NAME] == 1) {
-                                $instance->delete();
-                                continue;
+                            //处理已删除的关联
+                            try {
+                                if ($related[static::REMOVE_FLAG_NAME] == 1) {
+                                    $instance->delete();
+                                    continue;
+                                }
+                                Arr::forget($related, static::REMOVE_FLAG_NAME);
+                            } catch (\Exception $exception) {
+
                             }
-                            Arr::forget($related, static::REMOVE_FLAG_NAME);
-                        } catch (\Exception $exception) {
-
-                        }
-                        //过滤不存在的字段
-                        if (is_array($related)) {
-                            foreach ($related as $key => $value) {
-                                if (\Schema::hasColumn($instance->getTable(), $key)) {
-                                    $instance->setAttribute($key, $value);
+                            //过滤不存在的字段
+                            if (is_array($related)) {
+                                foreach ($related as $key => $value) {
+                                    if (\Schema::hasColumn($instance->getTable(), $key)) {
+                                        $instance->setAttribute($key, $value);
+                                    }
                                 }
                             }
+                            $instance->save();
                         }
-                        $instance->save();
                     }
 
                     break;
