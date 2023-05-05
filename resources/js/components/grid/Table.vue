@@ -496,6 +496,12 @@ export default {
       this.$refs["DialogGridFrom"].key = key;
     });
   },
+  beforeDestroy() {
+    var is_reload = this.$route.query.is_reload;
+    if (is_reload == 1) {
+      this.onFilterReset();
+    }
+  },
   destroyed() {
     //取消监听
     try {
