@@ -277,7 +277,7 @@ class Form extends Component
         return $this;
     }
 
-    protected function setMode($mode = 'create')
+    public function setMode($mode = 'create')
     {
         $this->mode = $mode;
     }
