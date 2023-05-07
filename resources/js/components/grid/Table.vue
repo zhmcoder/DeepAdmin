@@ -470,8 +470,11 @@ export default {
 
     this.$bus.on("showDialogGridFrom", ({ isShow, key, addOrEdit }) => {
       this.addOrEdit = addOrEdit || this.addOrEdit;
-      this.$refs["DialogGridFrom"].dialogVisible = isShow;
-      this.$refs["DialogGridFrom"].key = key;
+      if (this.$refs["DialogGridFrom"]) {
+        console.log("hhhh");
+        this.$refs["DialogGridFrom"].dialogVisible = isShow;
+        this.$refs["DialogGridFrom"].key = key;
+      }
     });
 
     // 监听刷新页面
@@ -492,8 +495,10 @@ export default {
     });
     this.$bus.on("showDialogGridFrom", ({ isShow, key, addOrEdit }) => {
       this.addOrEdit = addOrEdit || this.addOrEdit;
-      this.$refs["DialogGridFrom"].dialogVisible = isShow;
-      this.$refs["DialogGridFrom"].key = key;
+      if (this.$refs["DialogGridFrom"]) {
+        this.$refs["DialogGridFrom"].dialogVisible = isShow;
+        this.$refs["DialogGridFrom"].key = key;
+      }
     });
   },
   beforeDestroy() {
