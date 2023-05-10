@@ -77,6 +77,7 @@ export default {
           .catch(() => {});
       } else {
         if (this.action.isDialog) {
+          console.log("123");
           this.$bus.emit("showDialogGridFrom", {
             isShow: true,
             key: this.key,
