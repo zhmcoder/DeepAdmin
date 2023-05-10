@@ -20,7 +20,12 @@
         >{{ action.content }}</el-button
       >
     </el-popconfirm>
-    <el-tooltip :content="action.tooltip" placement="top" :disabled="!action.tooltip" v-else>
+    <el-tooltip
+      :content="action.tooltip"
+      placement="top"
+      :disabled="!action.tooltip"
+      v-else
+    >
       <el-button
         :type="action.type"
         :size="action.size"
@@ -65,16 +70,21 @@ export default {
   props: {
     scope: Object, //当前行的字段定义和数据
     action: Object, //当前主键的属性
-    key_name: String //主键名称
+    key_name: String, //主键名称
   },
   data() {
     return {
       loading: false,
-      dialogTableVisible: false
+      dialogTableVisible: false,
     };
   },
   mounted() {
-    this.$bus.on("closeDialog", data => {
+    this.$bus.on("closeDialog", (data) => {
+      this.dialogTableVisible = false;
+    });
+  },
+  updated() {
+    this.$bus.on("closeDialog", (data) => {
       this.dialogTableVisible = false;
     });
   },
@@ -107,19 +117,19 @@ export default {
       this.loading = true;
       this.$http
         .get(uri)
-        .then(res => {
+        .then((res) => {
           if (res.code == 200) {
-              //deep admin start
-              if(res.data.action.emit){
-                  this.$bus.emit(res.data.action.emit);
-              }
-              //deep admin end
+            //deep admin start
+            if (res.data.action.emit) {
+              this.$bus.emit(res.data.action.emit);
+            }
+            //deep admin end
           }
         })
         .finally(() => {
           this.loading = false;
         });
-    }
+    },
   },
   computed: {
     uri() {
@@ -141,7 +151,7 @@ export default {
     //主键值
     key() {
       return this.scope.row[this.key_name];
-    }
-  }
+    },
+  },
 };
 </script>

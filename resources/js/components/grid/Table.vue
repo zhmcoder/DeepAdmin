@@ -620,10 +620,18 @@ export default {
             data: this.quickFilter,
           });
           //deep admin end
-          this.$store.commit("setGridData", {
-            key: "filterFormData",
-            data: this.filterFormData,
-          });
+          var is_reload = this.$route.query.is_reload;
+          if (is_reload != 1) {
+            this.$store.commit("setGridData", {
+              key: "filterFormData",
+              data: this.filterFormData,
+            });
+          } else {
+            this.$store.commit("setGridData", {
+              key: "filterFormData",
+              data: this._.cloneDeep(this.attrs.filter.filterFormData),
+            });
+          }
           /** */
         })
         .finally(() => {
