@@ -476,6 +476,7 @@ export default {
       }
     });
     this.$bus.on("showDialogGridFrom1", ({ isShow, key, addOrEdit }) => {
+      console.log("点击点击====");
       this.addOrEdit = addOrEdit || this.addOrEdit;
       if (this.$refs["DialogGridFrom"]) {
         this.$refs["DialogGridFrom"].dialogVisible = isShow;
@@ -507,6 +508,7 @@ export default {
       }
     });
     this.$bus.on("showDialogGridFrom1", ({ isShow, key, addOrEdit }) => {
+      console.log("点击点击====");
       this.addOrEdit = addOrEdit || this.addOrEdit;
       if (this.$refs["DialogGridFrom"]) {
         this.$refs["DialogGridFrom"].dialogVisible = isShow;
