@@ -14,7 +14,7 @@
       >{{ action.content }}</el-button
     >
     <el-popconfirm
-      v-if="this.action.tipsType==2"
+      v-if="this.action.tipsType == 2"
       placement="top"
       :title="action.message"
       @confirm="onHandle"
@@ -26,13 +26,14 @@
         :icon="action.icon"
         :loading="loading"
         class="action-button"
-      >{{action.content}}</el-button>
+        >{{ action.content }}</el-button
+      >
     </el-popconfirm>
   </span>
 </template>
 <script>
 /***
- * tipsType 1:confirm模式的气泡确认框提示 2:el-popconfirm模式的提示 
+ * tipsType 1:confirm模式的气泡确认框提示 2:el-popconfirm模式的提示
  */
 export default {
   props: {
@@ -43,34 +44,62 @@ export default {
   data() {
     return {
       loading: false,
-			dialogVisible: false
+      dialogVisible: false,
     };
   },
   methods: {
     onHandle() {
       // 编辑时message有值有弹窗确认
-      if(this.action.message &&this.action.tipsType==1 ){
-          this.$confirm(this.action.message, '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
+      if (this.action.message && this.action.tipsType == 1) {
+        this.$confirm(this.action.message, "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        })
+          .then(() => {
             if (this.action.isDialog) {
-              this.$bus.emit("showDialogGridFrom", { isShow: true, key: this.key , addOrEdit:'edit' });
+              this.$bus.emit("showDialogGridFrom", {
+                isShow: true,
+                key: this.key,
+                addOrEdit: "edit",
+              });
             } else {
-              this.$router.push(this.$route.path + "/" + this.key + "/edit" + '?' + this.action.params);
+              this.$router.push(
+                this.$route.path +
+                  "/" +
+                  this.key +
+                  "/edit" +
+                  "?" +
+                  this.action.params
+              );
             }
-          }).catch(() => {         
-          });
-      }else{
+          })
+          .catch(() => {});
+      } else {
         if (this.action.isDialog) {
-          this.$bus.emit("showDialogGridFrom", { isShow: true, key: this.key , addOrEdit:'edit' });
+          this.$bus.emit("showDialogGridFrom", {
+            isShow: true,
+            key: this.key,
+            addOrEdit: "edit",
+          });
+          this.$bus.emit("showDialogGridFrom1", {
+            isShow: true,
+            key: this.key,
+            addOrEdit: "edit",
+          });
         } else {
           //deep admin start
-          this.$router.push(this.$route.path + "/" + this.key + "/edit" + '?' + this.action.params);
+          this.$router.push(
+            this.$route.path +
+              "/" +
+              this.key +
+              "/edit" +
+              "?" +
+              this.action.params
+          );
           //deep admin end
         }
-      }      
+      }
     },
   },
   computed: {

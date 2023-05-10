@@ -471,7 +471,13 @@ export default {
     this.$bus.on("showDialogGridFrom", ({ isShow, key, addOrEdit }) => {
       this.addOrEdit = addOrEdit || this.addOrEdit;
       if (this.$refs["DialogGridFrom"]) {
-        console.log("hhhh");
+        this.$refs["DialogGridFrom"].dialogVisible = isShow;
+        this.$refs["DialogGridFrom"].key = key;
+      }
+    });
+    this.$bus.on("showDialogGridFrom1", ({ isShow, key, addOrEdit }) => {
+      this.addOrEdit = addOrEdit || this.addOrEdit;
+      if (this.$refs["DialogGridFrom"]) {
         this.$refs["DialogGridFrom"].dialogVisible = isShow;
         this.$refs["DialogGridFrom"].key = key;
       }
@@ -494,6 +500,13 @@ export default {
       this.$refs.table.doLayout();
     });
     this.$bus.on("showDialogGridFrom", ({ isShow, key, addOrEdit }) => {
+      this.addOrEdit = addOrEdit || this.addOrEdit;
+      if (this.$refs["DialogGridFrom"]) {
+        this.$refs["DialogGridFrom"].dialogVisible = isShow;
+        this.$refs["DialogGridFrom"].key = key;
+      }
+    });
+    this.$bus.on("showDialogGridFrom1", ({ isShow, key, addOrEdit }) => {
       this.addOrEdit = addOrEdit || this.addOrEdit;
       if (this.$refs["DialogGridFrom"]) {
         this.$refs["DialogGridFrom"].dialogVisible = isShow;
