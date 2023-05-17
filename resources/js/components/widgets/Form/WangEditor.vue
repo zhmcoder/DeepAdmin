@@ -8,7 +8,12 @@
         :editor.sync="editor"
       />
     </div>
-    <div ref="editor" :style="attrs.style" id="w-e-text-container" :class="attrs.className"></div>
+    <div
+      ref="editor"
+      :style="attrs.style"
+      id="w-e-text-container"
+      :class="attrs.className"
+    ></div>
   </div>
 </template>
 <script>
@@ -21,7 +26,7 @@ export default {
     return {
       editor: null,
       initHtml: false,
-      defaultValue: ""
+      defaultValue: "",
     };
   },
   mounted() {
@@ -53,15 +58,15 @@ export default {
     // };
 
     this.editor.config.menus = this.attrs.menus;
-    console.log('this.attrs.zIndex', this.attrs.zIndex)
+    console.log("this.attrs.zIndex", this.attrs.zIndex);
     this.editor.config.zIndex = this.attrs.zIndex;
     this.editor.config.uploadImgShowBase64 = this.attrs.uploadImgShowBase64;
     if (this.attrs.uploadImgServer) {
-      console.log('this.attrs.uploadImgServer', this.attrs.uploadImgServer)
+      console.log("this.attrs.uploadImgServer", this.attrs.uploadImgServer);
       this.editor.config.uploadImgServer = this.attrs.uploadImgServer;
 
       this.editor.config.uploadImgParams = {
-        _token: Admin.token
+        _token: Admin.token,
       };
     }
     //自定义 fileName
@@ -73,7 +78,7 @@ export default {
       this.editor.config.uploadImgHeaders = this.attrs.uploadImgHeaders;
     }
 
-    this.editor.config.onchange = html => {
+    this.editor.config.onchange = (html) => {
       this.onChange(html);
     };
     this.editor.config.customUploadImg = function (resultFiles, insertImgFn) {
@@ -81,27 +86,32 @@ export default {
       // insertImgFn 是获取图片 url 后，插入到编辑器的方法
 
       // 上传图片，返回结果，将图片插入到编辑器中
-      let formdata = new FormData()
-      for(let i in resultFiles){
-        formdata.append('file'+ i,resultFiles[i])
+      let formdata = new FormData();
+      for (let i in resultFiles) {
+        formdata.append("file" + i, resultFiles[i]);
       }
-      formdata.append('amount', resultFiles.length)
-      formdata.append('_token', Admin.token)
-      _this.$http
-        .post(_this.attrs.uploadImgServer, formdata)
-        .then((data) => {
-          for(let i = 0 ; i <= data.data.length-1 ; i++) {
-            insertImgFn(data.data[i].url)
-          }
-        })
-    }
+      formdata.append("amount", resultFiles.length);
+      formdata.append("_token", Admin.token);
+      _this.$http.post(_this.attrs.uploadImgServer, formdata).then((data) => {
+        for (let i = 0; i <= data.data.length - 1; i++) {
+          insertImgFn(data.data[i].url);
+        }
+      });
+    };
 
     this.$nextTick(() => {
       this.editor.create();
       this.editor.txt.html(this.defaultValue);
-      console.log('获取value====',this.value);
-      if(this.value){
+      console.log("获取value====", this.value);
+      if (this.value) {
         this.editor && this.editor.txt.html(this.value);
+      }
+      var w_e = document.getElementById("w-e-text-container");
+      var clientHeight = w_e.clientHeight;
+      var w_e_text = document.getElementsByClassName("w-e-text");
+      console.log("w_e_text[0]", w_e_text[0]);
+      if (w_e_text && w_e_text.length) {
+        w_e_text[0].style.minHeight = clientHeight + "px";
       }
     });
     //编辑数据加载完毕设置编辑器的值
@@ -109,9 +119,9 @@ export default {
       this.editor && this.editor.txt.html(this.value);
     });
   },
-  watch:{
-    defaultPropValues(value){
-      if ((value !== this.editor.txt.html()) && value) {
+  watch: {
+    defaultPropValues(value) {
+      if (value !== this.editor.txt.html() && value) {
         this.editor.txt.html(JSON.parse(JSON.stringify(String(value))));
       }
     },
@@ -123,9 +133,9 @@ export default {
   },
   methods: {
     insertImgFn() {
-      console.log('插入图片')
-    }
-  }
+      console.log("插入图片");
+    },
+  },
 };
 </script>
 <style lang="scss">
@@ -163,7 +173,7 @@ export default {
 //       // 触发工具栏后的显示框调高
 //       z-index: 2 !important;
 //     }
-  // }
+// }
 // }
 
 .wangeditor-main {
@@ -185,5 +195,4 @@ export default {
     }
   }
 }
-
 </style>
