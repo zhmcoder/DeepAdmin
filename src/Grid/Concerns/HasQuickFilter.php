@@ -22,12 +22,14 @@ trait HasQuickFilter
     private $or = false;
     private $operator = '=';
     private $position = 'left';
+    private $removeUrl = '';
 
     public function quickFilter()
     {
         $this->quickFilter = new QuickFilter();
         $this->quickFilter->defaultValue = '';
         $this->quickFilter->position = $this->position;
+        $this->quickFilter->removeUrl = $this->removeUrl;
         return $this;
     }
 
@@ -80,6 +82,12 @@ trait HasQuickFilter
     public function position($position)
     {
         $this->quickFilter->position = $position;
+        return $this;
+    }
+
+    public function removeUrl($removeUrl)
+    {
+        $this->quickFilter->removeUrl = $removeUrl;
         return $this;
     }
 
