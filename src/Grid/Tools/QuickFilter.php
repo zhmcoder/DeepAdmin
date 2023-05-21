@@ -11,6 +11,7 @@ class QuickFilter implements JsonSerializable
     public $options;
     public $defaultValue;
     public $position;
+    public $removeUrl;
 
     /**
      * @inheritDoc
@@ -21,7 +22,8 @@ class QuickFilter implements JsonSerializable
             'filterKey' => $this->filterKey,
             'defaultValue' => $this->defaultValue,
             'position' => $this->position,
-            'options' => $this->options
+            'options' => $this->options,
+            'removeUrl' => $this->removeUrl,
         ];
     }
 }
