@@ -87,6 +87,10 @@ abstract class AbstractFilter extends AdminJsonBuilder
 
         $value = Arr::get($inputs, $this->column);
 
+        if (strpos($this->column, 'default_') !== false) {
+            return;
+        }
+
         if (!isset($value)) {
             return;
         }
