@@ -78,4 +78,6 @@ class Attributes
     public $showSummary = false;
     public $topTool = true; // 是否显示顶部工具
 
+    public $spanColumns = []; // 合并字段
+
 }

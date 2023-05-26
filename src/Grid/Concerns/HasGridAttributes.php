@@ -319,4 +319,16 @@ trait HasGridAttributes
         return $this;
     }
 
+    /**
+     * 合并字段信息
+     *
+     * @param array $columnArr
+     * @return $this
+     */
+    public function spanColumns(array $spanColumns)
+    {
+        $this->attributes->spanColumns = $spanColumns;
+        return $this;
+    }
+
 }
