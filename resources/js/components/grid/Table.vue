@@ -244,6 +244,7 @@
           :default-expand-all="attrs.attributes.defaultExpandAll"
           @sort-change="onTableSortChange"
           @selection-change="onTableselectionChange"
+          :span-method="objectSpanMethod"
         >
           <el-table-column
             v-if="attrs.attributes.selection"
@@ -413,11 +414,16 @@ export default {
       topViewHeight: 0,
       toolbarsViewHeight: 0,
       addOrEdit: "", //点击的action是否是添加或修改
+      //合并表格
+      columnArr: [],
+      spanArr: [], //临时组
+      spanData: [], // 组合的合并组
     };
   },
   mounted() {
     //初始化默认设置值
     this.filterFormData = this._.cloneDeep(this.attrs.filter.filterFormData);
+    this.columnArr = this.attrs.attributes.spanColumns || [];
     this.sort = this._.cloneDeep(this.attrs.defaultSort);
     //deep admin start
     if (this.attrs.quickFilter) {
@@ -531,6 +537,48 @@ export default {
     } catch (e) {}
   },
   methods: {
+    // 计算需要合并的单元格
+    getSpanData(data) {
+      this.spanData = []
+      this.columnArr.forEach((element) => {
+        let contactDot = 0
+        this.spanArr = []
+        data.forEach((item, index) => {
+          if (index === 0) {
+            this.spanArr.push(1)
+          } else {
+            if (item[element] === data[index - 1][element]) {
+              this.spanArr[contactDot] += 1
+              this.spanArr.push(0)
+            } else {
+              contactDot = index
+              this.spanArr.push(1)
+            }
+          }
+        })
+        this.spanData.push(this.spanArr)
+      })
+    },
+    objectSpanMethod({ row, column, rowIndex, columnIndex }) {
+      console.log('this.spanData', this.spanData)
+      console.log('this.columnArr', this.columnArr)
+      console.log('columnIndex', columnIndex)
+      console.log('rowIndex', rowIndex)
+
+      if (this.columnArr.includes(column.property)) {
+        if (this.spanData[columnIndex][rowIndex]) {
+          return {
+            rowspan: this.spanData[columnIndex][rowIndex],
+            colspan: 1,
+          }
+        } else {
+          return {
+            rowspan: 0,
+            colspan: 0,
+          }
+        }
+      }
+    },
     selectEnable(row, rowIndex) {
       console.log("this.attrs.attributes", this.attrs.attributes);
       var attrs = this.attrs.attributes;
@@ -602,6 +650,7 @@ export default {
         .then(({ data }) => {
           if (!this.attrs.hidePage) {
             this.tableData = data.data;
+            this.getSpanData(this.tableData)
             this.pageData.pageSize = data.per_page;
             this.pageData.currentPage = data.current_page;
             this.pageData.total = data.total;
