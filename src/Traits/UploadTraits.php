@@ -80,7 +80,7 @@ trait UploadTraits
                     'host' => \Storage::disk($disk)->url('')
                 ];
             } else {
-                if ($uniqueName == "true" || $uniqueName == true) {
+                if ($uniqueName === "true" || $uniqueName === true) {
                     $path = $file->store($path, $disk);
                 } else {
                     $path = $file->storeAs($path, $name, $disk);

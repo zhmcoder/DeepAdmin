@@ -640,7 +640,7 @@ class ContentController extends AdminController
                                 $accept = $v[1];
                                 break;
                             case 'uniqueName':
-                                $uniqueName = $v[1] == 1;
+                                $uniqueName = ($v[1] === 'true');
                                 break;
                             case 'path':
                                 $path = $v[1];
@@ -670,7 +670,7 @@ class ContentController extends AdminController
                                 $accept = $v[1];
                                 break;
                             case 'uniqueName':
-                                $uniqueName = $v[1] == 1;
+                                $uniqueName = ($v[1] === 'true');
                                 break;
                             case 'path':
                                 $path = $v[1];
@@ -699,7 +699,7 @@ class ContentController extends AdminController
                                 $accept = $v[1];
                                 break;
                             case 'uniqueName':
-                                $uniqueName = $v[1] == 1;
+                                $uniqueName = ($v[1] === 'true');
                                 break;
                             case 'path':
                                 $path = $v[1];
@@ -732,7 +732,7 @@ class ContentController extends AdminController
                                 $accept = $v[1];
                                 break;
                             case 'uniqueName':
-                                $uniqueName = $v[1] == 1;
+                                $uniqueName = ($v[1] === 'true');
                                 break;
                             case 'path':
                                 $path = $v[1];
