@@ -628,6 +628,8 @@ class ContentController extends AdminController
                     $formParams = explode("\n", $val['form_params']);
                     $disk = null;
                     $accept = null;
+                    $uniqueName = null;
+                    $path = null;
                     foreach ($formParams as $k => &$v) {
                         $v = explode('=', $v);
                         switch ($v[0]) {
@@ -637,17 +639,27 @@ class ContentController extends AdminController
                             case 'accept':
                                 $accept = $v[1];
                                 break;
+                            case 'uniqueName':
+                                $uniqueName = $v[1] == 1;
+                                break;
+                            case 'path':
+                                $path = $v[1];
+                                break;
                         }
                     }
                     $obj->component(Upload::make()->image($disk ?: config('deep_admin.upload.disk'))
                         ->accept($accept ?: config('deep_admin.upload.image'))
-                        ->uniqueName())->required($val['is_required'], 'string');
+                        ->uniqueName($uniqueName !== null ? $uniqueName : config('deep_admin.upload.uniqueName'))
+                        ->path($path ?: config('deep_admin.upload.directory.image')))
+                        ->required($val['is_required']);
                     break;
 
                 case 'avatar' : // 头像
                     $formParams = explode("\n", $val['form_params']);
                     $disk = null;
                     $accept = null;
+                    $uniqueName = null;
+                    $path = null;
                     foreach ($formParams as $k => &$v) {
                         $v = explode('=', $v);
                         switch ($v[0]) {
@@ -656,17 +668,27 @@ class ContentController extends AdminController
                                 break;
                             case 'accept':
                                 $accept = $v[1];
+                                break;
+                            case 'uniqueName':
+                                $uniqueName = $v[1] == 1;
+                                break;
+                            case 'path':
+                                $path = $v[1];
                                 break;
                         }
                     }
                     $obj->component(Upload::make()->avatar($disk ?: config('deep_admin.upload.disk'))
                         ->accept($accept ?: config('deep_admin.upload.image'))
-                        ->avatar()->path('avatar')->uniqueName())->required($val['is_required'], 'string');
+                        ->uniqueName($uniqueName !== null ? $uniqueName : config('deep_admin.upload.uniqueName'))
+                        ->path($path ?: config('deep_admin.upload.directory.avatar', 'avatar'))
+                        ->avatar()->uniqueName())->required($val['is_required']);
                     break;
                 case 'uploadMulti' : // 图片上传 多图
                     $formParams = explode("\n", $val['form_params']);
                     $disk = null;
                     $accept = null;
+                    $uniqueName = null;
+                    $path = null;
                     foreach ($formParams as $k => &$v) {
                         $v = explode('=', $v);
                         switch ($v[0]) {
@@ -675,12 +697,20 @@ class ContentController extends AdminController
                                 break;
                             case 'accept':
                                 $accept = $v[1];
+                                break;
+                            case 'uniqueName':
+                                $uniqueName = $v[1] == 1;
+                                break;
+                            case 'path':
+                                $path = $v[1];
                                 break;
                         }
                     }
                     $obj->component(
                         Upload::make()->image($disk ?: config('deep_admin.upload.disk'))
                             ->accept($accept ?: config('deep_admin.upload.image'))
+                            ->uniqueName($uniqueName !== null ? $uniqueName : config('deep_admin.upload.uniqueName'))
+                            ->path($path ?: config('deep_admin.upload.directory.file'))
                             ->multiple()->uniqueName()
                             ->limit((int)$val['form_params'])->drag()
                     )->inputWidth(24)->required($val['is_required'], 'array');
@@ -690,6 +720,8 @@ class ContentController extends AdminController
                     $formParams = explode("\n", $val['form_params']);
                     $disk = null;
                     $accept = null;
+                    $uniqueName = null;
+                    $path = null;
                     foreach ($formParams as $k => &$v) {
                         $v = explode('=', $v);
                         switch ($v[0]) {
@@ -699,13 +731,20 @@ class ContentController extends AdminController
                             case 'accept':
                                 $accept = $v[1];
                                 break;
+                            case 'uniqueName':
+                                $uniqueName = $v[1] == 1;
+                                break;
+                            case 'path':
+                                $path = $v[1];
+                                break;
                         }
                     }
                     $obj->component(
                         Upload::make()->file($disk ?: config('deep_admin.upload.disk'))
                             ->accept($accept ?: config('deep_admin.upload.file'))
-                            ->uniqueName()->path('file')
-                    )->inputWidth(12)->required($val['is_required'], 'string');
+                            ->uniqueName($uniqueName !== null ? $uniqueName : config('deep_admin.upload.uniqueName'))
+                            ->path($path ?: config('deep_admin.upload.directory.file'))
+                    )->inputWidth(12)->required($val['is_required']);
                     break;
 
                 case 'dateTime' : // 日期时间

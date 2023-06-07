@@ -136,9 +136,9 @@ class Upload extends Component
      * 自动生成文件名
      * @return $this
      */
-    public function uniqueName()
+    public function uniqueName($uniqueName = true)
     {
-        $this->data = Arr::set($this->data, "uniqueName", true);
+        $this->data = Arr::set($this->data, "uniqueName", $uniqueName);
         return $this;
     }
 
