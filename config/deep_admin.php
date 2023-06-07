@@ -71,6 +71,7 @@ return [
         'directory' => [
             'image' => 'images',
             'file' => 'files',
+            'avatar' => 'avatar',
         ],
         //文件上传类型
         'xlsx' => '.xls,.xlsx',
