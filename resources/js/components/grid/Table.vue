@@ -38,8 +38,9 @@
                     <ItemDiaplsy
                       v-model="filterFormData[item.column]"
                       :form-item="item"
-                      :form-items="attrs.filters"
+                      :form-items="attrs.filter.filters"
                       :form-data="filterFormData"
+                      from="table"
                     />
                   </el-form-item>
                 </el-col>
@@ -53,8 +54,9 @@
                 <ItemDiaplsy
                   v-model="filterFormData[item.column]"
                   :form-item="item"
-                  :form-items="attrs.filters"
+                  :form-items="attrs.filter.filters"
                   :form-data="filterFormData"
+                  from="table"
                 />
               </el-form-item>
             </template>
@@ -75,12 +77,14 @@
               <el-button @click="onFilterReset">重置</el-button>
               <el-button
                 v-if="attrs.filter.exportUri"
+                :loading="export1Loading"
                 @click="() => onFilterExport(1)"
               >
                 {{ attrs.filter.exportUriText }}
               </el-button>
               <el-button
                 v-if="attrs.filter.exportPdf"
+                :loading="export2Loading"
                 @click="() => onFilterExport(2)"
               >
                 {{ attrs.filter.exportPdfText }}
@@ -418,6 +422,8 @@ export default {
       columnArr: [],
       spanArr: [], //临时组
       spanData: [], // 组合的合并组
+      export1Loading: false,
+      export2Loading: false
     };
   },
   mounted() {
@@ -704,6 +710,12 @@ export default {
     },
     // 表单导出
     async onFilterExport(type) {
+      var _this = this;
+      if(type == 1) {
+        this.export1Loading = true
+      } else if(type == 2) {
+        this.export2Loading = true
+      }
       this.$http
         .post(
           type == 1 ? this.attrs.filter.exportUri : this.attrs.filter.exportPdf,
@@ -724,7 +736,18 @@ export default {
         )
         .then(({ code, data }) => {
           if (code == 200) {
+            if(type == 1) {
+              _this.export1Loading = false
+            } else if(type == 2) {
+              _this.export2Loading = false
+            }
             window.location.href = data.action.down_url;
+          } else {
+            if(type == 1) {
+              _this.export1Loading = false
+            } else if(type == 2) {
+              _this.export2Loading = false
+            }
           }
         })
         .finally(() => {

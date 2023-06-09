@@ -70,6 +70,7 @@ export default {
     defaultPropValues: {
       default: null,
     },
+    from: String
   },
   data() {
     return {};
@@ -86,45 +87,85 @@ export default {
   methods: {
     //deep admin start
     onChangeRelation(attrs, resValue) {
-      console.log("onChangeRelation ");
-      console.log(attrs);
-      if (attrs["isRelatedSelect"] == true) {
-        let form_item = null;
-        this.formItems.forEach((item) => {
-          if (item.prop == attrs["relatedSelectRef"]) {
-            form_item = item;
-            return;
-          }
-        });
-        this.$http
-          .get(form_item["component"]["remoteUrl"], {
-            params: {
-              [attrs.ref]: resValue,
-            },
-          })
-          .then((res) => {
-            const data = res.data.data || res.data;
-            // if (data && data.length) {
-            let length = form_item["component"]["options"].length;
-            for (let i = 0; i < length; i++) {
-              form_item["component"]["options"].splice(0, 1);
+      if(this.from && this.from == 'table') {
+        if (attrs["isRelatedSelect"] == true) {
+          let form_item = null;
+          this.formItems.forEach((item) => {
+            if (item.column == attrs["relatedSelectRef"]) {
+              form_item = item;
+              return;
             }
-            console.log(form_item.prop);
-            this.formData[form_item.prop] = "";
-            if (
-              form_item["component"]["relatedComponents"] != null &&
-              form_item["component"]["relatedComponents"].length > 0
-            ) {
-              form_item["component"]["relatedComponents"].forEach((item) => {
-                this.formData[item] = "";
-              });
-            }
-            if (data && data.length) {
-              form_item["component"]["options"].push(...data);
-            }
-            form_item["component"].paginate = 0;
-            // }
           });
+          this.$http
+            .get(form_item["component"]["remoteUrl"], {
+              params: {
+                [attrs.ref]: resValue,
+              },
+            })
+            .then((res) => {
+              const data = res.data.data || res.data;
+              // if (data && data.length) {
+              let length = form_item["component"]["options"].length;
+              for (let i = 0; i < length; i++) {
+                form_item["component"]["options"].splice(0, 1);
+              }
+              this.formData[form_item.prop] = "";
+              if (
+                form_item["component"]["relatedComponents"] != null &&
+                form_item["component"]["relatedComponents"].length > 0
+              ) {
+                form_item["component"]["relatedComponents"].forEach((item) => {
+                  this.formData[item] = "";
+                });
+              }
+              if (data && data.length) {
+                form_item["component"]["options"].push(...data);
+              }
+              form_item["component"].paginate = 0;
+              // }
+            });
+        }
+      } else {
+        console.log("onChangeRelation ");
+        console.log(attrs);
+        if (attrs["isRelatedSelect"] == true) {
+          let form_item = null;
+          this.formItems.forEach((item) => {
+            if (item.prop == attrs["relatedSelectRef"]) {
+              form_item = item;
+              return;
+            }
+          });
+          this.$http
+            .get(form_item["component"]["remoteUrl"], {
+              params: {
+                [attrs.ref]: resValue,
+              },
+            })
+            .then((res) => {
+              const data = res.data.data || res.data;
+              // if (data && data.length) {
+              let length = form_item["component"]["options"].length;
+              for (let i = 0; i < length; i++) {
+                form_item["component"]["options"].splice(0, 1);
+              }
+              console.log(form_item.prop);
+              this.formData[form_item.prop] = "";
+              if (
+                form_item["component"]["relatedComponents"] != null &&
+                form_item["component"]["relatedComponents"].length > 0
+              ) {
+                form_item["component"]["relatedComponents"].forEach((item) => {
+                  this.formData[item] = "";
+                });
+              }
+              if (data && data.length) {
+                form_item["component"]["options"].push(...data);
+              }
+              form_item["component"].paginate = 0;
+              // }
+            });
+        }
       }
     },
     //deep admin end
