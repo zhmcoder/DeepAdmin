@@ -12,16 +12,18 @@
       :preview-src-list="value"
     />
   </div>
-  <el-image
-    v-else
-    :style="attrs.style"
-    :class="attrs.className"
-    :fit="attrs.fit"
-    :lazy="attrs.lazy"
-    :src="src"
-    :scroll-container="attrs.scrollContainer"
-    :preview-src-list="previewSrcList"
-  />
+  <div v-else>
+    <el-image
+      v-if="isSrcListLen"
+      :src="src"
+      :style="attrs.style"
+      :class="attrs.className"
+      :fit="attrs.fit"
+      :lazy="attrs.lazy"
+      :scroll-container="attrs.scrollContainer"
+      :preview-src-list="previewSrcList"
+    />
+  </div>
 </template>
 <script>
 import { getFileUrl } from "@/utils";
@@ -39,12 +41,16 @@ export default {
   data() {
     return {
       srcList: [],
+      isSrcListLen: false
     };
   },
   mounted() {
     if (this.attrs.max) {
       var newValue = JSON.parse(JSON.stringify(this.value));
       this.srcList = newValue.splice(0, this.attrs.max);
+      if(this.srcList.length > 0) {
+        this.isSrcListLen = true
+      }
     } else {
     }
   },
