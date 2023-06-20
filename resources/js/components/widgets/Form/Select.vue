@@ -15,7 +15,6 @@
     :filterable="attrs.filterable"
     :allow-create="attrs.allowCreate"
     :remote="attrs.remote"
-    :loading="attrs.loading"
     :loading-text="attrs.loadingText"
     :no-match-text="attrs.noMatchText"
     :no-data-text="attrs.noDataText"
@@ -26,7 +25,9 @@
     :automatic-dropdown="attrs.automaticDropdown"
     :remote-method="remoteMethod"
     @change="onChange"
+    :loading="loading"
   >
+    <!-- :loading="attrs.loading" -->
     <!-- @change="e=>console.log(e)" -->
     <el-option
       v-for="(item, index) in options"
@@ -65,7 +66,8 @@ export default {
       meta: {
         page: 1,
         per_page: this.attrs.paginate
-      }
+      },
+      loading: false
     };
   },
   watch:{
@@ -144,6 +146,9 @@ export default {
         this.options = [];
         this.query = query;
         this.meta.page = 1;
+        if (query !== '') {
+          this.loading = true
+        }
       }
       this.$http
         .get(this.attrs.remoteUrl, {
@@ -167,6 +172,7 @@ export default {
           } else {
             this.loadMore = false;
           }
+          this.loading = false
         });
     },
     setLable() {
