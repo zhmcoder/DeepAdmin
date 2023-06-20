@@ -109,7 +109,7 @@ export default {
               for (let i = 0; i < length; i++) {
                 form_item["component"]["options"].splice(0, 1);
               }
-              this.formData[form_item.prop] = "";
+              this.formData[form_item.column] = "";
               if (
                 form_item["component"]["relatedComponents"] != null &&
                 form_item["component"]["relatedComponents"].length > 0
