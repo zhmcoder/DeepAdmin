@@ -167,6 +167,18 @@ trait HasGridAttributes
         return $this;
     }
 
+    /**
+     * 是否为远程搜索
+     * @param string $remoteUrl 远程搜索URL
+     * @return $this
+     */
+    public function remote($remoteUrl, $remote = true)
+    {
+        $this->attributes->remote = $remote;
+        $this->attributes->remoteUrl = $remoteUrl;
+        return $this;
+    }
+
     public function treeProps($hasChildren, $children)
     {
         $this->attributes->treeProps = [

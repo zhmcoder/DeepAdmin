@@ -60,6 +60,9 @@ class Attributes
 
     public $defaultExpandAll = false;
 
+    public $remote = false;
+    public $remoteUrl;
+
     public $treeProps = ['hasChildren' => 'hasChildren', 'children' => 'children'];
 
 
