@@ -197,9 +197,9 @@ class Select extends Component
      * @param string $remoteUrl 远程搜索URL
      * @return $this
      */
-    public function remote($remoteUrl)
+    public function remote($remoteUrl, $remote = true)
     {
-        $this->remote = true;
+        $this->remote = $remote;
         $this->remoteUrl = $remoteUrl;
         return $this;
     }
