@@ -49,6 +49,7 @@ class Filter
     protected $exportUriText = null;
     protected $exportPdf = null;
     protected $exportPdfText = null;
+    protected $reloadGrid = true;
 
     /**
      * @var Collection
@@ -175,6 +176,13 @@ class Filter
         return $this;
     }
 
+    public function reloadGrid($reloadGrid = true)
+    {
+        $this->reloadGrid = $reloadGrid;
+
+        return $this;
+    }
+
     public function leftAction($leftAction = '')
     {
         $this->leftAction = $leftAction;
@@ -249,6 +257,7 @@ class Filter
             'exportUriText' => $this->exportUriText,
             'exportPdf' => $this->exportPdf,
             'exportPdfText' => $this->exportPdfText,
+            'reloadGrid' => $this->reloadGrid
         ];
     }
 
