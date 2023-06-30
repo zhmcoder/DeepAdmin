@@ -13,8 +13,8 @@
     />
   </div>
   <div v-else>
+    <!-- v-if="isSrcListLen" -->
     <el-image
-      v-if="isSrcListLen"
       :src="src"
       :style="attrs.style"
       :class="attrs.className"
