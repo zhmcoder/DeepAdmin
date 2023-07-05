@@ -46,6 +46,8 @@ class WangEditor extends Component
 
     protected $component;
 
+    protected $disabled = false;
+
     static public function make($value = null)
     {
         return new Wangeditor($value);
@@ -128,6 +130,15 @@ class WangEditor extends Component
     }
 
 
-
+    /**
+     * 是否禁用
+     * @param bool $disabled
+     * @return WangEditor
+     */
+    public function disabled($disabled = true)
+    {
+        $this->disabled = $disabled;
+        return $this;
+    }
 
 }
