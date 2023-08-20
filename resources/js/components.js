@@ -10,7 +10,6 @@ Vue.component("LeftGrid", require("@/components/grid/LeftTable").default);
 Vue.component("Tree", require("@/components/grid/Tree").default);
 Vue.component("Form", require("@/components/form/Form").default);
 Vue.component("TabForm", require("@/components/form/TabForm").default);
-Vue.component("TabAllForm", require("@/components/form/TabAllForm").default);
 Vue.component("BaseForm", require("@/components/form/BaseForm").default);
 Vue.component("MenuItem", require("@/components/layout/MenuItem").default);
 Vue.component("ChartCard", require("@/components/layout/ChartCard").default);
