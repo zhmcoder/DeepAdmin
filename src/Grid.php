@@ -120,6 +120,10 @@ class Grid extends Component
      */
     protected $dialogTitleCenter = false;
 
+    protected $filterSearchLabel = '搜索';
+    protected $filterResetLabel = '重置';
+
+
     /**
      * 居中显示
      * @var bool
@@ -466,6 +470,17 @@ class Grid extends Component
         return $this;
     }
 
+    public function filterSearchLabel($filterSearchLabel = '搜索')
+    {
+        $this->filterSearchLabel = $filterSearchLabel;
+        return $this;
+    }
+
+    public function filterResetLabel($filterResetLabel = '重置')
+    {
+        $this->filterResetLabel = $filterResetLabel;
+        return $this;
+    }
 
     /**
      * @param $closure
@@ -605,6 +620,10 @@ class Grid extends Component
             $viewData['ref'] = $this->getRef();
             $viewData['filterFormCenter'] = $this->filterFormCenter;
             $viewData['dialogTitleCenter'] = $this->dialogTitleCenter;
+
+            $viewData['filterSearchLabel'] = $this->filterSearchLabel;
+            $viewData['filterResetLabel'] = $this->filterResetLabel;
+
             return $viewData;
         }
     }
