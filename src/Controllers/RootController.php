@@ -23,6 +23,7 @@ class RootController extends Controller
             'name' => config('deep_admin.name'),
             'copyright' => config('deep_admin.copyright'),
             'footerLinks' => config('deep_admin.footerLinks'),
+            'loginLinks' => config('deep_admin.loginLinks'),
             'uniqueOpened' => config('deep_admin.unique_opened', false),
             'user' => $this->getUserData(),
             'url' => $this->getUrls(),
