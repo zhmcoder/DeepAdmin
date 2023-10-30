@@ -29,6 +29,13 @@ return [
             'title' => '文档'
         ]
     ],
+    // 登录底部菜单
+    'loginLinks' => [
+        [
+            'href' => 'https://deepadmin.cc',
+            'title' => '文档'
+        ]
+    ],
     'unique_opened' => false, // 是否只保持一个子菜单的展开
     'bootstrap' => app_path('Admin/bootstrap.php'),
     'route' => [

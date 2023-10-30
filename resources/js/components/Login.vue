@@ -69,6 +69,17 @@
       </div>
     </div>
     <footer class="global-footer i-copyright">
+      <div class="footer-links" v-if="page_data && page_data.loginLinks">
+        <el-link
+          v-for="(item, index) in page_data.loginLinks"
+          :key="index"
+          type="text"
+          :href="item.href"
+          target="_blank"
+          :underline="false"
+          >{{ item.title }}
+        </el-link>
+      </div>
       <div class="global-footer-copyright">{{ page_data.copyright }}</div>
     </footer>
   </div>

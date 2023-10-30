@@ -104,6 +104,7 @@ class AdminController extends Controller
     protected function vueData()
     {
         $data['copyright'] = config('deep_admin.copyright');
+        $data['loginLinks'] = config('deep_admin.loginLinks');
         return $data;
     }
 }
