@@ -47,8 +47,8 @@ class Files extends Model
     protected $hidden = ['created_at', 'updated_at'];
 
     protected $casts = [
-        'created_at' => "Y-m-d H:i:s",
-        'updated_at' => "Y-m-d H:i:s",
+        'created_at' => "datetime:Y-m-d H:i:s",
+        'updated_at' => "datetime:Y-m-d H:i:s",
     ];
 
     /**

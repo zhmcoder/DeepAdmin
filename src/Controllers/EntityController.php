@@ -154,10 +154,14 @@ class EntityController extends BaseController
     protected function deleting_event($id)
     {
         $table = Entity::query()->findOrFail($id);
-        DB::beginTransaction();
-        TableHelpers::drop_table($table->table_name);
-        EntityField::query()->where('entity_id', $id)->delete();
-        DB::commit();
+        try {
+            DB::beginTransaction();
+            TableHelpers::drop_table($table->table_name);
+            EntityField::query()->where('entity_id', $id)->delete();
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+        }
     }
 
     protected function update_event(Form $form, $old_data)
