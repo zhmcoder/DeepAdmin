@@ -35,6 +35,7 @@ class UserController extends AdminController
         $grid->column('username', "用户名");
         $grid->column('name', '用户昵称');
         $grid->column('roles.name', "角色")->component(Tag::make()->effect('dark'));
+        $grid->column('name', '用户昵称');
 
         $grid->actions(function (Grid\Actions $actions) {
             $actions->setDeleteAction(new Grid\Actions\DeleteDialogAction());
