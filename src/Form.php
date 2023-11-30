@@ -23,6 +23,7 @@ use Andruby\DeepAdmin\Layout\Content;
 use Illuminate\Support\Str;
 
 //deep admin end
+use Psy\Readline\Hoa\Exception;
 use Symfony\Component\HttpFoundation\Response;
 
 class Form extends Component
@@ -597,17 +598,19 @@ class Form extends Component
         if (($response = $this->prepare($data)) instanceof Response) {
             return $response;
         }
-        DB::transaction(function () use ($data) {
+        try {
+            \Illuminate\Support\Facades\DB::beginTransaction();
             $updates = $this->prepareUpdate($this->updates);
             foreach ($updates as $key => $value) {
                 $this->model->setAttribute($key, $value);
             }
             $this->model->save();
             $this->updateRelation($this->relations);
-            if (($result = $this->callDbTransaction()) instanceof Response) {
-                abort(400, $result);
-            }
-        });
+            \Illuminate\Support\Facades\DB::commit();
+        }catch (Exception $e){
+            \Illuminate\Support\Facades\DB::rollBack();
+            Admin::responseError($e->getMessage());
+        }
 
         if (($result = $this->callSaved()) instanceof Response) {
             return $result;
