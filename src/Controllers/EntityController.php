@@ -155,12 +155,10 @@ class EntityController extends BaseController
     {
         $table = Entity::query()->findOrFail($id);
         try {
-            DB::beginTransaction();
             TableHelpers::drop_table($table->table_name);
             EntityField::query()->where('entity_id', $id)->delete();
-            DB::commit();
         } catch (\Exception $exception) {
-            DB::rollBack();
+            throw new \Exception('创建数据库表异常');
         }
     }
 
