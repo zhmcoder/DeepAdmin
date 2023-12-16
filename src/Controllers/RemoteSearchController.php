@@ -15,7 +15,7 @@ class RemoteSearchController extends AdminController
 
         $extUrlParams = json_decode(request('extUrlParams'), true);
         $formParams = !empty($extUrlParams['val']['form_params']) ? explode("\n", $extUrlParams['val']['form_params']) : [];
-        $tableWhere = !empty($extUrlParams['val']['table_where']) ? explode(",", $extUrlParams['val']['table_where']) : [];
+        $tableWhereList = !empty($extUrlParams['val']['table_where']) ? explode("\n", $extUrlParams['val']['table_where']) : [];
 
         $count = 0;
         $options = [];
@@ -23,11 +23,14 @@ class RemoteSearchController extends AdminController
             $model = new Content($formParams[0]);
             $model = $model->select([$formParams[1], $formParams[2]])->distinct();
 
-            if (!empty($tableWhere)) {
-                $model = $model->where("$tableWhere[0]", "$tableWhere[1]", "$tableWhere[2]")->where(function ($q) use ($formParams, $query) {
-                    $q->orWhere($formParams[1], 'like', "%{$query}%");
-                    $q->orWhere($formParams[2], 'like', "%{$query}%");
-                });
+            if (!empty($tableWhereList)) {
+                foreach ($tableWhereList as $tableWhere) {
+                    $tableWhere = !empty($tableWhere) ? explode(",", $tableWhere) : [];
+                    $model = $model->where("$tableWhere[0]", "$tableWhere[1]", "$tableWhere[2]")->where(function ($q) use ($formParams, $query) {
+                        $q->orWhere($formParams[1], 'like', "%{$query}%");
+                        $q->orWhere($formParams[2], 'like', "%{$query}%");
+                    });
+                }
             } else {
                 $model = $model->where($formParams[1], 'like', "%{$query}%")->orWhere($formParams[2], 'like', "%{$query}%");
             }
