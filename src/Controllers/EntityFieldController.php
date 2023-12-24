@@ -288,6 +288,9 @@ class EntityFieldController extends AdminController
             if (!$isEdit) {
                 $this->saved_event($form);
             }
+            if ($isEdit) {
+                $this->update_event($form, $this->old_data);
+            }
         });
 
         $form->saving(function (Form $form) use ($isEdit) {
@@ -296,12 +299,6 @@ class EntityFieldController extends AdminController
                 $this->old_data = $form->model()->findOrFail($id);
             }
 
-        });
-
-        $form->DbTransaction(function (Form $form) use ($isEdit) {
-            if ($isEdit) {
-                $this->update_event($form, $this->old_data);
-            }
         });
 
         $form->deleting(function (Form $form, $id) {
