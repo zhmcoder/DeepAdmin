@@ -226,4 +226,5 @@ return [
         '5' => '下拉查询-不可操作',
     ],
     'GRID_RELATED_DATA_CACHE_EXPIRE_TIME' => env('GRID_RELATED_DATA_CACHE_EXPIRE_TIME', 5 * 60),
+    'ENTITY_FIELD_CACHE_EXPIRE_TIME' => env('ENTITY_FIELD_CACHE_EXPIRE_TIME', 5 * 60),
 ];
