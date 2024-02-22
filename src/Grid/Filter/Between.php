@@ -10,10 +10,17 @@ class Between extends AbstractFilter
     // deep-admin start
     protected $timestamp = false;
     protected $datetime = false;
+    protected $date = false;
 
     public function datetime()
     {
         $this->datetime = true;
+        return $this;
+    }
+
+    public function date()
+    {
+        $this->date = true;
         return $this;
     }
 
@@ -70,6 +77,11 @@ class Between extends AbstractFilter
         if ($this->datetime) {
             $this->value[0] = $this->value[0] . ' 00:00:00';
             $this->value[1] = $this->value[1] . ' 23:59:59';
+        }
+
+        if ($this->date) {
+            $this->value[0] = $this->value[0];
+            $this->value[1] = $this->value[1];
         }
         // deep-admin end
 
