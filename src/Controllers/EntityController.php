@@ -136,16 +136,13 @@ class EntityController extends BaseController
             if (!$this->is_edit) {
                 $this->saved_event($form);
             }
+            if ($this->is_edit) {
+                $this->update_event($form, $this->old_data);
+            }
         });
 
         $form->deleting(function (Form $form, $id) {
             $this->deleting_event($id);
-        });
-
-        $form->DbTransaction(function (Form $form) {
-            if ($this->is_edit) {
-                $this->update_event($form, $this->old_data);
-            }
         });
 
         return $form;
