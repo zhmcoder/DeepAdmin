@@ -500,7 +500,8 @@ class Model
                 'per_page' => $this->model->perPage(),
                 'last_page' => $this->model->lastPage(),
                 'total' => $this->model->total(),
-                'data' => $this->displayData($data->items())
+                'data' => $this->displayData($data->items()),
+                'total_data' => $this->grid->getTotalData(),
             ];
         }
 

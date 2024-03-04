@@ -5,6 +5,7 @@ namespace Andruby\DeepAdmin;
 
 
 use Andruby\DeepAdmin\Grid\Concerns\HasTabFilter;
+use Andruby\DeepAdmin\Grid\Concerns\HasTotalData;
 use Andruby\DeepAdmin\Grid\RightFilter;
 use Andruby\DeepAdmin\Grid\TreeFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -31,7 +32,7 @@ use Andruby\DeepAdmin\Layout\Content;
 
 class Grid extends Component
 {
-    use HasGridAttributes, HasPageAttributes, HasDefaultSort, HasQuickSearch, HasFilter, HasQuickFilter, HasTabFilter;
+    use HasGridAttributes, HasPageAttributes, HasDefaultSort, HasQuickSearch, HasFilter, HasQuickFilter, HasTabFilter, HasTotalData;
 
     //<!--deep admin-->
     /**
@@ -518,13 +519,14 @@ class Grid extends Component
     /**
      * 自定义数据
      * @param $data
-     * @param $current_page
-     * @param $per_page
-     * @param $last_page
-     * @param $total
+     * @param int $current_page
+     * @param int $per_page
+     * @param int $last_page
+     * @param int $total
+     * @param array $total_data
      * @return $this
      */
-    public function customData($data, $current_page = 0, $per_page = 0, $last_page = 0, $total = 0)
+    public function customData($data, $current_page = 0, $per_page = 0, $last_page = 0, $total = 0, $total_data = [])
     {
         $this->customData = [
             'current_page' => (int)$current_page,
@@ -532,6 +534,7 @@ class Grid extends Component
             'last_page' => (int)$last_page,
             'total' => (int)$total,
             'data' => $data,
+            'total_data' => $total_data,
         ];
         return $this;
     }
@@ -554,6 +557,7 @@ class Grid extends Component
         $this->applyQuery();
 
         $data = $this->model->buildData();
+
         return [
             'code' => 200,
             'data' => $data
