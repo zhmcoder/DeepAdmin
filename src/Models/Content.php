@@ -55,20 +55,22 @@ class Content extends Model
         }
 
         // todo 多选需要标记字段类型
-        $entityFieldList = EntityField::query()
-            ->where('entity_id', $entityId)
-            ->whereIn('form_type', ['checkbox', 'checkboxTable', 'selectMulti', 'selectMultiTable', 'inputDecimal', 'cascade', 'cascadeMulti', 'uploadMulti'])
-            ->get()->toArray();
+        if (!empty($entityId)) {
+            $entityFieldList = EntityField::query()
+                ->where('entity_id', $entityId)
+                ->whereIn('form_type', ['checkbox', 'checkboxTable', 'selectMulti', 'selectMultiTable', 'inputDecimal', 'cascade', 'cascadeMulti', 'uploadMulti'])
+                ->get()->toArray();
 
-        $array = ['checkbox', 'checkboxTable', 'selectMulti', 'selectMultiTable', 'cascade', 'cascadeMulti', 'uploadMulti'];
-        foreach ($entityFieldList as $key => $val) {
-            // 转换成数组
-            if (in_array($val['form_type'], $array)) {
-                $this->casts[$val['name']] = 'array';
-            }
-            // 转换成float
-            if ($val['form_type'] == 'inputDecimal') {
-                $this->casts[$val['name']] = 'float';
+            $array = ['checkbox', 'checkboxTable', 'selectMulti', 'selectMultiTable', 'cascade', 'cascadeMulti', 'uploadMulti'];
+            foreach ($entityFieldList as $key => $val) {
+                // 转换成数组
+                if (in_array($val['form_type'], $array)) {
+                    $this->casts[$val['name']] = 'array';
+                }
+                // 转换成float
+                if ($val['form_type'] == 'inputDecimal') {
+                    $this->casts[$val['name']] = 'float';
+                }
             }
         }
 
