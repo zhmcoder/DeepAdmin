@@ -26,7 +26,7 @@ class EntityCacheService
         $value = Cache::get($key);
 
         if (empty($value)) {
-            $value = EntityField::query()->find($fieldId);
+            $value = EntityField::query()->find($fieldId)->toArray();
             Cache::put($key, $value, config('deep_admin.ENTITY_FIELD_CACHE_EXPIRE_TIME'));
         }
 
