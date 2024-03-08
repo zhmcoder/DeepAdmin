@@ -556,11 +556,14 @@ class ContentController extends AdminController
                 case 'inputNumber' : // 整数
                     $min = isset($val['min']) ? $val['min'] : 0;
                     $max = isset($val['max']) ? $val['max'] : 99999999999;
-                    $obj->component(InputNumber::make()->min($min)->max($max)->controlsPosition(''))->help($val['form_comment'])->defaultValue($defaultValue)->required($val['is_required'], 'number');
+                    $obj->component(InputNumber::make()->min($min)->max($max)->controlsPosition(''))
+                        ->help($val['form_comment'])->defaultValue($defaultValue)
+                        ->required($val['is_required'], 'integer');
                     break;
 
                 case 'inputDecimal' : // 小数
-                    $obj->component(InputNumber::make()->precision($val['field_scale'])->min(0)->controlsPosition(''))->help($val['form_comment'])->required($val['is_required'], 'float');
+                    $obj->component(InputNumber::make()->precision($val['field_scale'])->min(0)->controlsPosition(''))
+                        ->help($val['form_comment'])->required($val['is_required'], 'float');
                     break;
 
                 case 'option' : // 单选
