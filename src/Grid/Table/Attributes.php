@@ -5,6 +5,8 @@ namespace Andruby\DeepAdmin\Grid\Table;
 class Attributes
 {
     public $gridId = null;
+    public $columnDataUrl = '';
+    public $isColumn = false;
 
     public function __construct()
     {

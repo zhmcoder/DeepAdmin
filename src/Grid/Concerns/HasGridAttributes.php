@@ -343,4 +343,27 @@ trait HasGridAttributes
         return $this;
     }
 
+    /**
+     * 表头接口
+     * @param $columnDataUrl
+     * @return $this
+     */
+    public function setColumnDataUrl($columnDataUrl)
+    {
+        $this->attributes->columnDataUrl = $columnDataUrl;
+        return $this;
+    }
+
+
+    /**
+     * 是否请求表头
+     * @param bool $isColumn
+     * @return $this
+     */
+    public function setIsColumn($isColumn = true)
+    {
+        $this->attributes->isColumn = $isColumn;
+        return $this;
+    }
+
 }
