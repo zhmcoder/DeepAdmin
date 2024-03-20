@@ -319,6 +319,11 @@ class Grid extends Component
         return $this->columns;
     }
 
+    public function getColumnAttributes()
+    {
+        return $this->columnAttributes;
+    }
+
     protected function applyQuery()
     {
         //快捷搜索
