@@ -73,8 +73,8 @@
               />
             </el-form-item> -->
             <el-form-item>
-              <el-button type="primary" @click="onFilterSubmit">搜索</el-button>
-              <el-button @click="onFilterReset">重置</el-button>
+              <el-button type="primary" @click="onFilterSubmit">{{ attrs.filterSearchLabel?attrs.filterSearchLabel : '搜索'}}</el-button>
+              <el-button @click="onFilterReset">{{ attrs.filterResetLabel?attrs.filterResetLabel : '重置'}}</el-button>
               <el-button
                 v-if="attrs.filter.exportUri"
                 :loading="export1Loading"
@@ -130,7 +130,7 @@
                   @keyup.enter.native="getData"
                 >
                   <el-button @click="getData" :loading="loading" slot="append"
-                    >搜索</el-button
+                    >{{ attrs.filterSearchLabel?attrs.filterSearchLabel : '搜索'}}</el-button
                   >
                 </el-input>
               </div>
