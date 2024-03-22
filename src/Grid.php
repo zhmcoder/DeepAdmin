@@ -596,6 +596,7 @@ class Grid extends Component
             $viewData['pageSizes'] = $this->pageSizes;
             $viewData['perPage'] = $this->perPage;
             $viewData['pageLayout'] = $this->pageLayout;
+            $viewData['pageLabel'] = $this->pageLabel;
             $viewData['pageBackground'] = $this->pageBackground;
             $viewData['toolbars'] = $this->toolbars->builderData();
             $viewData['batchActions'] = $this->batchActions->builderActions();

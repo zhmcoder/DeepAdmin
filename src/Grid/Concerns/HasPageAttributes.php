@@ -10,6 +10,7 @@ trait HasPageAttributes
     protected $perPage = 15;
 
     protected $pageLayout = "total, sizes,->,prev, pager, next, jumper";
+    protected $pageLabel = "共, 条, 条/页, 前往, 页";
 
     protected $pageBackground = true;
 
@@ -90,6 +91,18 @@ trait HasPageAttributes
         if ($this->model) {
             $this->model->usePaginate(false);
         }
+        return $this;
+    }
+
+    /**
+     * 设置分页名称，子组件名用逗号分隔
+     * 共, 条, 条/页, 前往, 页
+     * @param string $pageLabel
+     * @return $this
+     */
+    public function pageLabel(string $pageLabel)
+    {
+        $this->pageLabel = $pageLabel;
         return $this;
     }
 
