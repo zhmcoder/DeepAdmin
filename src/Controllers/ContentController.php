@@ -134,7 +134,7 @@ class ContentController extends AdminController
 
                 if ($val['is_search'] == 4 || $val['is_search'] == 5) {
                     if (in_array($val['form_type'], ['hidden', 'option', 'selectMulti', 'select', 'checkbox'])) {
-                        $component = Select::make($defaultValue)->filterable()->options($this->_selectOption($val))->clearable()->style('width:' . $width . 'px;margin-left:5px;')->disabled($disabled);
+                        $component = Select::make($defaultValue)->placeholder('')->filterable()->options($this->_selectOption($val))->clearable()->style('width:' . $width . 'px;margin-left:5px;')->disabled($disabled);
 
                         if (in_array($val['form_type'], ['selectMulti', 'checkbox'])) { // 多选、复选
                             $filter->like($val['name'], $val['form_name'])->component($component);
@@ -143,7 +143,7 @@ class ContentController extends AdminController
                         }
                     }
                     if (in_array($val['form_type'], ['selectMultiTable', 'selectTable', 'checkboxTable'])) {
-                        $component = Select::make($defaultValue)->filterable()->options($this->_selectOptionTable($val))->clearable()->style('width:' . $width . 'px;margin-left:5px;')->disabled($disabled);
+                        $component = Select::make($defaultValue)->placeholder('')->filterable()->options($this->_selectOptionTable($val))->clearable()->style('width:' . $width . 'px;margin-left:5px;')->disabled($disabled);
 
                         if (in_array($val['form_type'], ['selectMultiTable', 'checkboxTable'])) {
                             $filter->like($val['name'], $val['form_name'])->component($component);
@@ -153,7 +153,7 @@ class ContentController extends AdminController
                     }
                     if (in_array($val['form_type'], ['selectRemote'])) {
                         $filter->equal($val['name'], $val['form_name'])->component(
-                            Select::make($defaultValue)->filterable()->placeholder('请输入查询')
+                            Select::make($defaultValue)->placeholder('')->filterable()->placeholder('请输入查询')
                                 ->remote($this->remoteUrl)->extUrlParams(['val' => $val])->paginate(10)
                                 ->clearable()->style('width:' . $width . 'px;margin-left:5px;')->disabled($disabled)
                         );
