@@ -130,7 +130,7 @@
             <div class="layout-header-breadcrumb">
               <el-breadcrumb separator="/">
                 <el-breadcrumb-item :to="{ path: '/' }"
-                  >首页
+                  >Home
                 </el-breadcrumb-item>
                 <!-- navBar -->
                 <template v-for="menu in pageData.menuList">
