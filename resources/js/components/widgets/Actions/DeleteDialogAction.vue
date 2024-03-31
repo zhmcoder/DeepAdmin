@@ -15,7 +15,7 @@
     </el-button>
 
     <el-dialog
-        title="action.title"
+        :title="action.title"
         :visible.sync="dialogVisible"
         :modal-append-to-body='false'
         width="30%">
