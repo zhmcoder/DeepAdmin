@@ -34,7 +34,7 @@
               v-model="form.username"
               prefix-icon="el-icon-user"
               @keyup.enter.native="handleSubmit('formValidate')"
-              placeholder="请输入用户名"
+              placeholder="Please Enter Username"
             />
           </el-form-item>
           <el-form-item prop="password">
@@ -44,15 +44,15 @@
               prefix-icon="el-icon-lock"
               show-password
               @keyup.enter.native="handleSubmit('formValidate')"
-              placeholder="请输入密码"
+              placeholder="Please Enter Password"
             />
           </el-form-item>
           <div class="page-account-auto-login flex-c-sb">
             <el-checkbox v-model="form.remember" size="large"
-              >自动登录</el-checkbox
+              >Auto Logon</el-checkbox
             >
             <el-button size="mini" type="text" @click="onForgetPassword"
-              >忘记密码</el-button
+              >Forgot Password</el-button
             >
           </div>
           <el-form-item>
@@ -62,7 +62,7 @@
               type="primary"
               style="width: 100%"
               long
-              >登录
+              >Login
             </el-button>
           </el-form-item>
         </el-form>
@@ -99,9 +99,9 @@ export default {
       loading: false,
       ruleValidate: {
         username: [
-          { required: true, message: "请输入用户名", trigger: "blur" },
+          { required: true, message: "Please Enter Username", trigger: "blur" },
         ],
-        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        password: [{ required: true, message: "Please Enter Password", trigger: "blur" }],
       },
     };
   },
@@ -112,7 +112,7 @@ export default {
   },
   methods: {
     onForgetPassword() {
-      this.$message.error("忘记密码请联系管理员");
+      this.$message.error("Forgot password, please contact the administrator");
     },
     handleSubmit(name) {
       this.$refs[name].validate((valid) => {
