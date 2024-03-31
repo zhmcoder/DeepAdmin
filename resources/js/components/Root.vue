@@ -296,7 +296,7 @@
 
     <!--  -->
     <el-dialog
-      title="修改密码"
+      title="Change Password"
       width="400px"
       :visible.sync="dialogUpdatePsdVisible"
       append-to-body
@@ -469,7 +469,7 @@ export default {
       this.isCollapsed = !this.isCollapsed;
     },
     onLogout() {
-      this.$confirm("您确定退出登录当前账户吗？", "退出登录确认").then(() => {
+      this.$confirm("Are you sure you want to log out of your current account？", "Exit Login Confirm").then(() => {
         window.location.href = this.pageData.url.logout;
       });
     },

@@ -15,14 +15,14 @@
     </el-button>
 
     <el-dialog
-        title="删除提示"
+        title="{{action.title}}"
         :visible.sync="dialogVisible"
         :modal-append-to-body='false'
         width="30%">
       <span style="margin: 20px">{{action.message}}</span>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" :loading="loading" :icon="action.icon" @click="onHandle">确 定</el-button>
+        <el-button @click="dialogVisible = false">{{action.cancel}}</el-button>
+        <el-button type="primary" :loading="loading" :icon="action.icon" @click="onHandle">{{action.confirm}}</el-button>
       </span>
     </el-dialog>
   </div>
