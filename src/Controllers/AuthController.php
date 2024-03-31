@@ -63,7 +63,7 @@ class AuthController extends AdminController
         $remember = $request->get('remember', false);
 
         if ($this->guard()->attempt($credentials, $remember)) {
-            return \Admin::responseRedirect(url($this->sendLoginResponse($request)), false, '登录成功', 'success', false);
+            return \Admin::responseRedirect(url($this->sendLoginResponse($request)), false, trans('deep-admin::admin.login_successful'), 'success', false);
         }
 
         return $this->responseError($this->getFailedLoginMessage());

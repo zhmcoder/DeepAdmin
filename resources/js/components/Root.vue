@@ -165,13 +165,13 @@
                   <a @click="updatePsd">
                     <el-dropdown-item>
                       <i class="el-icon-lock" size="18" />
-                      <span>修改密码</span>
+                      <span>Change Password</span>
                     </el-dropdown-item>
                   </a>
                   <a @click="onLogout">
                     <el-dropdown-item>
                       <i class="el-icon-right" size="18" />
-                      <span>退出登录</span>
+                      <span>Log Out</span>
                     </el-dropdown-item>
                   </a>
                 </el-dropdown-menu>
@@ -304,27 +304,27 @@
     >
       <!-- :rules="formRules" -->
       <el-form :model="passwordInfo" ref="psdForm" label-width="110px">
-        <el-form-item prop="password" label="新密码">
+        <el-form-item prop="password" label="New Password">
           <el-input
             type="password"
             v-model="passwordInfo.password"
             style="width: 250px"
-            placeholder="请输入新密码"
+            placeholder="Please Enter New Password"
           ></el-input>
         </el-form-item>
-        <el-form-item prop="password_confirm" label="确认密码">
+        <el-form-item prop="password_confirm" label="Confirm Password">
           <el-input
             type="password"
             v-model="passwordInfo.password_confirm"
             style="width: 250px"
-            placeholder="请确认密码"
+            placeholder="Please Confirm Password"
           ></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogUpdatePsdVisible = false">取 消</el-button>
+        <el-button @click="dialogUpdatePsdVisible = false">Cancel</el-button>
         <el-button :loading="btnLodgin" type="primary" @click="setPsd"
-          >确 定</el-button
+          >Confirm</el-button
         >
       </div>
     </el-dialog>
