@@ -33,14 +33,14 @@
                 type="text"
                 v-if="show_delete"
                 size="small">
-              移除
+              Delete
             </el-button>
           </template>
         </el-table-column>
       </el-table>
     </el-form-item>
     <el-form-item v-if="show_add">
-      <el-button style="display:block;margin: 0 auto;" type="text" size="middle" @click.native.prevent="addRow">添加
+      <el-button style="display:block;margin: 0 auto;" type="text" size="middle" @click.native.prevent="addRow">Add
       </el-button>
       <!-- <el-button @click="submitData">提交</el-button> -->
     </el-form-item>
