@@ -2,6 +2,7 @@
 
 namespace Andruby\DeepAdmin\Services;
 
+use Andruby\DeepAdmin\Models\Entity;
 use Andruby\DeepAdmin\Models\EntityField;
 use Illuminate\Support\Facades\Cache;
 
@@ -18,8 +19,46 @@ class EntityCacheService
         return new self();
     }
 
+    public function entity_table($table)
+    {
+        if (empty($table)) {
+            return [];
+        }
+
+        $key = 'ENTITY:' . $table;
+        $value = Cache::get($key);
+
+        if (empty($value)) {
+            $value = Entity::query()->where('table_name', $table)->first()->toArray();
+            Cache::put($key, $value, config('deep_admin.ENTITY_TABLE_CACHE_EXPIRE_TIME', 5 * 60));
+        }
+
+        return $value;
+    }
+
+    public function entity($entityId)
+    {
+        if (empty($entityId)) {
+            return [];
+        }
+
+        $key = 'ENTITY:' . $entityId;
+        $value = Cache::get($key);
+
+        if (empty($value)) {
+            $value = Entity::query()->find($entityId)->toArray();
+            Cache::put($key, $value, config('deep_admin.ENTITY_CACHE_EXPIRE_TIME', 5 * 60));
+        }
+
+        return $value;
+    }
+
     public function field($fieldId)
     {
+        if (empty($fieldId)) {
+            return [];
+        }
+
         $key = 'ENTITY:FIELD:' . $fieldId;
         $value = Cache::get($key);
 
@@ -33,13 +72,16 @@ class EntityCacheService
 
     public function list($entityId)
     {
+        if (empty($entityId)) {
+            return [];
+        }
+
         $key = 'ENTITY:FIELD:LIST:' . $entityId;
         $value = Cache::get($key);
 
         if (empty($value)) {
             $value = EntityField::query()
                 ->where('entity_id', $entityId)
-                ->whereIn('form_type', ['checkbox', 'checkboxTable', 'selectMulti', 'selectMultiTable', 'inputDecimal', 'cascade', 'cascadeMulti', 'uploadMulti'])
                 ->get()->toArray();
 
             Cache::put($key, $value, config('deep_admin.ENTITY_FIELD_LIST_CACHE_EXPIRE_TIME', 5 * 60));

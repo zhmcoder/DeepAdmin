@@ -49,10 +49,10 @@ class Content extends Model
         if (empty($table)) {
             $entityId = request('entity_id');
             if ($entityId) {
-                $table = Entity::where('id', $entityId)->value('table_name');
+                $table = EntityCacheService::instance()->entity($entityId)['table_name'] ?? '';
             }
         } else {
-            $entityId = Entity::where('table_name', $table)->value('id');
+            $entityId = EntityCacheService::instance()->entity_table($table)['id'] ?? '';
         }
 
         // todo 多选需要标记字段类型
