@@ -2,6 +2,7 @@
 
 namespace Andruby\DeepAdmin\Models;
 
+use Andruby\DeepAdmin\Services\EntityCacheService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -56,10 +57,7 @@ class Content extends Model
 
         // todo 多选需要标记字段类型
         if (!empty($entityId)) {
-            $entityFieldList = EntityField::query()
-                ->where('entity_id', $entityId)
-                ->whereIn('form_type', ['checkbox', 'checkboxTable', 'selectMulti', 'selectMultiTable', 'inputDecimal', 'cascade', 'cascadeMulti', 'uploadMulti'])
-                ->get()->toArray();
+            $entityFieldList = EntityCacheService::instance()->list($entityId);
 
             $array = ['checkbox', 'checkboxTable', 'selectMulti', 'selectMultiTable', 'cascade', 'cascadeMulti', 'uploadMulti'];
             foreach ($entityFieldList as $key => $val) {
