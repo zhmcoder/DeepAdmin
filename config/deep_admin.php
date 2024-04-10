@@ -202,6 +202,7 @@ return [
         'upload' => '图片上传（单图）',
         'uploadMulti' => '图片上传（多图）',
         'uploadFile' => '文件上传（单个）',
+        'upload_doge' => '上传 多吉',
         'dateTime' => '日期时间',
         'date' => '日期',
         'color' => '颜色选择',

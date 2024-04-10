@@ -661,6 +661,25 @@ class ContentController extends AdminController
                         ->required($val['is_required']);
                     break;
                 case 'upload_doge' :
+                    $formParams = explode("\n", $val['form_params']);
+                    $disk = null;
+                    $accept = null;
+                    $uniqueName = null;
+                    $path = null;
+                    foreach ($formParams as $k => &$v) {
+                        $v = explode('=', $v);
+                        switch ($v[0]) {
+                            case 'accept':
+                                $accept = $v[1];
+                                break;
+                            case 'uniqueName':
+                                $uniqueName = ($v[1] === 'true');
+                                break;
+                            case 'path':
+                                $path = $v[1];
+                                break;
+                        }
+                    }
                     $obj->component(UploadDoge::make()->file($disk ?: config('deep_admin.upload.disk'))
                         ->accept($accept ?: config('deep_admin.upload.file'))
                         ->uniqueName($uniqueName !== null ? $uniqueName : config('deep_admin.upload.uniqueName'))
