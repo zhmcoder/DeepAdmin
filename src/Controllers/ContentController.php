@@ -2,6 +2,7 @@
 
 namespace Andruby\DeepAdmin\Controllers;
 
+use Andruby\DeepAdmin\Components\Form\UploadDoge;
 use Andruby\DeepAdmin\Components\Grid\DeepLink;
 use Andruby\DeepAdmin\Components\Grid\SortEdit;
 use Andruby\DeepAdmin\Models\ContentTimeStamp;
@@ -324,6 +325,9 @@ class ContentController extends AdminController
 
                 case 'upload' :
                     $obj->align('center')->component(Image::make()->preview()->style('height:40px;width:40px;'));
+                    break;
+                case 'upload_doge' :
+                    $obj->align('center')->component(UploadDoge::make()->preview()->style('height:40px;width:40px;'));
                     break;
 
                 case 'avatar' :
@@ -654,6 +658,14 @@ class ContentController extends AdminController
                         ->accept($accept ?: config('deep_admin.upload.image'))
                         ->uniqueName($uniqueName !== null ? $uniqueName : config('deep_admin.upload.uniqueName'))
                         ->path($path ?: config('deep_admin.upload.directory.image')))
+                        ->required($val['is_required']);
+                    break;
+                case 'upload_doge' :
+                    $obj->component(UploadDoge::make()->file($disk ?: config('deep_admin.upload.disk'))
+                        ->accept($accept ?: config('deep_admin.upload.file'))
+                        ->uniqueName($uniqueName !== null ? $uniqueName : config('deep_admin.upload.uniqueName'))
+                        ->path('https://cdn.splash.lifeano.cn/')
+                        ->host('https://cdn.splash.lifeano.cn/'))
                         ->required($val['is_required']);
                     break;
 

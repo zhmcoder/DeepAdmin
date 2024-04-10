@@ -25,6 +25,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -65,12 +70,12 @@ __webpack_require__.r(__webpack_exports__);
     // };
 
     this.editor.config.menus = this.attrs.menus;
-    console.log('this.attrs.zIndex', this.attrs.zIndex);
+    console.log("this.attrs.zIndex", this.attrs.zIndex);
     this.editor.config.zIndex = this.attrs.zIndex;
     this.editor.config.uploadImgShowBase64 = this.attrs.uploadImgShowBase64;
 
     if (this.attrs.uploadImgServer) {
-      console.log('this.attrs.uploadImgServer', this.attrs.uploadImgServer);
+      console.log("this.attrs.uploadImgServer", this.attrs.uploadImgServer);
       this.editor.config.uploadImgServer = this.attrs.uploadImgServer;
       this.editor.config.uploadImgParams = {
         _token: Admin.token
@@ -98,11 +103,11 @@ __webpack_require__.r(__webpack_exports__);
       var formdata = new FormData();
 
       for (var i in resultFiles) {
-        formdata.append('file' + i, resultFiles[i]);
+        formdata.append("file" + i, resultFiles[i]);
       }
 
-      formdata.append('amount', resultFiles.length);
-      formdata.append('_token', Admin.token);
+      formdata.append("amount", resultFiles.length);
+      formdata.append("_token", Admin.token);
 
       _this.$http.post(_this.attrs.uploadImgServer, formdata).then(function (data) {
         for (var _i = 0; _i <= data.data.length - 1; _i++) {
@@ -116,10 +121,19 @@ __webpack_require__.r(__webpack_exports__);
 
       _this2.editor.txt.html(_this2.defaultValue);
 
-      console.log('获取value====', _this2.value);
+      console.log("获取value====", _this2.value);
 
       if (_this2.value) {
         _this2.editor && _this2.editor.txt.html(_this2.value);
+      }
+
+      var w_e = document.getElementById("w-e-text-container");
+      var clientHeight = w_e.clientHeight;
+      var w_e_text = document.getElementsByClassName("w-e-text");
+      console.log("w_e_text[0]", w_e_text[0]);
+
+      if (w_e_text && w_e_text.length) {
+        w_e_text[0].style.minHeight = clientHeight + "px";
       }
     }); //编辑数据加载完毕设置编辑器的值
 
@@ -141,7 +155,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     insertImgFn: function insertImgFn() {
-      console.log('插入图片');
+      console.log("插入图片");
     }
   }
 });
