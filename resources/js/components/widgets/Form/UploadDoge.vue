@@ -135,8 +135,7 @@ export default {
     },
     methods: {
         uploadFile(param, config) {
-            var aws = new S3();
-            aws.upload()
+
             let axiosConfig = {
                 url: this.attrs.action,
                 method: 'post',
@@ -152,11 +151,8 @@ export default {
 
         handleRequest(data) {
             console.log(this.attrs);
-            this.$http
-                .get(this.attrs.tmpTokenUrl, {
-                    params: {
-                        path: this.attrs.path
-                    }
+            this.$http.post(this.attrs.tmpTokenUrl, {
+                    path: this.attrs.data.path.replace('/*', '')
                 })
                 .then(res => {
                     console.log(res);
@@ -177,7 +173,7 @@ export default {
                     // formdata.append('file', data.file)
 
                     var file = data.file;
-                    //console.log(file);
+                    console.log(file);
 
                     var dego_file_name = file.name;
 
@@ -187,7 +183,7 @@ export default {
                         var name_md5 = md5.update(dego_file_name).digest('hex');
                         dego_file_name = name_md5 + '.' + ext;
                     }
-
+                    console.log(dego_file_name);
                     var targetKey = (this.attrs.data.path || '*').replace('*', dego_file_name);
                     // 服务端返回的这个 keyPrefix 是服务端授权的文件路径名或路径前缀，如果其中包含通配符 *，表示服务端允许客户端自定义
                     // 全部或者一部分的文件路径 Key，我们可以进行自定义，这里用文件本身的名 file.name 来替代，如果 keyPrefix 中不包含 *，
