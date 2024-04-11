@@ -682,8 +682,9 @@ class ContentController extends AdminController
                     }
                     $obj->component(UploadDoge::make()->file($disk ?: config('deep_admin.upload.disk'))
                         ->accept($accept ?: config('deep_admin.upload.file'))
+                        ->tmpTokenUrl(env('DOGE_TMP_TOKEN_URL', route('doge.tmp_token')))
                         ->uniqueName($uniqueName !== null ? $uniqueName : config('deep_admin.upload.uniqueName'))
-                        ->path('https://cdn.splash.lifeano.cn/')
+                        ->path($path . '/*')
                         ->host('https://cdn.splash.lifeano.cn/'))
                         ->required($val['is_required']);
                     break;

@@ -40,6 +40,7 @@
         "@antv/x6": "^1.24.3",
         "aws-sdk": "^2.1594.0",
         "cartesian": "^1.0.1",
+        "crypto": "^1.0.1",
         "echarts": "^4.6.0",
         "echarts-liquidfill": "^2.0.6",
         "flat": "^5.0.2",

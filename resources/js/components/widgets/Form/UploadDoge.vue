@@ -109,6 +109,7 @@ import {getFileUrl, getFileName} from "@/utils";
 import {FormItemComponent} from "@/mixins.js";
 import draggable from "vuedraggable";
 import axios from 'axios';
+import crypto from 'crypto'
 
 export default {
     mixins: [FormItemComponent],
@@ -125,6 +126,7 @@ export default {
             progressPercent: 0,
             uidList: [], //存储每个uid信息数据
             progressList: [], //展示所有上传文件进度的列表
+
         };
     },
     mounted() {
@@ -149,11 +151,11 @@ export default {
         },
 
         handleRequest(data) {
+            console.log(this.attrs);
             this.$http
-                .get('admin-api/Doge/key_info', {
+                .get(this.attrs.tmpTokenUrl, {
                     params: {
-                        uid: 12345678,
-                        abcd: 'efg'
+                        path: this.attrs.path
                     }
                 })
                 .then(res => {
@@ -175,11 +177,18 @@ export default {
                     // formdata.append('file', data.file)
 
                     var file = data.file;
-                    console.log(file);
-                    console.log("服务端允许本次上传的文件路径：" + key_data.keyPrefix);
+                    //console.log(file);
 
+                    var dego_file_name = file.name;
 
-                    var targetKey = (key_data.keyPrefix || '*').replace('*', file.name);
+                    if (this.attrs.data.uniqueName) {
+                        var md5 = crypto.createHash('md5')
+                        var ext = file.name.substring(file.name.lastIndexOf('.') + 1);
+                        var name_md5 = md5.update(dego_file_name).digest('hex');
+                        dego_file_name = name_md5 + '.' + ext;
+                    }
+
+                    var targetKey = (this.attrs.data.path || '*').replace('*', dego_file_name);
                     // 服务端返回的这个 keyPrefix 是服务端授权的文件路径名或路径前缀，如果其中包含通配符 *，表示服务端允许客户端自定义
                     // 全部或者一部分的文件路径 Key，我们可以进行自定义，这里用文件本身的名 file.name 来替代，如果 keyPrefix 中不包含 *，
                     // 表示服务端已经完全设置好本次上传的文件路径 Key 了，咱们客户端没办法自定义了，此时这里的 file.name 自然不会起作用
@@ -187,7 +196,7 @@ export default {
                     // document.getElementById('uploadBtn').disabled = true;
                     file.progressPercent = 0.00;
                     file.targetKey = targetKey;
-                    console.log(file)
+                    //console.log(file)
                     this.progressList.push(file);
                     let that = this;
                     var startTime = new Date().getTime(), lastTime = new Date().getTime(); // 记录开始时间
@@ -214,9 +223,9 @@ export default {
                             console.log('________')
                             var newProgressList = JSON.parse(JSON.stringify(that.progressList))
                             newProgressList.map((item) => {
-                                console.log('++++++++')
+                                //console.log('++++++++')
                                 if (item.targetKey == evt.key) {
-                                    console.log('========')
+                                    //console.log('========')
                                     item.progressPercent = Number.parseFloat(percent);
                                     item.name = file.name;
                                     item.size = file.size;
@@ -234,9 +243,9 @@ export default {
                             // 成功后的进度条
                             var newProgressList = JSON.parse(JSON.stringify(that.progressList))
                             newProgressList.map((item) => {
-                                console.log('finish+++')
+                                //console.log('finish+++')
                                 if (item.targetKey == data.Key) {
-                                    console.log('finish+++   0000')
+                                    //console.log('finish+++   0000')
                                     item.progressPercent = 100
                                     item.name = file.name
                                     item.size = file.size
@@ -245,10 +254,10 @@ export default {
                             })
                             that.progressList = newProgressList;
 
-                            console.log("上传成功：" + targetKey, data);
+                            //console.log("上传成功：" + targetKey, data);
                             that.onChange(data.Key);
                             var cdn = key_data.cdn_host;
-                            console.log("url:" + cdn + targetKey);
+                            //console.log("url:" + cdn + targetKey);
                             // document.getElementById('uploadStatus').innerHTML = "上传成功： " + '<a target="_blank" href="' + cdn + targetKey + '">' + targetKey + '</a>';
                         }
                     });

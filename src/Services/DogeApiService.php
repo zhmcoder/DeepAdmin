@@ -68,11 +68,11 @@ class DogeApiService
         }
     }
 
-    public function tmp_token()
+    public function tmp_token($path = 'videos')
     {
         $data['channel'] = 'OSS_UPLOAD';
-        $data['ttl'] = 7200;
-        $data['scopes'] = ['xunji:videos/*'];
+        $data['ttl'] = env('DOGE_AUTH_EXPIRED', 7200);
+        $data['scopes'] = [env('DOGE_BUCKET', 'xunji') . ':' . $path . '/*'];
 
         $url = '/auth/tmp_token.json';
         $result = $this->doge_cloud_api($url, $data, true);

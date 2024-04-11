@@ -28,7 +28,7 @@ Route::group([
 
     $router->post('auth/resetPwd', 'AuthController@resetPwd')->name('auth.resetPwd');
 
-    $router->get('Doge/key_info', 'DogeController@key_info')->name('doge.key_info');
+    $router->get('Doge/tmp_token', 'DogeController@tmp_token')->name('doge.tmp_token');
 });
 
 Route::group([

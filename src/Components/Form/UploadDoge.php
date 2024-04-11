@@ -15,6 +15,7 @@ class UploadDoge extends Component
 
     protected $type = "image";
     protected $action = "";
+    protected $tmpTokenUrl = "";
     protected $host = "";
     protected $multiple = false;
     protected $data = [];
@@ -78,6 +79,16 @@ class UploadDoge extends Component
     public function action($action)
     {
         $this->action = $action;
+        return $this;
+    }
+
+    /**
+     * @param string $tmpTokenUrl
+     * @return $this
+     */
+    public function tmpTokenUrl($tmpTokenUrl)
+    {
+        $this->tmpTokenUrl = $tmpTokenUrl;
         return $this;
     }
 
