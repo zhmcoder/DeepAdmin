@@ -769,9 +769,7 @@ export default {
             } else if (type == 2) {
               _this.export2Loading = false;
             }
-            if (!data.action.down_url) {
-              this.$message.info(message);
-            } else {
+            if (data.action.down_url) {
               window.location.href = data.action.down_url;
             }
           } else {
