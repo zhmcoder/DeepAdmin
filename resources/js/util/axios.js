@@ -17,12 +17,12 @@ axios.interceptors.response.use(
         // 对响应数据做点什么
         switch (data.code) {
             case '100':
-                Message.info({
+                Message.success({
                     message: data.message
                 });
                 break;
             case 100:
-                Message.info({
+                Message.success({
                     message: data.message
                 });
                 break;
