@@ -774,7 +774,7 @@ class ContentController extends AdminController
 
                 case 'wangEditor' : //
                     $obj->component(
-                        WangEditor::make()->uploadImgServer($this->uploadImages)->uploadFileName('file')->style('min-height:300px;')
+                        WangEditor::make()->uploadImgServer($this->uploadImages)->uploadFileName('file')->style('height:300px;')
                     )->inputWidth(20);
                     break;
 
