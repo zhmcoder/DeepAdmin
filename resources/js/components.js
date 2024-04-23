@@ -45,6 +45,7 @@ Vue.component(
   require("@/components/widgets/Form/Transfer").default
 );
 Vue.component("Upload", require("@/components/widgets/Form/Upload").default);
+Vue.component("UploadList", require("@/components/widgets/Form/UploadList").default);
 Vue.component(
   "ColorPicker",
   require("@/components/widgets/Form/ColorPicker").default
