@@ -549,7 +549,7 @@ class Grid extends Component
      * data
      * @return array
      */
-    protected function data()
+    public function data(): array
     {
         if ($this->customData) {
             $this->customData['data'] = $this->model()->displayData($this->customData['data']);
