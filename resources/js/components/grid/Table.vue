@@ -559,7 +559,7 @@ export default {
       const sums = [];
       columns.forEach((column, index) => {
         if (index === 0) {
-          sums[index] = '总价';
+          sums[index] = '合计';
           return;
         } else {
           if(this.total_info) {
