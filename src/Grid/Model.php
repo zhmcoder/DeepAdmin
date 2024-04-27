@@ -513,7 +513,7 @@ class Model
                             if (!empty($item['value'][2])) {
                                 $totalData[$item['value'][1]] = $totalData[$item['value'][1]] * $item['value'][2] / 100;
                             }
-                            if (!empty($totalData[$item['value']])) {
+                            if (isset($totalData[$item['value'][1]]) && isset($totalData[$item['value'][2]])) {
                                 $totalData[$item['key']] = $totalData[$item['value'][1]] ? round($totalData[$item['value'][0]] / $totalData[$item['value'][1]] * 100, 2) : 0;
                                 $totalData[$item['key']] .= $item['suffix'];
                             } else {
