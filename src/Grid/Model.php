@@ -513,8 +513,12 @@ class Model
                             if (!empty($item['value'][2])) {
                                 $totalData[$item['value'][1]] = $totalData[$item['value'][1]] * $item['value'][2] / 100;
                             }
-                            $totalData[$item['key']] = $totalData[$item['value'][1]] ? round($totalData[$item['value'][0]] / $totalData[$item['value'][1]] * 100, 2) : 0;
-                            $totalData[$item['key']] .= $item['suffix'];
+                            if (!empty($totalData[$item['value']])) {
+                                $totalData[$item['key']] = $totalData[$item['value'][1]] ? round($totalData[$item['value'][0]] / $totalData[$item['value'][1]] * 100, 2) : 0;
+                                $totalData[$item['key']] .= $item['suffix'];
+                            } else {
+                                $totalData[$item['key']] = '0%';
+                            }
                         }
                     }
                 }
