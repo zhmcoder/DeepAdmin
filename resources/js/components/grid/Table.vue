@@ -93,6 +93,20 @@
               >
                 {{ attrs.filter.exportPdfText }}
               </el-button>
+              <el-button
+                v-if="attrs.filter.exportUri"
+                :loading="export3Loading"
+                @click="() => onFilterExport(3)"
+              >
+                {{ attrs.filter.exportUriText }}
+              </el-button>
+              <el-button
+                v-if="attrs.filter.exportPdf"
+                :loading="export4Loading"
+                @click="() => onFilterExport(4)"
+              >
+                {{ attrs.filter.exportPdfText }}
+              </el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -434,6 +448,8 @@ export default {
       spanData: [], // 组合的合并组
       export1Loading: false,
       export2Loading: false,
+      export3Loading: false,
+      export4Loading: false,
       total_info: null
     };
   },
@@ -743,7 +759,11 @@ export default {
         this.export1Loading = true;
       } else if (type == 2) {
         this.export2Loading = true;
-      }
+      } else if (type == 3) {
+        this.export3Loading = true;
+      } else if (type == 4) {
+        this.export4Loading = true;
+      } 
       this.$http
         .post(
           type == 1 ? this.attrs.filter.exportUri : this.attrs.filter.exportPdf,
@@ -768,7 +788,11 @@ export default {
               _this.export1Loading = false;
             } else if (type == 2) {
               _this.export2Loading = false;
-            }
+            } else if (type == 3) {
+              _this.export3Loading = false;
+            } else if (type == 4) {
+              _this.export4Loading = false;
+            } 
             if (data.action.down_url) {
               window.location.href = data.action.down_url;
             }
@@ -777,6 +801,10 @@ export default {
               _this.export1Loading = false;
             } else if (type == 2) {
               _this.export2Loading = false;
+            } else if (type == 3) {
+              _this.export3Loading = false;
+            } else if (type == 4) {
+              _this.export4Loading = false;
             }
           }
         })
