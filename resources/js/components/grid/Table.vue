@@ -73,10 +73,10 @@
               />
             </el-form-item> -->
             <el-form-item>
-              <el-button type="primary" @click="onFilterSubmit">{{
+              <el-button v-if="attrs.filterSearchLabel" type="primary" @click="onFilterSubmit">{{
                 attrs.filterSearchLabel ? attrs.filterSearchLabel : "搜索"
               }}</el-button>
-              <el-button @click="onFilterReset">{{
+              <el-button v-if="attrs.filterResetLabel" @click="onFilterReset">{{
                 attrs.filterResetLabel ? attrs.filterResetLabel : "重置"
               }}</el-button>
               <el-button
