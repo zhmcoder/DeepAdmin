@@ -2,6 +2,8 @@
 
 namespace Andruby\DeepAdmin\Grid\Table;
 
+use Illuminate\Support\Str;
+
 class Attributes
 {
     public $gridId = null;
@@ -12,6 +14,8 @@ class Attributes
     {
         $this->border = env('TABLE_BORDER', false);
         $this->size = env('TABLE_SIZE', 'small');
+
+        $this->gridId = strtolower(Str::random(8));
     }
 
     public $height;
