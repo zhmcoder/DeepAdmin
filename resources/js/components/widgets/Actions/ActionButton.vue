@@ -41,7 +41,7 @@
       >
     </el-tooltip>
     <el-dialog
-      v-if="action.dialog"
+      v-if="action.dialog && dialogTableVisible"
       :title="action.dialog.title"
       :visible.sync="dialogTableVisible"
       :width="action.dialog.width"
