@@ -1,12 +1,9 @@
 <?php
 
-
 namespace Andruby\DeepAdmin\Grid\Actions;
-
 
 use Andruby\DeepAdmin\Actions\BaseRowAction;
 use Andruby\DeepAdmin\Components\Attrs\Button;
-use Andruby\DeepAdmin\Grid\Concerns\HasDialog;
 
 class ActionButton extends BaseRowAction
 {
@@ -14,8 +11,10 @@ class ActionButton extends BaseRowAction
     const HANDLER_ROUTE = "route";
     const HANDLER_LINK = "link";
     const HANDLER_REQUEST = "request";
+    const HANDLER_LINK_TARGET = 'link_target';
 
     use Button;
+
     protected $uri;
     protected $componentName = "ActionButton";
     protected $handler;
@@ -60,7 +59,8 @@ class ActionButton extends BaseRowAction
         return $this;
     }
 
-    public function route($uri){
+    public function route($uri)
+    {
         $this->uri = $uri;
         $this->handler = self::HANDLER_ROUTE;
         return $this;
