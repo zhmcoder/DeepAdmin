@@ -105,6 +105,9 @@ export default {
         case "link":
           window.location.href = this.uri;
           break;
+        case "link_target":
+          window.open(this.uri)
+          break;
         case "request":
           this.onRequest(this.uri);
           break;
