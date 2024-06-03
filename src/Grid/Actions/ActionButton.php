@@ -53,7 +53,7 @@ class ActionButton extends BaseRowAction
      */
     public function handler($handler)
     {
-        abort_if(!in_array($handler, [self::HANDLER_LINK, self::HANDLER_REQUEST, self::HANDLER_ROUTE]), 400, "ActionButton 事件类型错误");
+        abort_if(!in_array($handler, [self::HANDLER_LINK, self::HANDLER_REQUEST, self::HANDLER_ROUTE, self::HANDLER_LINK_TARGET]), 400, "ActionButton 事件类型错误");
 
         $this->handler = $handler;
         return $this;
