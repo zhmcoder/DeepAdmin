@@ -5,6 +5,7 @@ namespace Andruby\DeepAdmin\Grid\Concerns;
 trait HasTotalData
 {
     protected $totalData;
+    protected $totalDataCompute;
 
     /**
      * @param $totalData
@@ -23,5 +24,17 @@ trait HasTotalData
     public function getTotalData()
     {
         return $this->totalData;
+    }
+
+    public function setTotalDataCompute($totalDataCompute)
+    {
+        $this->totalDataCompute = $totalDataCompute;
+
+        return $this;
+    }
+
+    public function getTotalDataCompute()
+    {
+        return $this->totalDataCompute;
     }
 }

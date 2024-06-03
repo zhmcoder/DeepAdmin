@@ -41,7 +41,7 @@
       >
     </el-tooltip>
     <el-dialog
-      v-if="action.dialog"
+      v-if="action.dialog && dialogTableVisible"
       :title="action.dialog.title"
       :visible.sync="dialogTableVisible"
       :width="action.dialog.width"
@@ -104,6 +104,9 @@ export default {
           break;
         case "link":
           window.location.href = this.uri;
+          break;
+        case "link_target":
+          window.open(this.uri)
           break;
         case "request":
           this.onRequest(this.uri);

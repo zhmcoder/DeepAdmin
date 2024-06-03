@@ -75,8 +75,12 @@ class Between extends AbstractFilter
         }
 
         if ($this->datetime) {
-            $this->value[0] = $this->value[0] . ' 00:00:00';
-            $this->value[1] = $this->value[1] . ' 23:59:59';
+            if (strlen($this->value[0]) == 10) {
+                $this->value[0] = $this->value[0] . ' 00:00:00';
+            }
+            if (strlen($this->value[1]) == 10) {
+                $this->value[1] = $this->value[1] . ' 23:59:59';
+            }
         }
 
         if ($this->date) {

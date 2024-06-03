@@ -73,8 +73,12 @@
               />
             </el-form-item> -->
             <el-form-item>
-              <el-button type="primary" @click="onFilterSubmit">{{ attrs.filterSearchLabel?attrs.filterSearchLabel : '搜索'}}</el-button>
-              <el-button @click="onFilterReset">{{ attrs.filterResetLabel?attrs.filterResetLabel : '重置'}}</el-button>
+              <el-button v-if="attrs.filterSearchLabel" type="primary" @click="onFilterSubmit">{{
+                attrs.filterSearchLabel ? attrs.filterSearchLabel : "搜索"
+              }}</el-button>
+              <el-button v-if="attrs.filterResetLabel" @click="onFilterReset">{{
+                attrs.filterResetLabel ? attrs.filterResetLabel : "重置"
+              }}</el-button>
               <el-button
                 v-if="attrs.filter.exportUri"
                 :loading="export1Loading"
@@ -88,6 +92,13 @@
                 @click="() => onFilterExport(2)"
               >
                 {{ attrs.filter.exportPdfText }}
+              </el-button>
+              <el-button
+                v-if="attrs.filter.exportImg"
+                :loading="export3Loading"
+                @click="() => onFilterExport(3)"
+              >
+                {{ attrs.filter.exportImgText }}
               </el-button>
             </el-form-item>
           </el-form>
@@ -129,8 +140,13 @@
                   @clear="getData"
                   @keyup.enter.native="getData"
                 >
-                  <el-button @click="getData" :loading="loading" slot="append"
-                    >{{ attrs.filterSearchLabel?attrs.filterSearchLabel : '搜索'}}</el-button
+                  <el-button
+                    @click="getData"
+                    :loading="loading"
+                    slot="append"
+                    >{{
+                      attrs.filterSearchLabel ? attrs.filterSearchLabel : "搜索"
+                    }}</el-button
                   >
                 </el-input>
               </div>
@@ -235,6 +251,7 @@
           :row-key="attrs.attributes.rowKey"
           :height="gridHeight"
           :show-summary="attrs.attributes.showSummary"
+          :summary-method="total_info ? getSummaries : null"
           :max-height="attrs.attributes.maxHeight"
           :default-sort="default_sort_get"
           :stripe="attrs.attributes.stripe"
@@ -423,7 +440,9 @@ export default {
       spanArr: [], //临时组
       spanData: [], // 组合的合并组
       export1Loading: false,
-      export2Loading: false
+      export2Loading: false,
+      export3Loading: false,
+      total_info: null
     };
   },
   mounted() {
@@ -543,33 +562,49 @@ export default {
     } catch (e) {}
   },
   methods: {
+    getSummaries(param) {
+      const { columns, data } = param;
+      const sums = [];
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = '合计';
+          return;
+        } else {
+          if(this.total_info) {
+            sums[index] = this.total_info[column.property] ? String(this.total_info[column.property]) : '';
+            return
+          }
+        }
+      });
+      return sums;
+    },
     // 计算需要合并的单元格
     getSpanData(data) {
-      this.spanData = []
+      this.spanData = [];
       this.columnArr.forEach((element) => {
-        let contactDot = 0
-        this.spanArr = []
+        let contactDot = 0;
+        this.spanArr = [];
         data.forEach((item, index) => {
           if (index === 0) {
-            this.spanArr.push(1)
+            this.spanArr.push(1);
           } else {
             if (item[element] === data[index - 1][element]) {
-              this.spanArr[contactDot] += 1
-              this.spanArr.push(0)
+              this.spanArr[contactDot] += 1;
+              this.spanArr.push(0);
             } else {
-              contactDot = index
-              this.spanArr.push(1)
+              contactDot = index;
+              this.spanArr.push(1);
             }
           }
-        })
-        this.spanData.push(this.spanArr)
-      })
+        });
+        this.spanData.push(this.spanArr);
+      });
     },
     objectSpanMethod({ row, column, rowIndex, columnIndex }) {
-      console.log('this.spanData', this.spanData)
-      console.log('this.columnArr', this.columnArr)
-      console.log('columnIndex', columnIndex)
-      console.log('rowIndex', rowIndex)
+      // console.log('this.spanData', this.spanData)
+      // console.log('this.columnArr', this.columnArr)
+      // console.log('columnIndex', columnIndex)
+      // console.log('rowIndex', rowIndex)
 
       if (this.columnArr.includes(column.property)) {
         if (this.spanData[columnIndex][rowIndex]) {
@@ -661,6 +696,7 @@ export default {
             this.pageData.currentPage = data.current_page;
             this.pageData.total = data.total;
             this.pageData.lastPage = data.last_page;
+            this.total_info = data.total_data;
 
             this.$store.commit("setGridData", { key: "sort", data: this.sort });
             this.$store.commit("setGridData", { key: "page", data: this.page });
@@ -711,14 +747,16 @@ export default {
     // 表单导出
     async onFilterExport(type) {
       var _this = this;
-      if(type == 1) {
-        this.export1Loading = true
-      } else if(type == 2) {
-        this.export2Loading = true
+      if (type == 1) {
+        this.export1Loading = true;
+      } else if (type == 2) {
+        this.export2Loading = true;
+      } else if (type == 3) {
+        this.export3Loading = true;
       }
       this.$http
         .post(
-          type == 1 ? this.attrs.filter.exportUri : this.attrs.filter.exportPdf,
+          type == 1 ? this.attrs.filter.exportUri : type == 2 ? this.attrs.filter.exportPdf : type == 3 ? this.attrs.filter.exportImg : '',
           {
             params: {
               get_data: true,
@@ -734,19 +772,25 @@ export default {
             },
           }
         )
-        .then(({ code, data }) => {
+        .then(({ code, data, message }) => {
           if (code == 200) {
-            if(type == 1) {
-              _this.export1Loading = false
-            } else if(type == 2) {
-              _this.export2Loading = false
+            if (type == 1) {
+              _this.export1Loading = false;
+            } else if (type == 2) {
+              _this.export2Loading = false;
+            } else if (type == 3) {
+              _this.export3Loading = false;
             }
-            window.location.href = data.action.down_url;
+            if (data.action.down_url) {
+              window.location.href = data.action.down_url;
+            }
           } else {
-            if(type == 1) {
-              _this.export1Loading = false
-            } else if(type == 2) {
-              _this.export2Loading = false
+            if (type == 1) {
+              _this.export1Loading = false;
+            } else if (type == 2) {
+              _this.export2Loading = false;
+            } else if (type == 3) {
+              _this.export3Loading = false;
             }
           }
         })

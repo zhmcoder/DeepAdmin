@@ -495,13 +495,45 @@ class Model
         }
 
         if ($this->model instanceof LengthAwarePaginator) {
+
+            $data = $this->displayData($data->items());
+
+            $totalDataCompute = $this->grid->getTotalDataCompute();
+            if (!empty($totalDataCompute)) {
+                $totalData = [];
+                foreach ($totalDataCompute as $key => $compute) {
+                    if ($key == '+') {
+                        foreach ($data as $item) {
+                            foreach ($compute as $value) {
+                                $totalData[$value] = round(round(($totalData[$value] ?? 0), 2) + round(($item[$value] ?? 0), 2), 2);
+                            }
+                        }
+                    } else if ($key == '/') {
+                        foreach ($compute as $item) {
+                            if (isset($totalData[$item['value'][0]]) && isset($totalData[$item['value'][1]])) {
+                                if (isset($item['value'][2])) {
+                                    $totalData[$item['key']] = $totalData[$item['value'][1]] ? round($totalData[$item['value'][0]] / $totalData[$item['value'][1]] * $item['value'][2], 2) : 0;
+                                } else {
+                                    $totalData[$item['key']] = $totalData[$item['value'][1]] ? round($totalData[$item['value'][0]] / $totalData[$item['value'][1]] * 100, 2) : 0;
+                                }
+                                $totalData[$item['key']] .= $item['suffix'];
+                            } else {
+                                $totalData[$item['key']] = '0%';
+                            }
+                        }
+                    }
+                }
+            } else {
+                $totalData = $this->grid->getTotalData();
+            }
+
             return [
                 'current_page' => $this->model->currentPage(),
                 'per_page' => $this->model->perPage(),
                 'last_page' => $this->model->lastPage(),
                 'total' => $this->model->total(),
-                'data' => $this->displayData($data->items()),
-                'total_data' => $this->grid->getTotalData(),
+                'data' => $data,
+                'total_data' => $totalData,
             ];
         }
 

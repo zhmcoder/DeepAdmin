@@ -996,7 +996,7 @@ class ContentController extends AdminController
                     $v[$value] = ($type == 'integer') ? (int)$v[$value] : (string)$v[$value];
                     $disabled = (isset($v[3]) && $v[3]) ? true : false;
 
-                    $name = $v[$label];
+                    $name = $v[$label] ?? '';
                     $name = strlen($name) > $labelLen ? stringToText($name, $labelLen) : $name;
                     $return[] = SelectOption::make($v[$value], $name)->disabled($disabled);
                 }

@@ -29,8 +29,11 @@ class EntityCacheService
         $value = Cache::get($key);
 
         if (empty($value)) {
-            $value = Entity::query()->where('table_name', $table)->first()->toArray();
-            Cache::put($key, $value, config('deep_admin.ENTITY_TABLE_CACHE_EXPIRE_TIME', 5 * 60));
+            $entity = Entity::query()->where('table_name', $table)->first();
+            if ($entity) {
+                $value = $entity->toArray();
+                Cache::put($key, $value, config('deep_admin.ENTITY_TABLE_CACHE_EXPIRE_TIME', 5 * 60));
+            }
         }
 
         return $value;
@@ -46,8 +49,11 @@ class EntityCacheService
         $value = Cache::get($key);
 
         if (empty($value)) {
-            $value = Entity::query()->find($entityId)->toArray();
-            Cache::put($key, $value, config('deep_admin.ENTITY_CACHE_EXPIRE_TIME', 5 * 60));
+            $entity = Entity::query()->find($entityId);
+            if ($entity) {
+                $value = $entity->toArray();
+                Cache::put($key, $value, config('deep_admin.ENTITY_CACHE_EXPIRE_TIME', 5 * 60));
+            }
         }
 
         return $value;
@@ -63,8 +69,11 @@ class EntityCacheService
         $value = Cache::get($key);
 
         if (empty($value)) {
-            $value = EntityField::query()->find($fieldId)->toArray();
-            Cache::put($key, $value, config('deep_admin.ENTITY_FIELD_CACHE_EXPIRE_TIME'));
+            $entityField = EntityField::query()->find($fieldId);
+            if ($entityField) {
+                $value = $entityField->toArray();
+                Cache::put($key, $value, config('deep_admin.ENTITY_FIELD_CACHE_EXPIRE_TIME'));
+            }
         }
 
         return $value;
