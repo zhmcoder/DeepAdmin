@@ -209,6 +209,7 @@ return [
         'timePicker' => '时间选择',
         'timePickerRange' => '时间段选择',
         'markdown' => 'markdown编辑器',
+        'baiduEditor' => '百度富文本编辑器',
     ],
     // 表单是否显示
     'is_form_show' => [
