@@ -844,7 +844,7 @@ class ContentController extends AdminController
                     break;
                 case 'baiduEditor': //百度编辑器
                     $obj->component(
-                        BaiduEditor::make()->style('z-index: 10')
+                        BaiduEditor::make()->uploadImgServer($this->uploadImages)->uploadFileName('file')->style('min-height:300px;')
                     )->inputWidth(500)->required($val['is_required'], 'string');
                     break;
             }
