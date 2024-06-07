@@ -10,6 +10,7 @@
     </div>
     <div
       ref="editor"
+      lang="en"
       :style="attrs.style"
       id="w-e-text-container"
       :class="attrs.className"

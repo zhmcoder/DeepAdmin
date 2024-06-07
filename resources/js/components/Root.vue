@@ -145,7 +145,7 @@
           </div>
           <div class="layout-header-r">
             <div class="flex align-center"></div>
-            <el-tooltip class="item" effect="dark" content="刷新">
+            <el-tooltip class="item" effect="dark" content="Refresh">
               <div
                 @click="pageReload"
                 class="layout-header-trigger layout-header-trigger-min hover"
@@ -211,11 +211,11 @@
     <el-backtop></el-backtop>
     <el-drawer :visible.sync="showAdminSet" size="250px">
       <div style="padding: 0 10px">
-        <el-divider>主题风格</el-divider>
+        <el-divider>Theme Style</el-divider>
         <div>
           <el-badge type="success" is-dot :hidden="!isWhite">
             <div>
-              <el-tooltip content="亮色菜单风格" placement="top">
+              <el-tooltip content="Bright style" placement="top">
                 <img
                   @click="
                     isWhite = true;
@@ -230,7 +230,7 @@
           </el-badge>
           <el-badge type="success" is-dot :hidden="!isDark">
             <div class="ml-20">
-              <el-tooltip content="暗色菜单风格" placement="top">
+              <el-tooltip content="Dark style" placement="top">
                 <img
                   @click="
                     isDark = true;
@@ -245,7 +245,7 @@
           </el-badge>
           <el-badge type="success" is-dot :hidden="!isBlue">
             <div class="ml-20">
-              <el-tooltip content="蓝色菜单风格" placement="top">
+              <el-tooltip content="Blue style" placement="top">
                 <img
                   @click="
                     isBlue = true;
@@ -262,29 +262,29 @@
         <div class="mt-30">
           <el-badge type="success" is-dot :hidden="!isDarkHeader">
             <div @click="isDarkHeader = true">
-              <el-tooltip content="亮色顶栏风格" placement="top">
+              <el-tooltip content="Bright top style" placement="top">
                 <img class="hover" src="../assets/nav-light.svg" />
               </el-tooltip>
             </div>
           </el-badge>
           <el-badge type="success" is-dot :hidden="isDarkHeader">
             <div class="ml-20" @click="isDarkHeader = false">
-              <el-tooltip content="暗色顶栏风格" placement="top">
+              <el-tooltip content="Dart top style" placement="top">
                 <img class="hover" src="../assets/nav-dark.svg" />
               </el-tooltip>
             </div>
           </el-badge>
         </div>
-        <el-divider>导航设置</el-divider>
+        <el-divider>Navigation Settings</el-divider>
 
         <div class="setting-item">
-          <span>固定顶栏</span>
+          <span>Fixed Top</span>
           <span>
             <el-switch v-model="fixedHeader"></el-switch>
           </span>
         </div>
         <div class="setting-item">
-          <span>固定侧边栏</span>
+          <span>Fixed Left Side</span>
           <span>
             <el-switch v-model="fixedSide"></el-switch>
           </span>
@@ -298,6 +298,7 @@
     <el-dialog
       title="Change Password"
       width="400px"
+      style="padding: 10px"
       :visible.sync="dialogUpdatePsdVisible"
       append-to-body
       destroy-on-close
