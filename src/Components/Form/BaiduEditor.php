@@ -44,13 +44,17 @@ class BaiduEditor extends Component
 
     protected $uploadImgHeaders;
 
+    protected $jsBasePath;//百度编辑器基础js, 必传
+
     protected $component;
 
     protected $disabled = false;
 
     static public function make($value = null)
     {
-        return new BaiduEditor($value);
+        $obj = new BaiduEditor($value);
+        $obj->jsBasePath = config("deep_admin.baidu_editor.js_base_path");//实例化组件自动设置
+        return $obj;
     }
 
     /**
