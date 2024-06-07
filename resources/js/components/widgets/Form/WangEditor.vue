@@ -10,7 +10,6 @@
     </div>
     <div
       ref="editor"
-      lang="en"
       :style="attrs.style"
       id="w-e-text-container"
       :class="attrs.className"
@@ -35,6 +34,8 @@ export default {
     this.defaultValue = this._.cloneDeep(this.attrs.componentValue);
 
     this.editor = new E(this.$refs.toolbar, this.$refs.editor);
+    this.editor.i18next = window.i18next;
+    this.editor.config.lang = 'en'
     // this.editor.customConfig.menus = this.attrs.menus;
     // this.editor.customConfig.zIndex = this.attrs.zIndex;
     // this.editor.customConfig.uploadImgShowBase64 = this.attrs.uploadImgShowBase64;
