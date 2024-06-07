@@ -55,7 +55,6 @@
     methods: {
       initEditor() {
         const _this = this;
-        console.log('##',this.attrs)
         if(UE.getEditor) {
           this.ueditor = UE.getEditor(this.randomEditorId, {
             UEDITOR_HOME_URL: this.attrs.jsBasePath,
