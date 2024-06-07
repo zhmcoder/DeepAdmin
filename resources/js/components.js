@@ -66,6 +66,9 @@ Vue.component(
 Vue.component("WangEditor", () =>
   import("@/components/widgets/Form/WangEditor")
 );
+Vue.component("BaiduEditor", () =>
+  import("@/components/widgets/Form/BaiduEditor")
+);
 Vue.component(
   "ItemSelect",
   require("@/components/widgets/Form/ItemSelect").default

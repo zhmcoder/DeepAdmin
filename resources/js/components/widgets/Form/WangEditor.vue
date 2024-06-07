@@ -58,7 +58,7 @@ export default {
     // };
 
     this.editor.config.menus = this.attrs.menus;
-    console.log("this.attrs.zIndex", this.attrs.zIndex);
+    console.log("this.attrs.zIndex", this.attrs.zIndex, this.value);
     this.editor.config.zIndex = this.attrs.zIndex;
     this.editor.config.uploadImgShowBase64 = this.attrs.uploadImgShowBase64;
     if (this.attrs.uploadImgServer) {
