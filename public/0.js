@@ -23,7 +23,8 @@ __webpack_require__.r(__webpack_exports__);
       randomEditorId: 'ueditor',
       defaultValue: '',
       editorHtml: '111',
-      ueditor: null
+      ueditor: null,
+      editorHomeUrl: null
     };
   },
   updated: function updated() {
@@ -31,9 +32,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     var _this2 = this;
+    this.editorHomeUrl = this.attrs.jsBasePath ? this.attrs.jsBasePath : window.location.origin + '/UEditor/';
     this.randomEditorId = 'ueditor_' + parseInt(Math.random() * 1000);
-    this.loadCDNJS("".concat(this.attrs.jsBasePath, "ueditor.config.js"));
-    this.loadCDNJS("".concat(this.attrs.jsBasePath, "ueditor.all.min.js"), true).then(function (_) {
+    this.loadCDNJS("".concat(this.editorHomeUrl, "ueditor.config.js"));
+    this.loadCDNJS("".concat(this.editorHomeUrl, "ueditor.all.min.js"), true).then(function (_) {
       _this2.initEditor();
     });
     this.$nextTick(function (_) {});
@@ -53,7 +55,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
       if (UE.getEditor) {
         this.ueditor = UE.getEditor(this.randomEditorId, {
-          UEDITOR_HOME_URL: this.attrs.jsBasePath,
+          UEDITOR_HOME_URL: this.editorHomeUrl,
           initialContent: this.value || this.attrs.componentValue || '',
           // toolbars: [this.attrs.menus],
           zIndex: this.attrs.zIndex,
@@ -145,7 +147,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.edui-default .edui-toolbar {\n    line-height: initial;\n}\n.edui-default .edui-toolbar .edui-combox .edui-combox-body {\n    line-height: initial;\n}\n", ""]);
+exports.push([module.i, "\n.edui-default .edui-toolbar {\r\n    line-height: initial;\n}\n.edui-default .edui-toolbar .edui-combox .edui-combox-body {\r\n    line-height: initial;\n}\r\n", ""]);
 
 // exports
 

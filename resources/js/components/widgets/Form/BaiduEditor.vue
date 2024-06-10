@@ -27,15 +27,17 @@
         defaultValue: '',
         editorHtml: '111',
         ueditor: null,
+        editorHomeUrl: null,
       }
     },
     updated(){
       console.log('updated')
     },
     mounted() {
+      this.editorHomeUrl = this.attrs.jsBasePath ? this.attrs.jsBasePath : window.location.origin + '/UEditor/'
       this.randomEditorId = 'ueditor_' + parseInt(Math.random() * 1000)
-      this.loadCDNJS(`${this.attrs.jsBasePath}ueditor.config.js`)
-      this.loadCDNJS(`${this.attrs.jsBasePath}ueditor.all.min.js`, true).then(_=>{
+      this.loadCDNJS(`${this.editorHomeUrl}ueditor.config.js`)
+      this.loadCDNJS(`${this.editorHomeUrl}ueditor.all.min.js`, true).then(_=>{
         this.initEditor()
       })
       this.$nextTick(_=> {
@@ -57,7 +59,7 @@
         const _this = this;
         if(UE.getEditor) {
           this.ueditor = UE.getEditor(this.randomEditorId, {
-            UEDITOR_HOME_URL: this.attrs.jsBasePath,
+            UEDITOR_HOME_URL: this.editorHomeUrl,
             initialContent: this.value || this.attrs.componentValue || '',
             // toolbars: [this.attrs.menus],
             zIndex: this.attrs.zIndex,
