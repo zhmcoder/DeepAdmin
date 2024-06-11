@@ -2,8 +2,6 @@
 
 namespace Andruby\DeepAdmin\Validates;
 
-use Andruby\Login\Validates\Validate;
-
 class AdminUserValidate extends Validate
 {
     public function resetPwd($request_data)
