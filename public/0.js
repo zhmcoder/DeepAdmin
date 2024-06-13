@@ -147,7 +147,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.edui-default .edui-toolbar {\r\n    line-height: initial;\n}\n.edui-default .edui-toolbar .edui-combox .edui-combox-body {\r\n    line-height: initial;\n}\r\n", ""]);
+exports.push([module.i, "\n.edui-default .edui-toolbar {\n    line-height: initial;\n}\n.edui-default .edui-toolbar .edui-combox .edui-combox-body {\n    line-height: initial;\n}\n", ""]);
 
 // exports
 

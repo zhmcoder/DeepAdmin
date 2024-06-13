@@ -102,17 +102,6 @@ class BaiduEditor extends Component
     }
 
     /**
-     * 自定义 fileName
-     * @param mixed $uploadFileName
-     * @return WangEditor
-     */
-    public function uploadFileName(string $uploadFileName)
-    {
-        $this->uploadFileName = $uploadFileName;
-        return $this;
-    }
-
-    /**
      * 自定义 header
      * @param mixed $uploadImgHeaders
      * @return WangEditor

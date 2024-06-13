@@ -86,4 +86,63 @@ class UploadController extends AdminController
         echo json_encode($data);
     }
 
+    public function baidu_images(Request $request)
+    {
+        $action = request('action', '');
+        if ($action == 'config') {
+            echo json_encode([
+                'imageActionName' => 'upload',
+                'imageFieldName' => 'file',
+                'imageMaxSize' => 10485760,
+                'imageAllowFiles' => [
+                    ".png", ".jpg", ".jpeg", ".gif", ".bmp", ".webp"
+                ],
+                "imageCompressEnable" => false,
+                "scrawlFieldName" => 'file',
+                "snapscreenActionName" => 'upload',
+            ]);
+            exit;
+        }
+        if ($action != "upload") {
+            echo json_encode([
+                'errno' => 500,
+                'msg' => "action error",
+            ]);
+            exit;
+        }
+
+        if (!isset($_FILES["file"])) {
+            echo json_encode([
+                'errno' => 500,
+                'msg' => "File not uploaded",
+            ]);
+            exit;
+        }
+
+        $file = $request->file('file');
+        $uniqueName = $request->input('uniqueName', config('deep_admin.upload.uniqueName', false));
+        $disk = $request->input('disk', config('deep_admin.upload.disk'));
+        $name = $file->getClientOriginalName();
+        $path = $request->input('path', 'images');
+        if ($uniqueName == "true" || $uniqueName == true) {
+            $path = $file->store($path, $disk);
+        } else {
+            $path = $file->storeAs($path, $name, $disk);
+        }
+        if (config('filesystems.disks.' . $disk . '.isSign')) {
+            $url = \Storage::disk($disk)->signUrl($path, 60);
+        } else {
+            $url = \Storage::disk($disk)->url($path);
+        }
+        $data = [
+            'state' => "SUCCESS",
+            'url' => $url,
+            'title' => basename($path),
+            'original' => $name
+        ];
+
+        // 返回数据
+        echo json_encode($data);
+    }
+
 }
