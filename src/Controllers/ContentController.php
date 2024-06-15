@@ -2,6 +2,7 @@
 
 namespace Andruby\DeepAdmin\Controllers;
 
+use Andruby\DeepAdmin\Components\Form\BaiduEditor;
 use Andruby\DeepAdmin\Components\Grid\DeepLink;
 use Andruby\DeepAdmin\Components\Grid\SortEdit;
 use Andruby\DeepAdmin\Models\ContentTimeStamp;
@@ -839,6 +840,11 @@ class ContentController extends AdminController
                 case 'markdown' : // markdown编辑器
                     $obj->component(
                         Markdown::make()->style('z-index: 10')
+                    )->inputWidth(500)->required($val['is_required'], 'string');
+                    break;
+                case 'baiduEditor': //百度编辑器
+                    $obj->component(
+                        BaiduEditor::make()->uploadImgServer($this->uploadImages)->uploadFileName('file')->style('min-height:300px;')
                     )->inputWidth(500)->required($val['is_required'], 'string');
                     break;
             }

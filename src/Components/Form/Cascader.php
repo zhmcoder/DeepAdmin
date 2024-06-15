@@ -21,7 +21,7 @@ class Cascader extends Component
      */
     protected $props;
     protected $size;
-    protected $placeholder = "请选择";
+    protected $placeholder = "Please select";
     protected $disabled = false;
     protected $clearable = false;
     protected $showAllLevels = true;
