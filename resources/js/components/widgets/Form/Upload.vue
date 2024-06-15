@@ -57,7 +57,7 @@
             plain
             :class="attrs.type"
             :style="{ width: attrs.width + 'px', height: attrs.height + 'px' }"
-          >上传</el-button>
+          >Upload</el-button>
         </el-upload>
 
         <el-upload
@@ -83,7 +83,7 @@
             plain
             :class="attrs.type"
             :style="{ width: attrs.width + 'px', height: attrs.height + 'px' }"
-          >上传</el-button>
+          >Upload</el-button>
         </el-upload>
       </div>
     </div>

@@ -35,7 +35,7 @@
                 width: attrs.width + 'px',
                 height: attrs.height + 'px',
               }"
-              >上传</el-button
+              >Upload</el-button
             >
           </el-upload>
         </div>

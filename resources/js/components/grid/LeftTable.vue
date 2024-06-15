@@ -340,16 +340,16 @@
                       </el-tooltip>
                       <el-dropdown-menu slot="dropdown">
                         <a @click="attrs.attributes.size = null">
-                          <el-dropdown-item>正常</el-dropdown-item>
+                          <el-dropdown-item>Normal</el-dropdown-item>
                         </a>
                         <a @click="attrs.attributes.size = 'medium'">
-                          <el-dropdown-item>中等</el-dropdown-item>
+                          <el-dropdown-item>Eedium</el-dropdown-item>
                         </a>
                         <a @click="attrs.attributes.size = 'small'">
-                          <el-dropdown-item>紧凑</el-dropdown-item>
+                          <el-dropdown-item>Small</el-dropdown-item>
                         </a>
                         <a @click="attrs.attributes.size = 'mini'">
-                          <el-dropdown-item>迷你</el-dropdown-item>
+                          <el-dropdown-item>Mini</el-dropdown-item>
                         </a>
                       </el-dropdown-menu>
                     </el-dropdown>
@@ -357,7 +357,7 @@
                     <el-tooltip
                       class="item"
                       effect="dark"
-                      content="刷新"
+                      content="Reload"
                       placement="top"
                     >
                       <i class="el-icon-refresh hover" @click="getData"></i>
