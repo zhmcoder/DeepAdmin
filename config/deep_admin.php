@@ -171,7 +171,7 @@ return [
         'preview' => true
     ],
     'baidu_editor' => [
-        'js_base_path' => env('BAIDU_EDITOR_JS_BASE_PATH', 'https://image.bioss.zdapk.cn/UEditor/'),
+        'js_base_path' => env('BAIDU_EDITOR_JS_BASE_PATH', 'http://localhost:82/vendor/deep-admin/UEditor/'),
     ],
     // 数据库表字段类型 参考：https://laravel.com/docs/5.5/migrations#columns
     'db_table_field_type' => [

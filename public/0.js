@@ -12,6 +12,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/mixins.js */ "./resources/js/mixins.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js");
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(js_cookie__WEBPACK_IMPORTED_MODULE_2__);
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -27,15 +30,16 @@ __webpack_require__.r(__webpack_exports__);
       editorHomeUrl: null
     };
   },
-  updated: function updated() {
-    console.log('updated');
-  },
+  updated: function updated() {},
   mounted: function mounted() {
     var _this2 = this;
     this.editorHomeUrl = this.attrs.jsBasePath ? this.attrs.jsBasePath : window.location.origin + '/UEditor/';
+    // if (this.editorHomeUrl.includes('localhost')) {
+    //   this.editorHomeUrl = 'https://plm.zdapk.cn/UEditor/'
+    // }
     this.randomEditorId = 'ueditor_' + parseInt(Math.random() * 1000);
     this.loadCDNJS("".concat(this.editorHomeUrl, "ueditor.config.js"));
-    this.loadCDNJS("".concat(this.editorHomeUrl, "ueditor.all.min.js"), true).then(function (_) {
+    this.loadCDNJS("".concat(this.editorHomeUrl, "ueditor.all.js?v=2"), true).then(function (_) {
       _this2.initEditor();
     });
     this.$nextTick(function (_) {});
@@ -53,13 +57,23 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     initEditor: function initEditor() {
       var _this = this;
+      console.log('###$1', Admin, this.attrs);
       if (UE.getEditor) {
         this.ueditor = UE.getEditor(this.randomEditorId, {
           UEDITOR_HOME_URL: this.editorHomeUrl,
           initialContent: this.value || this.attrs.componentValue || '',
+          allHtmlEnabled: true,
+          headers: {
+            // 'Content-Type': 'multipart/form-data',
+            _token: Admin.token
+            // 'xsrf-token': Cookies.get('XSRF-TOKEN')
+          },
+
           // toolbars: [this.attrs.menus],
           zIndex: this.attrs.zIndex,
-          readonly: this.attrs.disabled
+          serverUrl: window.location.origin + '/' + this.attrs.uploadImgServer,
+          readonly: this.attrs.disabled,
+          axios: axios__WEBPACK_IMPORTED_MODULE_1___default.a
         });
         this.ueditor.ready(function () {
           _this.ueditor.setContent(_this.value || '');
@@ -147,7 +161,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.edui-default .edui-toolbar {\n    line-height: initial;\n}\n.edui-default .edui-toolbar .edui-combox .edui-combox-body {\n    line-height: initial;\n}\n", ""]);
+exports.push([module.i, "\n.edui-default .edui-toolbar {\r\n    line-height: initial;\n}\n.edui-default .edui-toolbar .edui-combox .edui-combox-body {\r\n    line-height: initial;\n}\r\n", ""]);
 
 // exports
 

@@ -15,6 +15,7 @@
 
   import { FormItemComponent } from '@/mixins.js'
   import axios from 'axios'
+  import Cookies from "js-cookie";
 
   export default {
     components: {
@@ -31,13 +32,15 @@
       }
     },
     updated(){
-      console.log('updated')
     },
     mounted() {
       this.editorHomeUrl = this.attrs.jsBasePath ? this.attrs.jsBasePath : window.location.origin + '/UEditor/'
+      // if (this.editorHomeUrl.includes('localhost')) {
+      //   this.editorHomeUrl = 'https://plm.zdapk.cn/UEditor/'
+      // }
       this.randomEditorId = 'ueditor_' + parseInt(Math.random() * 1000)
       this.loadCDNJS(`${this.editorHomeUrl}ueditor.config.js`)
-      this.loadCDNJS(`${this.editorHomeUrl}ueditor.all.min.js`, true).then(_=>{
+      this.loadCDNJS(`${this.editorHomeUrl}ueditor.all.js?v=2`, true).then(_=>{
         this.initEditor()
       })
       this.$nextTick(_=> {
@@ -57,13 +60,22 @@
     methods: {
       initEditor() {
         const _this = this;
+        console.log('###$1', Admin, this.attrs)
         if(UE.getEditor) {
           this.ueditor = UE.getEditor(this.randomEditorId, {
             UEDITOR_HOME_URL: this.editorHomeUrl,
             initialContent: this.value || this.attrs.componentValue || '',
+            allHtmlEnabled: true,
+            headers: {
+              // 'Content-Type': 'multipart/form-data',
+              _token: Admin.token,
+              // 'xsrf-token': Cookies.get('XSRF-TOKEN')
+            },
             // toolbars: [this.attrs.menus],
             zIndex: this.attrs.zIndex,
-            readonly: this.attrs.disabled
+            serverUrl: window.location.origin + '/' + this.attrs.uploadImgServer,
+            readonly: this.attrs.disabled,
+            axios: axios,
           })
           this.ueditor.ready(function(){
             _this.ueditor.setContent(_this.value || '')
