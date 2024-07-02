@@ -25,6 +25,7 @@ Route::group([
     $router->post('_deep_admin_upload_image_', 'UploadController@uploadImage')->name('upload.image_handle');
     $router->post('_deep_admin_upload_file_', 'UploadController@uploadFile')->name('upload.file_handler');
     $router->post('_deep_admin_upload_xlsx_', 'UploadController@uploadXlsx')->name('upload.xlsx_handler');
+    $router->post('_deep_admin_upload_pdf_', 'UploadController@uploadPdf')->name('upload.pdf_handler');
 
     $router->post('auth/resetPwd', 'AuthController@resetPwd')->name('auth.resetPwd');
 });
@@ -61,6 +62,7 @@ Route::group([
         $router->post('_handle_upload_image_', 'HandleController@uploadImage')->name('admin.handle-upload-image');
         $router->post('_handle_upload_file_', 'HandleController@uploadFile')->name('admin.handle-upload-file');
         $router->post('_handle_upload_xlsx_', 'HandleController@uploadXlsx')->name('admin.handle-upload-xlsx');
+        $router->post('_handle_upload_pdf_', 'HandleController@uploadPdf')->name('admin.handle-upload-pdf');
         $router->post('_handle_form_', 'HandleController@handleForm')->name('admin.handle-form');
         $router->post('_handle_action_', 'HandleController@handleAction')->name('admin.handle-action');
     });
