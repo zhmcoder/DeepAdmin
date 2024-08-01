@@ -124,6 +124,8 @@ class Grid extends Component
     protected $filterSearchLabel = '搜索';
     protected $filterResetLabel = '重置';
 
+    protected $isMultiple = false; // 是否多选（false单选、true多选）
+
 
     /**
      * 居中显示
@@ -632,6 +634,8 @@ class Grid extends Component
 
             $viewData['filterSearchLabel'] = $this->filterSearchLabel;
             $viewData['filterResetLabel'] = $this->filterResetLabel;
+
+            $viewData['isMultiple'] = $this->isMultiple;
 
             return $viewData;
         }
