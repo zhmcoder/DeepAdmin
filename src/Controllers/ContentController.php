@@ -758,7 +758,7 @@ class ContentController extends AdminController
                     break;
 
                 case 'date' : // 日期
-                    $obj->component(DatePicker::make()->clearable())->required($val['is_required'], 'string')->inputWidth(11);
+                    $obj->component(DatePicker::make())->required($val['is_required'], 'string')->inputWidth(11);
                     break;
 
                 case 'switch' : // 开关
