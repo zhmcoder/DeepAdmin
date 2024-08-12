@@ -7,6 +7,23 @@ use Illuminate\Http\Request;
 
 trait UploadTraits
 {
+    public function uploadPdf(Request $request)
+    {
+        try {
+            $mimes = config('deep_admin.upload.pdf', '.pdf');
+            \Admin::validatorData($request->all(), [
+                'file' => 'mimes:' . str_replace('.', '', $mimes)
+            ]);
+            return $this->upload($request);
+        } catch (\Exception $exception) {
+            if (method_exists($this, 'responseError')) {
+                $this->responseError($exception->getMessage());
+            } else {
+                return \Admin::responseError($exception->getMessage());
+            }
+        }
+    }
+
     public function uploadXlsx(Request $request)
     {
         try {

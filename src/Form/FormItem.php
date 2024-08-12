@@ -446,7 +446,7 @@ class FormItem extends Component
     public function required(bool $required = true, $type = "string", $message = null, $trigger = "blur")
     {
         $this->required = $required;
-        $message = $message ?? '请填写' . $this->label;
+        $message = $message ?? 'Please Fill in ' . $this->label;
         //deep admin start
         if ($this->required) {
             //deep admin end

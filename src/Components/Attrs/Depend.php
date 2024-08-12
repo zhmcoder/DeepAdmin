@@ -13,6 +13,7 @@ trait Depend
     protected $isRelatedSelect;
     protected $relatedSelectRef;
     protected $findByParent = false;
+    protected $isReload = true;
     //deep admin end
 
     /**
@@ -94,5 +95,12 @@ trait Depend
         $this->findByParent = $findByParent;
         return $this;
     }
+
     //deep admin end
+
+    public function isReload($isReload = true)
+    {
+        $this->isReload = $isReload;
+        return $this;
+    }
 }

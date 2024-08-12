@@ -228,6 +228,16 @@ class Upload extends Component
         return $this;
     }
 
+    public function pdf($disk = 'public')
+    {
+        $this->type = "pdf";
+        $this->action = route(config('deep_admin.upload.pdf_handle_router', 'admin.handle-upload-pdf'),
+            ['disk' => $disk]);
+        $this->accept = config('deep_admin.upload.pdf');
+        $this->host = \Storage::disk($disk)->url('/');
+        return $this;
+    }
+
     /**
      * @param int $width
      * @return $this

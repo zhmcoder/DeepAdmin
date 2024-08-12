@@ -45,6 +45,7 @@ class ContentController extends AdminController
     protected $entityField = null; // 模型字段
     protected $remoteUrl = '';
     protected $uploadImages = '';
+    protected $baiduEditorUploadImages = '';
     protected $createUrl = "/entities/content/create?";
     protected $dataUrl = "";
 
@@ -63,6 +64,7 @@ class ContentController extends AdminController
 
         $this->remoteUrl = config('deep_admin.route.api_prefix') . '/remote/search'; // 下拉远程搜索
         $this->uploadImages = config('deep_admin.route.api_prefix') . '/upload/images_v4'; // 编辑框上传图片
+        $this->baiduEditorUploadImages = config('deep_admin.route.api_prefix') . '/upload/baidu_images'; // 百度富文本上传图片
     }
 
     protected function getTableName()
@@ -844,7 +846,7 @@ class ContentController extends AdminController
                     break;
                 case 'baiduEditor': //百度编辑器
                     $obj->component(
-                        BaiduEditor::make()->uploadImgServer($this->uploadImages)->uploadFileName('file')->style('min-height:300px;')
+                        BaiduEditor::make()->uploadImgServer($this->baiduEditorUploadImages)->style('min-height:300px;')
                     )->inputWidth(500)->required($val['is_required'], 'string');
                     break;
             }
