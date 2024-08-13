@@ -758,7 +758,7 @@ class ContentController extends AdminController
                     break;
 
                 case 'date' : // 日期
-                    $obj->component(DatePicker::make())->required($val['is_required'], 'string')->inputWidth(11);
+                    $obj->component(DatePicker::make())->required($val['is_required'], 'string')->inputWidth(10);
                     break;
 
                 case 'switch' : // 开关
@@ -784,7 +784,7 @@ class ContentController extends AdminController
                 case 'timePicker' : // 时间选择
                     $obj->component(TimePicker::make()->clearable()->pickerOptions(
                         ['start' => '00:00', 'step' => '00:30', 'end' => '24:00']
-                    )->placeholder($val['form_comment']))->required($val['is_required'], 'string')->inputWidth(11);
+                    )->placeholder($val['form_comment']))->required($val['is_required'], 'string')->inputWidth(10);
                     break;
 
                 case 'timePickerRange' : // 时间段选择
