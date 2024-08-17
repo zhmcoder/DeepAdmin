@@ -22,6 +22,11 @@
 				old_sort_value: this.value,
 			};
 		},
+    watch: {
+      value(val, oldVal) {
+        this.sort_value = val
+      },
+    },
 		mounted() {
 		},
 		methods: {
