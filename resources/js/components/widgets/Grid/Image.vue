@@ -15,6 +15,7 @@
   <div v-else>
     <!-- v-if="isSrcListLen" -->
     <el-image
+      v-if="src"
       :src="src"
       :style="attrs.style"
       :class="attrs.className"
@@ -56,7 +57,11 @@ export default {
   },
   computed: {
     src() {
-      return getFileUrl(this.attrs.host, this.value);
+      if(this.value) {
+        return getFileUrl(this.attrs.host, this.value);
+      } else {
+        return null
+      }
     },
     previewSrcList() {
       if (!this.attrs.preview) return [];
