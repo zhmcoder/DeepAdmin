@@ -429,7 +429,7 @@ class ContentController extends AdminController
         $column = request('column', 'sort');
         $sort_value = request('sort_value');
 
-        if (empty($id) || $sort_value != '') {
+        if (empty($id) || $sort_value == '') {
             return \Admin::responseError("参数错误");
         } else {
             $form = new Form(new Content($this->entity->table_name));
