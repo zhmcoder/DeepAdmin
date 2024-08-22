@@ -11,6 +11,7 @@ class SelectEdit extends Component
     protected $width = 60;
     protected $field = 'sort';
     protected $showSummary = false;
+    protected $options = [];
 
     public static function make($value = null)
     {
@@ -60,6 +61,21 @@ class SelectEdit extends Component
     public function showSummary($showSummary)
     {
         $this->showSummary = $showSummary;
+        return $this;
+    }
+
+    /**
+     * @param $options
+     * @return $this
+     */
+    public function options($options)
+    {
+        if ($options instanceof \Closure) {
+            $this->options = call_user_func($options);
+        } else {
+            $this->options = $options;
+        }
+
         return $this;
     }
 
