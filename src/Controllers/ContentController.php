@@ -790,7 +790,7 @@ class ContentController extends AdminController
                 case 'timePickerRange' : // 时间段选择
                     $obj->component(TimePicker::make([])->pickerOptions(
                         ['start' => '00:00', 'step' => '00:01', 'end' => '24:00']
-                    )->isRange()->rangeSeparator('To')->placeholder($val['form_comment']))->required($val['is_required'], 'string');
+                    )->isRange()->valueFormat('HH:mm')->format('HH:mm')->rangeSeparator('To')->placeholder($val['form_comment']))->required($val['is_required'], 'string');
                     break;
 
                 case 'selectRemote' : // 下拉单选远程查询
