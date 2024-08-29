@@ -39,13 +39,17 @@
       //   this.editorHomeUrl = 'https://plm.zdapk.cn/UEditor/'
       // }
       this.randomEditorId = 'ueditor_' + parseInt(Math.random() * 1000)
-      this.loadCDNJS(`${this.editorHomeUrl}ueditor.config.js`)
-      this.loadCDNJS(`${this.editorHomeUrl}ueditor.all.js?v=2`, true).then(_=>{
-        this.initEditor()
-      })
-      this.$nextTick(_=> {
-        
-      })
+      if(typeof UE != 'undefined') {
+        this.$nextTick((_) => {
+          this.initEditor()
+        })
+      }
+      else {
+        this.loadCDNJS(`${this.editorHomeUrl}ueditor.config.js`)
+        this.loadCDNJS(`${this.editorHomeUrl}ueditor.all.js`, true).then((_) => {
+          this.initEditor()
+        })
+      }
     },
     watch: {
       value(value) {

@@ -766,7 +766,7 @@ class ContentController extends AdminController
                     break;
 
                 case 'color' : // 颜色选择
-                    $obj->component(ColorPicker::make())->required($val['is_required'], 'string');
+                    $obj->component(ColorPicker::make())->required($val['is_required'], 'string')->defaultValue($defaultValue);
                     break;
 
                 case 'password' : // 密码
