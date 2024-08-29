@@ -509,6 +509,8 @@ class ContentController extends AdminController
 
         $cascadeFields = [];
 
+        $form = $this->form_first($form, $isEdit);
+
         foreach ($entityField as $key => $val) {
 
             // 是否显示表单
@@ -916,6 +918,12 @@ class ContentController extends AdminController
     protected function grid_toolbars(Grid\Toolbars $toolbars)
     {
         return $toolbars;
+    }
+
+    // 列表回调
+    protected function form_first(Form $form, $isEdit)
+    {
+        return $form;
     }
 
     // 列表回调
