@@ -783,13 +783,13 @@ class ContentController extends AdminController
 
                 case 'timePicker' : // 时间选择
                     $obj->component(TimePicker::make()->clearable()->pickerOptions(
-                        ['start' => '00:00', 'step' => '00:30', 'end' => '24:00']
+                        ['start' => '00:00', 'step' => '00:01', 'end' => '24:00']
                     )->placeholder($val['form_comment']))->required($val['is_required'], 'string')->inputWidth(10);
                     break;
 
                 case 'timePickerRange' : // 时间段选择
                     $obj->component(TimePicker::make([])->pickerOptions(
-                        ['start' => '00:00', 'step' => '01:00', 'end' => '24:00']
+                        ['start' => '00:00', 'step' => '00:01', 'end' => '24:00']
                     )->isRange()->rangeSeparator('至')->placeholder($val['form_comment']))->required($val['is_required'], 'string');
                     break;
 
