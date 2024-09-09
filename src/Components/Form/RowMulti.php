@@ -10,6 +10,7 @@ class RowMulti extends Component
 
     protected $component;
     protected $multiData;
+    protected $wrap = false;
 
     public static function make()
     {
@@ -20,6 +21,12 @@ class RowMulti extends Component
     {
         $this->multiData[$multiItem->getProp()] = $multiItem->getValue();
         $this->component[] = $multiItem;
+        return $this;
+    }
+
+    public function wrap($wrap = true)
+    {
+        $this->wrap = $wrap;
         return $this;
     }
 

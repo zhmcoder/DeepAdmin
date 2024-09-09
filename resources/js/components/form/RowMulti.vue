@@ -16,7 +16,8 @@
       />
       <span :style="item.labelStyle" :class="item.className">
        {{item.afterLabel}}
-     </span>
+      </span>
+      <div v-if="item.wrap"></div>
     </template>
   </div>
 </template>
