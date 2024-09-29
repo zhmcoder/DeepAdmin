@@ -17,6 +17,7 @@ Vue.component("SearchGrid", require("@/components/grid/SearchTable").default);
 
 //Form
 Vue.component("Input", require("@/components/widgets/Form/Input").default);
+Vue.component("InputPhone", require("@/components/widgets/Form/InputPhone").default);
 Vue.component(
   "RadioGroup",
   require("@/components/widgets/Form/RadioGroup").default
