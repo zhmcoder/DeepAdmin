@@ -4,6 +4,7 @@
 namespace Andruby\DeepAdmin\Grid;
 
 
+use Andruby\DeepAdmin\Grid\Filter\Phone;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -29,6 +30,7 @@ use Andruby\DeepAdmin\Grid\Filter\Scope;
  * @method AbstractFilter day($column, $label = '')
  * @method AbstractFilter month($column, $label = '')
  * @method AbstractFilter year($column, $label = '')
+ * @method AbstractFilter phone($column, $label = '')
  */
 class Filter
 {
@@ -76,6 +78,7 @@ class Filter
         'contains' => Filter\Like::class,
         'startsWith' => Filter\StartsWith::class,
         'endsWith' => Filter\EndsWith::class,
+        'phone' => Phone::class,
     ];
 
     public function __construct($model)
