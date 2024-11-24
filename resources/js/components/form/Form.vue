@@ -250,7 +250,11 @@
 			};
 		},
     created(){
-      this.activeName = this.attrs.tabValue;
+      if (this.attrs.target_url) {
+        window.open(this.attrs.target_url, '_blank');
+      } else {
+        this.activeName = this.attrs.tabValue;
+      }
     },
 		mounted() {
       // 存在dataUrl的时候获取后台数据
