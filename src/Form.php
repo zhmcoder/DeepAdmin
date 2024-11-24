@@ -105,6 +105,7 @@ class Form extends Component
     private $tabValue = '基本信息';
 
     protected $actions;
+    private $target_url = '';
 
 
     public function __construct($model = null)
@@ -199,6 +200,17 @@ class Form extends Component
     {
         $this->top = new Content();
         call_user_func($closure, $this->top);
+        return $this;
+    }
+
+    /**
+     * 新窗口url
+     * @param $target_url
+     * @return $this
+     */
+    public function target_url($target_url)
+    {
+        $this->target_url = $target_url;
         return $this;
     }
 
@@ -867,6 +879,7 @@ class Form extends Component
             'bottom' => $this->bottom,
             'actions' => $this->actions->builderActions(),
             'tabValue' => $this->tabValue,
+            'target_url' => $this->target_url,
         ];
 
     }
