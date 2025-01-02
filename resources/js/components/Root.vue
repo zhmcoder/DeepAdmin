@@ -407,7 +407,9 @@ export default {
       if(this.pageData.menuIsCollapsed !== null
           && localStorage.getItem("isCollapsed") === null){
           this.isCollapsed = this.pageData.menuIsCollapsed
+          console.log('reload menuIsCollapsed')
       }
+      console.log(this.pageData.menuIsCollapsed)
   },
   mounted() {
     //监听路由变动
