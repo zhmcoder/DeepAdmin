@@ -406,7 +406,7 @@ export default {
     }
       if(this.pageData.menuIsCollapsed !== null
           && localStorage.getItem("isCollapsed") === null){
-          this.isCollapsed=this.pageData.menuIsCollapsed
+          this.isCollapsed = this.pageData.menuIsCollapsed
       }
   },
   mounted() {
