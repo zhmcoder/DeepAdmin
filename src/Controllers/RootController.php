@@ -28,6 +28,7 @@ class RootController extends Controller
             'user' => $this->getUserData(),
             'url' => $this->getUrls(),
             'resetPwdUrl' => route('auth.resetPwd'),
+            'menuIsCollapsed' => config('deep_admin.menu_is_collapsed',true),
         ];
 
         return view('deep-admin::root', ['data' => $data]);

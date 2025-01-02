@@ -404,6 +404,10 @@ export default {
       this.isWhite = true;
       localStorage.setItem("isWhite", "true");
     }
+      if(this.pageData.menuIsCollapsed !== null
+          && localStorage.getItem("isCollapsed") === null){
+          this.isCollapsed=this.pageData.menuIsCollapsed
+      }
   },
   mounted() {
     //监听路由变动
