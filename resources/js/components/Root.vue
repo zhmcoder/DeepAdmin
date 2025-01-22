@@ -71,6 +71,8 @@
             :collapse-transition="false"
             :unique-opened="pageData.uniqueOpened"
             :router="true"
+            @select="onSelect"
+            v-if="show"
           >
             <template v-for="menu in pageData.menu">
               <el-submenu
@@ -334,6 +336,7 @@
 <script>
 import { flattenDeepChild } from "../utils";
 import MessageDialog from "./grid/MessageDialog.vue";
+import Vue from "vue";
 
 export default {
   components: { MessageDialog },
@@ -393,6 +396,7 @@ export default {
           },
         ],
       },
+      show: true
     };
   },
   created() {
@@ -478,6 +482,14 @@ export default {
       this.$confirm("您确定退出登录当前账户吗？", "退出登录确认").then(() => {
         window.location.href = this.pageData.url.logout;
       });
+    },
+    onSelect() {
+        if (this.isCollapsed) {
+           this.show = false
+           Vue.nextTick(() => {
+               this.show = true
+           })
+        }
     },
     // 修改密码
     updatePsd() {
