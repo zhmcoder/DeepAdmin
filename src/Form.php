@@ -106,6 +106,7 @@ class Form extends Component
 
     protected $actions;
     private $target_url = '';
+    private $target_url_2 = '';
 
 
     public function __construct($model = null)
@@ -211,6 +212,17 @@ class Form extends Component
     public function target_url($target_url)
     {
         $this->target_url = $target_url;
+        return $this;
+    }
+
+    /**
+     * 新窗口url2
+     * @param $target_url_2
+     * @return $this
+     */
+    public function target_url_2($target_url_2)
+    {
+        $this->target_url_2 = $target_url_2;
         return $this;
     }
 
@@ -880,6 +892,7 @@ class Form extends Component
             'actions' => $this->actions->builderActions(),
             'tabValue' => $this->tabValue,
             'target_url' => $this->target_url,
+            'target_url_2' => $this->target_url_2,
         ];
 
     }
