@@ -252,6 +252,9 @@
     created(){
       if (this.attrs.target_url) {
         window.open(this.attrs.target_url, '_blank');
+        if (this.attrs.target_url_2) {
+          window.open(this.attrs.target_url_2, '_blank');
+        }
       } else {
         this.activeName = this.attrs.tabValue;
       }
