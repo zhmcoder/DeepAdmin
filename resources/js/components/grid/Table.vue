@@ -463,7 +463,7 @@ export default {
     //deep admin end
     //初始化vuex状态值
     if (this.$store.getters.thisPage.grids.page) {
-      this.page = this._.cloneDeep(this.$store.getters.thisPage.grids.page);
+      //this.page = this._.cloneDeep(this.$store.getters.thisPage.grids.page);
 
       if (this.attrs.attributes.dataVuex) {
         this.tableData = this._.cloneDeep(
