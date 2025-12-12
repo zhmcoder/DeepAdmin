@@ -51,6 +51,9 @@ class Filter
     protected $exportPdfText = null;
     protected $exportImg = null;
     protected $exportImgText = null;
+    protected $exportOriginImg = null;
+    protected $exportOriginImgText = null;
+
     protected $reloadGrid = true;
 
     /**
@@ -192,6 +195,20 @@ class Filter
         return $this;
     }
 
+    public function exportOriginImg($exportOriginImg)
+    {
+        $this->exportOriginImg = $exportOriginImg;
+
+        return $this;
+    }
+
+    public function exportOriginImgText($exportOriginImgText)
+    {
+        $this->exportOriginImgText = $exportOriginImgText;
+
+        return $this;
+    }
+
     public function reloadGrid($reloadGrid = true)
     {
         $this->reloadGrid = $reloadGrid;
@@ -275,6 +292,8 @@ class Filter
             'exportPdfText' => $this->exportPdfText,
             'exportImg' => $this->exportImg,
             'exportImgText' => $this->exportImgText,
+            'exportOriginImg' => $this->exportOriginImg,
+            'exportOriginImgText' => $this->exportOriginImgText,
             'reloadGrid' => $this->reloadGrid
         ];
     }
