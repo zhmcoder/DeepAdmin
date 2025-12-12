@@ -766,7 +766,7 @@ export default {
       }
       this.$http
         .post(
-          type == 1 ? this.attrs.filter.exportUri : type == 2 ? this.attrs.filter.exportPdf : type == 3 ? this.attrs.filter.exportImg : '',
+          type == 1 ? this.attrs.filter.exportUri : type == 2 ? this.attrs.filter.exportPdf : type == 3 ? this.attrs.filter.exportImg : type == 4 ? this.attrs.filter.exportOriginImg :  '',
           {
             params: {
               get_data: true,
