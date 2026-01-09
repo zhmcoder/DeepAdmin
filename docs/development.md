@@ -137,11 +137,11 @@ node script.js --name=Test -e dev --debug
 
 ### 在 DeepAdmin 项目中的应用
 
-虽然 DeepAdmin 本身是一个 Laravel + Vue.js 项目，但在开发构建工具或自定义脚本时，可以使用 minimist 来处理命令行参数。例如：
+虽然 DeepAdmin 是基于 Laravel + Vue.js 的项目，但在开发构建工具或自定义脚本时仍可使用 minimist 处理命令行参数，例如：
 
-- 创建数据迁移脚本
-- 自定义构建流程
-- 开发辅助工具
+- 创建数据迁移脚本；
+- 自定义构建流程；
+- 开发辅助工具。
 
 ### 安装 minimist
 
