@@ -16,6 +16,8 @@ class BatchActions
 
     protected $keys = "selectionKeys";
 
+    private bool $isButton = false;
+
     public function __construct()
     {
         $this->deleteAction = DeleteAction::make();
@@ -63,6 +65,15 @@ class BatchActions
         return $this->keys;
     }
 
+    /**
+     * isButton
+     * @return $this
+     */
+    public function isButton($isButton = true): string
+    {
+        $this->isButton = $isButton;
+        return $this;
+    }
 
 
     public function builderActions()
