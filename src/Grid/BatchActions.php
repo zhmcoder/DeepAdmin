@@ -69,7 +69,7 @@ class BatchActions
      * isButton
      * @return $this
      */
-    public function isButton($isButton = true): string
+    public function isButton($isButton = true)
     {
         $this->isButton = $isButton;
         return $this;
