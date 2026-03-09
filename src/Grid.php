@@ -80,6 +80,8 @@ class Grid extends Component
     private $bottom;
     private $isReload = false;
 
+    private $isButton = false;
+
     /**
      * 请求方式
      * @var string
@@ -522,6 +524,16 @@ class Grid extends Component
         return $this;
     }
 
+    /**
+     * @param bool $isButton
+     * @return $this
+     */
+    public function isButton(bool $isButton = true)
+    {
+        $this->isButton = $isButton;
+        return $this;
+    }
+
 
     /**
      * 自定义数据
@@ -613,6 +625,7 @@ class Grid extends Component
             $viewData['top'] = $this->top;
             $viewData['bottom'] = $this->bottom;
             $viewData['isReload'] = $this->isReload;
+            $viewData['isButton'] = $this->isButton;
 
             $viewData['isDialogForm'] = $this->isDialogForm;
             $viewData['isDrawerForm'] = $this->isDrawerForm;
