@@ -1,6 +1,7 @@
 <template>
   <a @click="onClick">
-    <el-dropdown-item>{{ action.content }}</el-dropdown-item>
+    <el-button type="primary" style="margin-right: 4px" v-if="attrs.isButton" :disabled="len == 0">{{ action.content }}</el-button>
+    <el-dropdown-item v-else>{{ action.content }}</el-dropdown-item>
     <el-dialog
       v-if="action.dialog"
       :title="action.dialog.title"
@@ -30,8 +31,10 @@
 <script>
 export default {
   props: {
+    attrs: Object,
     action: Object,
-    keys: String
+    keys: String,
+    len: Number,
   },
   data() {
     return {

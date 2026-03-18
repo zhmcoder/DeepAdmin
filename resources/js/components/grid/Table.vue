@@ -134,6 +134,7 @@
                 :key_name="attrs.keyName"
                 :rows="selectionRows"
                 :actions="attrs.batchActions"
+                :attrs="attrs"
                 v-if="attrs.selection"
               />
               <div

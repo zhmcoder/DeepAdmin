@@ -1,5 +1,9 @@
 <template>
-  <el-dropdown class="mr-10">
+  <div v-if="attrs.isButton">
+    <component v-for="(component, index) in actions" :key="component.componentName + index" :is="component.componentName"
+      :action="component" :keys="keys" :attrs="attrs" :len="rows.length"  />
+  </div>
+  <el-dropdown v-else class="mr-10">
     <el-button :disabled="rows.length <= 0">
       <span>已选择 {{ rows.length }} 项</span>
       <i class="el-icon-arrow-down el-icon--right"></i>
@@ -18,6 +22,7 @@
 <script>
 export default {
   props: {
+    attrs: Object,
     rows: Array,
     routers: Object,
     key_name: String,
