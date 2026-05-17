@@ -587,7 +587,7 @@ export default {
       });
       return sums;
     },
-    // 计算需要合并的单元格
+    // 计算需要合并的单元格（只有内容完全相同时才合并）
     getSpanData(data) {
       this.spanData = [];
       this.columnArr.forEach((element) => {
@@ -597,7 +597,14 @@ export default {
           if (index === 0) {
             this.spanArr.push(1);
           } else {
-            if (item[element] === data[index - 1][element]) {
+            // 获取当前值和上一行的值
+            const currentVal = item[element];
+            const prevVal = data[index - 1][element];
+
+            // 判断是否应该合并：值必须完全相同
+            const shouldMerge = this.valuesEqual(currentVal, prevVal);
+
+            if (shouldMerge) {
               this.spanArr[contactDot] += 1;
               this.spanArr.push(0);
             } else {
@@ -609,23 +616,50 @@ export default {
         this.spanData.push(this.spanArr);
       });
     },
+    // 深度比较两个值是否完全相同
+    valuesEqual(val1, val2) {
+      // 首先检查类型是否相同
+      if (typeof val1 !== typeof val2) {
+        return false;
+      }
+
+      // 处理 null/undefined
+      if (val1 === null || val1 === undefined) {
+        return val1 === val2;
+      }
+
+      // 处理 NaN（NaN !== NaN，需要特殊处理）
+      if (typeof val1 === 'number' && isNaN(val1)) {
+        return typeof val2 === 'number' && isNaN(val2);
+      }
+
+      // 使用 lodash 进行深度比较
+      return this._.isEqual(val1, val2);
+    },
     objectSpanMethod({ row, column, rowIndex, columnIndex }) {
       // console.log('this.spanData', this.spanData)
       // console.log('this.columnArr', this.columnArr)
       // console.log('columnIndex', columnIndex)
       // console.log('rowIndex', rowIndex)
 
-      if (this.columnArr.includes(column.property)) {
-        if (this.spanData[columnIndex][rowIndex]) {
-          return {
-            rowspan: this.spanData[columnIndex][rowIndex],
-            colspan: 1,
-          }
-        } else {
-          return {
-            rowspan: 0,
-            colspan: 0,
-          }
+      // 找到当前列在 columnArr 中的索引
+      const arrIndex = this.columnArr.indexOf(column.property);
+
+      // 如果当前列不在合并列列表中，不处理
+      if (arrIndex === -1) {
+        return;
+      }
+
+      // 使用 arrIndex 而不是 columnIndex 来访问 spanData
+      if (this.spanData[arrIndex] && this.spanData[arrIndex][rowIndex]) {
+        return {
+          rowspan: this.spanData[arrIndex][rowIndex],
+          colspan: 1,
+        }
+      } else {
+        return {
+          rowspan: 0,
+          colspan: 0,
         }
       }
     },
