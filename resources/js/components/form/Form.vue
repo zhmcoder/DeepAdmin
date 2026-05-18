@@ -313,10 +313,15 @@
 														}
 													}
 													select_item['component']['options'].push(...select_data);
-                          if(!isNaN(select_related_value)){
-													  data[select_related] = select_related_value * 1;
-                          }else{
-													  data[select_related] = select_related_value;
+                          // 如果是数组，不做处理，直接使用原始值
+                          if (Array.isArray(select_related_value)) {
+                            data[select_related] = select_related_value;
+                          } else if (!isNaN(select_related_value)) {
+                            // 非数组且是数字，转换为数字类型
+                            data[select_related] = select_related_value * 1;
+                          } else {
+                            // 其他情况保持原样
+                            data[select_related] = select_related_value;
                           }
 												});
 										}
@@ -391,10 +396,20 @@
 														}
 													}
 													select_item['component']['options'].push(...select_data);
-                          if(!isNaN(select_related_value)){
-													  data[select_related] = select_related_value * 1;
-                          }else{
-													  data[select_related] = select_related_value;
+                          // if(!isNaN(select_related_value)){
+													//   data[select_related] = select_related_value * 1;
+                          // }else{
+													//   data[select_related] = select_related_value;
+                          // }
+                          // 如果是数组，不做处理，直接使用原始值
+                          if (Array.isArray(select_related_value)) {
+                            data[select_related] = select_related_value;
+                          } else if (!isNaN(select_related_value)) {
+                            // 非数组且是数字，转换为数字类型
+                            data[select_related] = select_related_value * 1;
+                          } else {
+                            // 其他情况保持原样
+                            data[select_related] = select_related_value;
                           }
 												});
 										}
