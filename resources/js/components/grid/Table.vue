@@ -707,6 +707,7 @@ export default {
     },
     //表单还原
     onFilterReset() {
+      console.log('this.attrs.isAllClear', this.attrs.isAllClear)
       if (this.attrs.isAllClear) {
         this.clearAllQuery()
       } else {
