@@ -707,7 +707,24 @@ export default {
     },
     //表单还原
     onFilterReset() {
-      this.filterFormData = this._.cloneDeep(this.attrs.filter.filterFormData);
+      if (this.attrs.isAllClear) {
+        this.clearAllQuery()
+      } else {
+        this.filterFormData = this._.cloneDeep(this.attrs.filter.filterFormData);
+        this.quickSearch = null;
+        // deep admin start
+        this.page = 1;
+        // deep admin end
+        this.getData();
+      }
+    },
+    // 清空搜索条件
+    clearAllQuery() {
+      this.q_search = {};
+      this.quick_filter = {};
+      this.tab_filter = {};
+      // 清空所有查询条件，不带入默认条件
+      this.filterFormData = {};
       this.quickSearch = null;
       // deep admin start
       this.page = 1;
