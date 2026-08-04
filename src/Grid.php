@@ -127,6 +127,7 @@ class Grid extends Component
     protected $filterResetLabel = '重置';
 
     protected $isMultiple = false; // 是否多选（false单选、true多选）
+    protected $isAllClear = false; // 加一个isAllClear字段吧，true代表清除所有
 
 
     /**
@@ -492,6 +493,12 @@ class Grid extends Component
         return $this;
     }
 
+    public function isAllClear($isAllClear = true)
+    {
+        $this->isAllClear = $isAllClear;
+        return $this;
+    }
+
     /**
      * @param $closure
      * @return $this
@@ -649,6 +656,7 @@ class Grid extends Component
             $viewData['filterResetLabel'] = $this->filterResetLabel;
 
             $viewData['isMultiple'] = $this->isMultiple;
+            $viewData['isAllClear'] = $this->isAllClear;
 
             return $viewData;
         }
